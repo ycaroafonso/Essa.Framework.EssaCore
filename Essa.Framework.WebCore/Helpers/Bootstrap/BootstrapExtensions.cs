@@ -4,10 +4,11 @@
     using Essa.Framework.WebCore.Helpers.Bootstrap.Accordion;
     using Essa.Framework.WebCore.Helpers.Bootstrap.Modal;
     using Essa.Framework.WebCore.Helpers.Bootstrap.Tabs;
+    using Microsoft.AspNetCore.Mvc.ViewFeatures;
     using Portlet;
     using System;
     using System.Collections.Generic;
-    using System.Web.Mvc;
+    
 
     public static class BootstrapExtensions
     {
@@ -39,10 +40,10 @@
             return new TabsBuilder(_htmlHelper.ViewContext, _id, indexAbaAtiva);
         }
 
-        public MvcHtmlString BotaoComModalAjax(string tituloBotao, string url, Action<IModalAddBotao> config = null)
-        {
-            return new ModalBuilder(_id).BotaoComModalAjax(tituloBotao, url, config);
-        }
+        //public MvcHtmlString BotaoComModalAjax(string tituloBotao, string url, Action<IModalAddBotao> config = null)
+        //{
+        //    return new ModalBuilder(_id).BotaoComModalAjax(tituloBotao, url, config);
+        //}
 
         public IModalAddBotao BotaoComModalSimples(string tituloBotao, string tituloModal, object htmlAttributesBotao = null)
         {

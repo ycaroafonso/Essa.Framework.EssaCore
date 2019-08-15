@@ -1,7 +1,7 @@
 ﻿namespace Essa.Framework.WebCore.Helpers.Bootstrap.Portlet
 {
     using System;
-    using System.Web.Mvc;
+    
     using Microsoft.AspNetCore.Mvc;
 
 

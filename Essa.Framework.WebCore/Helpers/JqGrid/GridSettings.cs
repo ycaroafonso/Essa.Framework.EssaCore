@@ -6,7 +6,7 @@
     using System.Threading.Tasks;
 
 
-    [System.Web.Mvc.ModelBinder(typeof(GridModelBinder))]
+    [ModelBinder(typeof(GridModelBinder))]
     public class GridSettings
     {
         public bool IsSearch { get; set; }

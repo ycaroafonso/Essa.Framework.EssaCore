@@ -1,8 +1,7 @@
 ﻿namespace Essa.Framework.WebCore.Util
 {
     using Extensions;
-    using Microsoft.AspNetCore.Mvc;
-    using System.Web.Mvc;
+    using Microsoft.AspNetCore.Mvc.Rendering;
 
     public static class Util
     {

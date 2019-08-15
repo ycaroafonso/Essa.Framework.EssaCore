@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Web;
-    using System.Web.Mvc;
+    
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.AspNetCore.Routing;
@@ -17,7 +17,7 @@
     public class ModalBuilder : IModalAddBotao
     {
         private string _id;
-        private System.Web.Mvc.ViewContext _html;
+        private ViewContext _html;
         private Queue<string> _botoes;
 
         public ModalBuilder(string id)
@@ -25,7 +25,7 @@
             _id = id;
         }
 
-        public ModalBuilder(string id, System.Web.Mvc.ViewContext html)
+        public ModalBuilder(string id, ViewContext html)
         {
             _botoes = new Queue<string>();
             _id = id;
