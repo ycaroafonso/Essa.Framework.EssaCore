@@ -4,7 +4,7 @@
     using System;
     using System.Text;
     using Microsoft.AspNetCore.Mvc;
-    using System.Web.Mvc;
+    using Microsoft.AspNetCore.Html;
 
     public class TreeViewBuilder
     {
@@ -23,7 +23,7 @@
             return this;
         }
 
-        public MvcHtmlString Montar()
+        public HtmlString Montar()
         {
             StringBuilder str = new StringBuilder();
 
@@ -31,7 +31,7 @@
             foreach (var item in _treeViewOptions.data)
                 str.Append(MontaHtmlRecursivo(item, 0, index++, _id));
 
-            return new MvcHtmlString(string.Format(@"
+            return new HtmlString(string.Format(@"
 <div id=""{1}"" style=""overflow-y: scroll; overflow-x: hidden; height: 500px;"">
     <ul class=""nav nav-list"">
 	    {0}

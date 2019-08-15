@@ -5,7 +5,8 @@
     using System;
     using System.Collections.Generic;
     using Microsoft.AspNetCore.Mvc;
-    using System.Web.Mvc;
+    using Microsoft.AspNetCore.Html;
+
 
 
     //public class JqGridBuilder<T> : JqGridBuilder
@@ -142,7 +143,7 @@
         }
 
 
-        public MvcHtmlString Montar()
+        public HtmlString Montar()
         {
 
             string str = string.Concat(@" <table id=""", Id, @"""></table>
@@ -153,10 +154,10 @@
                                             });
                                         </script>");
 
-            return new MvcHtmlString(str.ToString());
+            return new HtmlString(str.ToString());
         }
 
-        public MvcHtmlString retornaGrid()
+        public HtmlString retornaGrid()
         {
             return Montar();
         }

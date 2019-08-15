@@ -1,12 +1,13 @@
 ﻿namespace Essa.Framework.WebCore.Helpers.JqGrid
 {
+    using Microsoft.AspNetCore.Mvc;
     using System.Runtime.Serialization;
     using System.Runtime.Serialization.Json;
     using System.Text;
     using System.Threading.Tasks;
 
 
-    [System.Web.Mvc.ModelBinder(typeof(GridModelBinder))]
+    [ModelBinder(typeof(GridModelBinder))]
     public class GridSettings
     {
         public bool IsSearch { get; set; }

@@ -4,10 +4,12 @@
     using Essa.Framework.WebCore.Helpers.Bootstrap.Accordion;
     using Essa.Framework.WebCore.Helpers.Bootstrap.Modal;
     using Essa.Framework.WebCore.Helpers.Bootstrap.Tabs;
+    using Microsoft.AspNetCore.Html;
+    using Microsoft.AspNetCore.Mvc.ViewFeatures;
     using Portlet;
     using System;
     using System.Collections.Generic;
-    using System.Web.Mvc;
+    
 
     public static class BootstrapExtensions
     {
@@ -39,10 +41,10 @@
             return new TabsBuilder(_htmlHelper.ViewContext, _id, indexAbaAtiva);
         }
 
-        public MvcHtmlString BotaoComModalAjax(string tituloBotao, string url, Action<IModalAddBotao> config = null)
-        {
-            return new ModalBuilder(_id).BotaoComModalAjax(tituloBotao, url, config);
-        }
+        //public HtmlString BotaoComModalAjax(string tituloBotao, string url, Action<IModalAddBotao> config = null)
+        //{
+        //    return new ModalBuilder(_id).BotaoComModalAjax(tituloBotao, url, config);
+        //}
 
         public IModalAddBotao BotaoComModalSimples(string tituloBotao, string tituloModal, object htmlAttributesBotao = null)
         {
@@ -69,7 +71,7 @@
             return new PortletBuilder(_id, _htmlHelper.ViewContext, titulo, classPortlet, classIconeTitulo);
         }
 
-        public MvcHtmlString DropDown(string titulo, List<DropDownItem> itens)
+        public HtmlString DropDown(string titulo, List<DropDownItem> itens)
         {
             return new DropDownBuilder(_id, _htmlHelper.ViewContext).AddItem(itens).Texto(titulo).Montar();
         }
