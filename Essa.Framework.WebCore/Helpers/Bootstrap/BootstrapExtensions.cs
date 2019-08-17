@@ -5,6 +5,7 @@
     using Essa.Framework.WebCore.Helpers.Bootstrap.Modal;
     using Essa.Framework.WebCore.Helpers.Bootstrap.Tabs;
     using Microsoft.AspNetCore.Html;
+    using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.AspNetCore.Mvc.ViewFeatures;
     using Portlet;
     using System;
@@ -19,7 +20,7 @@
         /// <param name="htmlHelper"></param>
         /// <param name="id">ID do componente</param>
         /// <returns></returns>
-        public static Bootstrap Bootstrap(this HtmlHelper htmlHelper, string id)
+        public static Bootstrap Bootstrap(this IHtmlHelper htmlHelper, string id)
         {
             return new Bootstrap(htmlHelper, id);
         }
@@ -27,10 +28,10 @@
 
     public class Bootstrap
     {
-        private HtmlHelper _htmlHelper;
+        private IHtmlHelper _htmlHelper;
         private string _id;
 
-        public Bootstrap(HtmlHelper htmlHelper, string id)
+        public Bootstrap(IHtmlHelper htmlHelper, string id)
         {
             _htmlHelper = htmlHelper;
             _id = id;
