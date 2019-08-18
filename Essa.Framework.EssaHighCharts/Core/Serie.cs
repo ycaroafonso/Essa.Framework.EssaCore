@@ -26,8 +26,6 @@ namespace Highcharts.Core.Data.Chart
         public int? xAxis;
         public int? yAxis;
 
-        public int? y{ get; set; }
-
         public object[] data;
 
         public override string ToString()
