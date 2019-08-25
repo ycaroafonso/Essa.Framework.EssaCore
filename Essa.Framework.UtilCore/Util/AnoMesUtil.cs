@@ -2,7 +2,7 @@
 {
     using Essa.Framework.UtilCore.Extensions;
     using System;
-
+    using System.Linq;
 
     public class AnoMesUtil
     {
@@ -48,7 +48,13 @@
             }
         }
 
+        public void SetMes(string mesExtenso)
+        {
+            var x = Geral.MesesComNumero().Where(c => c.Value.StartsWith(mesExtenso)).Single();
+            Mes = x.Key;
+        }
 
+        public AnoMesUtil() { }
 
         public AnoMesUtil(int anomes)
         {
