@@ -1,11 +1,11 @@
 ﻿namespace Essa.Framework.WebCore.Helpers.TreeView
 {
     using Framework.UtilCore.Models.Helpers.TreeView;
+    using Microsoft.AspNetCore.Html;
     using Newtonsoft.Json;
     using System;
     using System.Text;
-    using Microsoft.AspNetCore.Mvc;
-    using System.Web.Mvc;
+
 
     public class TreeViewBuilder
     {
@@ -24,7 +24,7 @@
             return this;
         }
 
-        public MvcHtmlString Montar()
+        public HtmlString Montar()
         {
             StringBuilder str = new StringBuilder();
 
@@ -34,7 +34,7 @@
                 DefaultValueHandling = DefaultValueHandling.Ignore
             });
 
-            return new MvcHtmlString(string.Format(@"
+            return new HtmlString(string.Format(@"
                 <script>
                     jQuery(document).ready(function () {{ $('#{1}').treeview({0}) }});
                 </script>

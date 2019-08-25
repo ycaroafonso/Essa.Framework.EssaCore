@@ -1,9 +1,7 @@
 ﻿namespace Essa.Framework.WebCore.Helpers.Bootstrap.Portlet
 {
+    using Microsoft.AspNetCore.Mvc.Rendering;
     using System;
-    using System.Web.Mvc;
-    using Microsoft.AspNetCore.Mvc;
-
 
     public class PortletBuilder : IDisposable
     {

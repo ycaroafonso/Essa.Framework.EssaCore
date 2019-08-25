@@ -1445,9 +1445,9 @@ function (sub_grid_id, row_id) {
             // Return script + required elements
             return script.ToString() + table.ToString() + pager.ToString() + topPager.ToString();
         }
-        //public MvcHtmlString retornaGrid()
+        //public HtmlString retornaGrid()
         //{
-        //    return MvcHtmlString.Create(this.ToString());
+        //    return HtmlString.Create(this.ToString());
         //}
     }
 

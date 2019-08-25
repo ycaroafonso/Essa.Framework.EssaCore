@@ -1,9 +1,8 @@
 ﻿namespace Essa.Framework.WebCore.Controller
 {
     using Framework.UtilCore.Models.Controller;
+    using Microsoft.AspNetCore.Mvc.ModelBinding;
     using System.Linq;
-    using Microsoft.AspNetCore.Mvc;
-    using System.Web.Mvc;
 
     public class CustomJsonBuilder
     {
