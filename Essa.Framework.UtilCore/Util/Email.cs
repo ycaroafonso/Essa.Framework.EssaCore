@@ -29,11 +29,9 @@
             _smtp.UseDefaultCredentials = false;
             _smtp.Credentials = _credencial;
 
-            if (emailDe != null)
-                _mailMessage = new MailMessage()
-                {
-                    From = new MailAddress(emailDe), 
-                };
+            _mailMessage = new MailMessage();
+
+            _mailMessage.From = new MailAddress(emailDe ?? userName);
         }
 
 
