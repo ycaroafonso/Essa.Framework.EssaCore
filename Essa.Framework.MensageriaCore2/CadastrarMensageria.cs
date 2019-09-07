@@ -1,6 +1,5 @@
 ﻿namespace Essa.Framework.MensageriaCore
 {
-    using Essa.Framework.UtilCore.Extensions;
     using RabbitMQ.Client;
     using RabbitMQ.Client.Events;
     using System;
@@ -45,12 +44,6 @@
                                  consumer: consumer);
         }
 
-
-
-
-
-
-
         public void ConfirmarRecebimento()
         {
             _channel.BasicAck(CodigoRecebimento, false);
@@ -72,22 +65,23 @@
 
         public void Publicar(byte[] body)
         {
-            Publicar(_queue, body);
+            _channel.BasicPublish(exchange: "",
+                            routingKey: _queue,
+                            basicProperties: null,
+                            body: body);
         }
 
 
         public void Publicar<T>(T body)
         {
-            Publicar(body.ToJson().ToByteArray());
+            var xxx = body.ToJson();
+
+            _channel.BasicPublish(exchange: "",
+                            routingKey: _queue,
+                            basicProperties: null,
+                            body: body.ToJson());
         }
 
-        public void Publicar(string routingKey, byte[] body)
-        {
-            _channel.BasicPublish(exchange: "",
-                            routingKey: routingKey,
-                            basicProperties: null,
-                            body: body);
-        }
 
 
 
