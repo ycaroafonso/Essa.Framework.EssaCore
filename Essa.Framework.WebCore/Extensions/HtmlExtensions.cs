@@ -7,7 +7,7 @@
 
     public static class HtmlExtensions
     {
-        //public static MvcHtmlString TextBoxFor<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression, Action<RouteValueDictionary> customHtmlAttributes)
+        //public static HtmlString TextBoxFor<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression, Action<RouteValueDictionary> customHtmlAttributes)
         //{
         //    RouteValueDictionary htmlAttributes = new RouteValueDictionary();
         //    customHtmlAttributes(htmlAttributes);

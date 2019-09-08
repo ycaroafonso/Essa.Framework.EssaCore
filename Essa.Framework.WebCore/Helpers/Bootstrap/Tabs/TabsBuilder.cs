@@ -1,9 +1,8 @@
 ﻿namespace Essa.Framework.WebCore.Helpers.Bootstrap.Tabs
 {
+    using Microsoft.AspNetCore.Mvc.Rendering;
     using System;
     using System.Collections.Generic;
-    
-    using Microsoft.AspNetCore.Mvc;
 
 
     public class TabsBuilder : IDisposable

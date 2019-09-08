@@ -1,5 +1,6 @@
 ﻿namespace Essa.Framework.WebCore.Helpers.JqGrid
 {
+    using Microsoft.AspNetCore.Mvc;
     using System.Runtime.Serialization;
     using System.Runtime.Serialization.Json;
     using System.Text;

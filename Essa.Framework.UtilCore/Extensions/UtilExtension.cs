@@ -5,13 +5,25 @@
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
-
+    using System.Runtime.Serialization.Formatters.Binary;
 
     public static class UtilExtension
     {
         public static int ToInt32(this object valor)
         {
             return Convert.ToInt32(valor);
+        }
+
+        public static byte[] ToByteArray(this object obj)
+        {
+            if (obj == null)
+                return null;
+            BinaryFormatter bf = new BinaryFormatter();
+            using (MemoryStream ms = new MemoryStream())
+            {
+                bf.Serialize(ms, obj);
+                return ms.ToArray();
+            }
         }
 
         public static bool IfNegative<T>(this T value) where T : IComparable<T>
@@ -99,6 +111,7 @@
                 return ms.ToArray();
             }
         }
+
 
 
         public static Dictionary<int, T> ToDictionary<T>(this T[] lista)

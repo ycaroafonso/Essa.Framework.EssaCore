@@ -1,9 +1,9 @@
 ﻿namespace Essa.Framework.WebCore.Helpers.Bootstrap.DropDown
 {
+    using Microsoft.AspNetCore.Html;
+    using Microsoft.AspNetCore.Mvc.Rendering;
     using System.Collections.Generic;
     using System.Linq;
-    
-    using Microsoft.AspNetCore.Mvc;
 
 
     public class DropDownBuilder
@@ -39,9 +39,9 @@
         }
 
 
-        public MvcHtmlString Montar()
+        public HtmlString Montar()
         {
-            return new MvcHtmlString(string.Format(@"
+            return new HtmlString(string.Format(@"
 <div class=""dropdown"" id=""{1}"">
 	<button class=""btn btn-default dropdown-toggle"" type=""button"" id=""{1}_btn"" data-toggle=""dropdown"" aria-haspopup=""true"" aria-expanded=""true"">
 		<span>{0}</span>

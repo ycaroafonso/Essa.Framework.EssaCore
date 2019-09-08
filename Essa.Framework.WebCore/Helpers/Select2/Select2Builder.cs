@@ -2,6 +2,7 @@
 {
     using Essa.Framework.UtilCore.Extensions;
     using Essa.Framework.UtilCore.Models.Helpers.Select2;
+    using Microsoft.AspNetCore.Html;
     using Microsoft.AspNetCore.Mvc.Rendering;
     using Newtonsoft.Json;
     using System;
@@ -172,7 +173,7 @@
         }
 
 
-        public MvcHtmlString Montar()
+        public IHtmlContent Montar()
         {
             string
                 script = JsonConvert.SerializeObject(_select2Options ?? new Select2Options(), new JsonSerializerSettings
@@ -184,7 +185,7 @@
                 js = string.Format("function {0}_ToSelect2(pConfig){{ var config = $.extend({1}, pConfig == undefined ? {{}} : pConfig); $(\"#{0}\").select2(config){2}; }}jQuery(document).ready(function () {{ {0}_ToSelect2(); }});"
                                 , id, script, _complementoScript);
 
-            return new MvcHtmlString(string.Format(@"
+            return new HtmlString(string.Format(@"
                 <script>
                     {0}
                 </script>

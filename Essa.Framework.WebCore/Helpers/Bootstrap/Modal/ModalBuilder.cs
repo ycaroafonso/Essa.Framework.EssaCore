@@ -1,13 +1,11 @@
 ﻿namespace Essa.Framework.WebCore.Helpers.Bootstrap.Modal
 {
+    using Microsoft.AspNetCore.Html;
+    using Microsoft.AspNetCore.Mvc.Rendering;
+    using Microsoft.AspNetCore.Routing;
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Web;
-    
-    using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Mvc.Rendering;
-    using Microsoft.AspNetCore.Routing;
 
     public interface IModalAddBotao : IDisposable
     {
@@ -39,7 +37,7 @@
         /// <param name="url">URL ou Javascript que retorna a URL</param>
         /// <param name="config"></param>
         /// <returns></returns>
-        public MvcHtmlString BotaoComModalAjax(string tituloBotao, string url, Action<IModalAddBotao> config = null)
+        public IHtmlContent BotaoComModalAjax(string tituloBotao, string url, Action<IModalAddBotao> config = null)
         {
             _botoes = new Queue<string>();
             string resolveUrl = ""; // VirtualPathUtility.ToAbsolute("~/");
@@ -57,7 +55,7 @@
 ", _id, tituloBotao, Parte1(tituloBotao), "assets/global/img/loading-spinner-grey.gif", Parte2()
     , url.StartsWith("~/") ? "link.attr(\"href\")" : url);
 
-            return new MvcHtmlString(html.ToString());
+            return new HtmlString(html.ToString());
         }
 
 
