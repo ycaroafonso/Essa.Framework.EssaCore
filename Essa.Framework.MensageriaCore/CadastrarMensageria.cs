@@ -4,6 +4,9 @@
     using RabbitMQ.Client;
     using RabbitMQ.Client.Events;
     using System;
+    using System.Collections.Generic;
+
+
 
     public class CadastrarMensageria : IDisposable
     {
@@ -12,20 +15,31 @@
         private IModel _channel;
         string _queue;
 
-        public CadastrarMensageria(string queue, bool autoDelete = false)
+        public CadastrarMensageria(string queue)
         {
             _factory = new ConnectionFactory() { HostName = "localhost" };
             _connection = _factory.CreateConnection();
             _channel = _connection.CreateModel();
 
             _queue = queue;
+        }
 
-            _channel.QueueDeclare(queue: queue,
+
+        public void CriarFila(bool autoDelete = false, IDictionary<string, object> arguments = null)
+        {
+            _channel.QueueDeclare(queue: _queue,
                      durable: true,
                      exclusive: false,
                      autoDelete: autoDelete,
-                     arguments: null);
+                     arguments: arguments);
         }
+
+
+
+
+
+
+
 
 
         private ulong CodigoRecebimento;
@@ -70,23 +84,18 @@
 
 
 
-        public void Publicar(byte[] body)
-        {
-            Publicar(_queue, body);
-        }
-
-
-        public void Publicar<T>(T body)
-        {
-            Publicar(body.ToJson().ToByteArray());
-        }
-
-        public void Publicar(string routingKey, byte[] body)
+        public void Publicar(byte[] body, string routingKey = "")
         {
             _channel.BasicPublish(exchange: "",
                             routingKey: routingKey,
                             basicProperties: null,
                             body: body);
+        }
+
+
+        public void Publicar<T>(T body, string routingKey = "")
+        {
+            Publicar(body.ToJson().ToByteArray(), routingKey);
         }
 
 
