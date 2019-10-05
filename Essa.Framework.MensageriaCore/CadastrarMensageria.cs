@@ -93,9 +93,14 @@
         }
 
 
-        public void Publicar<T>(T body, string routingKey = "")
+        public void Publicar<T>(T body, string routingKey)
         {
             Publicar(body.ToJson().ToByteArray(), routingKey);
+        }
+
+        public void Publicar<T>(T body)
+        {
+            Publicar(body.ToJson().ToByteArray(), _queue);
         }
 
 
