@@ -9,7 +9,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Essa.Framework\Essa.Framework.UtilCore\Essa.Framework.UtilCore.csproj" />
     <ProjectReference Include="..\Essa.Framework.UtilCore\Essa.Framework.UtilCore.csproj" />
   </ItemGroup>
 

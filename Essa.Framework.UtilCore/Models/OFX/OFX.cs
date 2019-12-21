@@ -4,7 +4,6 @@
     using System.Collections.Generic;
     using System.Globalization;
     using System.Xml.Serialization;
-    using Util;
 
 
     //public class OFXUtil
@@ -24,8 +23,43 @@
     //}
 
 
-    public class OFX
+    public partial class OFX
     {
+
+    }
+
+
+
+
+    [Serializable()]
+    public class STMTRS
+    {
+        public string CURDEF { get; set; }
+
+
+        /// <summary>
+        /// Conta Corrente
+        /// </summary>
+        public BANKACCTFROM BANKACCTFROM { get; set; }
+
+        /// <summary>
+        /// Cartão de crédito
+        /// </summary>
+        public CCACCTFROM CCACCTFROM { get; set; }
+
+        public BANKTRANLIST BANKTRANLIST { get; set; }
+    }
+
+    public sealed class LEDGERBAL
+    {
+        public decimal BALAMT { get; set; }
+
+
+        [XmlIgnore]
+        public DateTime DTASOF { get; set; }
+
+        [XmlElement("DTASOF")]
+        public string _DTASOF { get { return DTASOF.ToShortDateString(); } set { DTASOF = DateTime.ParseExact(value.Substring(0, 8), "yyyyMMdd", CultureInfo.InvariantCulture); } }
 
     }
 
@@ -53,32 +87,13 @@
 
 
 
+        public int? ANOMES { get; set; }
+
+
         [XmlElement("STMTTRN")]
         public List<STMTTRN> STMTTRN { get; set; }
 
 
-    }
-
-    [XmlType("STMTTRN")]
-    public sealed class STMTTRN
-    {
-        public string TRNTYPE { get; set; }
-
-        [XmlIgnore]
-        public DateTime DTPOSTED { get; set; }
-        [XmlElement("DTPOSTED")]
-        public string _DTPOSTED { get { return DTPOSTED.ToShortDateString(); } set { DTPOSTED = DateTime.ParseExact(value.Substring(0, 8), "yyyyMMdd", CultureInfo.InvariantCulture); } }
-
-
-
-        public decimal TRNAMT { get; set; }
-        public string FITID { get; set; }
-        public string MEMO { get; set; }
-
-        [XmlElement("CURRENCY")]
-        public List<CURRENCY> CURRENCY { get; set; }
-        public string REFNUM { get; set; }
-        public string CHECKNUM { get; set; }
     }
 
 
