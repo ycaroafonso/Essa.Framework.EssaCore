@@ -15,7 +15,7 @@
         private IModel _channel;
         string _queue;
 
-        public CadastrarMensageria(string queue)
+        public CadastrarMensageria(string queue, bool autoDelete = false)
         {
             _factory = new ConnectionFactory() { HostName = "localhost" };
             _connection = _factory.CreateConnection();
@@ -33,12 +33,6 @@
                      autoDelete: autoDelete,
                      arguments: arguments);
         }
-
-
-
-
-
-
 
 
 
@@ -84,23 +78,23 @@
 
 
 
-        public void Publicar(byte[] body, string routingKey = "")
+        public void Publicar(byte[] body)
+        {
+            Publicar(_queue, body);
+        }
+
+
+        public void Publicar<T>(T body)
+        {
+            Publicar(body.ToJson().ToByteArray());
+        }
+
+        public void Publicar(string routingKey, byte[] body)
         {
             _channel.BasicPublish(exchange: "",
                             routingKey: routingKey,
                             basicProperties: null,
                             body: body);
-        }
-
-
-        public void Publicar<T>(T body, string routingKey)
-        {
-            Publicar(body.ToJson().ToByteArray(), routingKey);
-        }
-
-        public void Publicar<T>(T body)
-        {
-            Publicar(body.ToJson().ToByteArray(), _queue);
         }
 
 
