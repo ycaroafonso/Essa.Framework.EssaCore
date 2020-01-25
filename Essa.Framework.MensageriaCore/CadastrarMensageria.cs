@@ -1,6 +1,6 @@
-﻿namespace Essa.Framework.MensageriaCore
+﻿namespace Essa.Framework.Mensageria
 {
-    using Essa.Framework.UtilCore.Extensions;
+    using Essa.Framework.Util.Extensions;
     using RabbitMQ.Client;
     using RabbitMQ.Client.Events;
     using System;

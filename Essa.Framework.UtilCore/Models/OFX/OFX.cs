@@ -1,4 +1,4 @@
-﻿namespace Essa.Framework.UtilCore.Models.OFX
+﻿namespace Essa.Framework.Util.Models.OFX
 {
     using System;
     using System.Collections.Generic;

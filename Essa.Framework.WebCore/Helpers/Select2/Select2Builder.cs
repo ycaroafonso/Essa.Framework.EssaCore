@@ -1,7 +1,7 @@
-﻿namespace Essa.Framework.WebCore.Helpers.Select2
+﻿namespace Essa.Framework.Web.Helpers.Select2
 {
-    using Essa.Framework.UtilCore.Extensions;
-    using Essa.Framework.UtilCore.Models.Helpers.Select2;
+    using Essa.Framework.Util.Extensions;
+    using Essa.Framework.Util.Models.Helpers.Select2;
     using Microsoft.AspNetCore.Html;
     using Microsoft.AspNetCore.Mvc.Rendering;
     using Newtonsoft.Json;

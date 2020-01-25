@@ -1,7 +1,7 @@
-﻿namespace Essa.Framework.UtilCore
+﻿namespace Essa.Framework.Util
 {
-    using Essa.Framework.UtilCore.Extensions;
-    using Essa.Framework.UtilCore.Models.OFX;
+    using Essa.Framework.Util.Extensions;
+    using Essa.Framework.Util.Models.OFX;
     using System;
     using System.Collections.Generic;
     using System.Linq;

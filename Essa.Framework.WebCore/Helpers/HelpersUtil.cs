@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Essa.Framework.WebCore.Helpers
+namespace Essa.Framework.Web.Helpers
 {
     public static class HelpersUtil
     {

@@ -1,4 +1,4 @@
-﻿namespace Essa.Framework.WebCore.Util
+﻿namespace Essa.Framework.Web.Util
 {
     using Extensions;
     using Microsoft.AspNetCore.Mvc.Rendering;
@@ -8,11 +8,11 @@
 
         public static SelectList SimNao()
         {
-            return Framework.UtilCore.Geral.SimNao().ToSelectList(x => x.Key, y => y.Value);
+            return Framework.Util.Geral.SimNao().ToSelectList(x => x.Key, y => y.Value);
         }
         public static SelectList SimNao(string valorSelecionado)
         {
-            return Framework.UtilCore.Geral.SimNao().ToSelectList(x => x.Key, y => y.Value, null, null, valorSelecionado);
+            return Framework.Util.Geral.SimNao().ToSelectList(x => x.Key, y => y.Value, null, null, valorSelecionado);
         }
     }
 }

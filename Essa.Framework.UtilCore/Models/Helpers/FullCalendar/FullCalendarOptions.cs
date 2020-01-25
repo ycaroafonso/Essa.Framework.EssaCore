@@ -1,4 +1,4 @@
-﻿namespace Essa.Framework.UtilCore.Models.Helpers.FullCalendar
+﻿namespace Essa.Framework.Util.Models.Helpers.FullCalendar
 {
     using System;
 

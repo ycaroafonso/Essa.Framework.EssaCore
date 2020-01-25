@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Xml.Serialization;
 
-namespace Essa.Framework.UtilCore.Models.OFX
+namespace Essa.Framework.Util.Models.OFX
 {
     public partial class OFX
     {

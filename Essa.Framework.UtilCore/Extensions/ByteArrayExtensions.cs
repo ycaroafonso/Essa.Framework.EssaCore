@@ -1,4 +1,4 @@
-﻿namespace Essa.Framework.UtilCore.Extensions
+﻿namespace Essa.Framework.Util.Extensions
 {
     using System.IO;
     using System.Runtime.Serialization.Formatters.Binary;

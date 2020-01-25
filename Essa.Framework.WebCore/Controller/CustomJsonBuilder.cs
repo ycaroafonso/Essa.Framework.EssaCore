@@ -1,6 +1,6 @@
-﻿namespace Essa.Framework.WebCore.Controller
+﻿namespace Essa.Framework.Web.Controller
 {
-    using Framework.UtilCore.Models.Controller;
+    using Framework.Util.Models.Controller;
     using Microsoft.AspNetCore.Mvc.ModelBinding;
     using System.Linq;
 

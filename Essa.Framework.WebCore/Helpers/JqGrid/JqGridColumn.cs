@@ -1,4 +1,4 @@
-﻿namespace Essa.Framework.WebCore.Helpers.JqGrid
+﻿namespace Essa.Framework.Web.Helpers.JqGrid
 {
     using Newtonsoft.Json.Linq;
     using System;

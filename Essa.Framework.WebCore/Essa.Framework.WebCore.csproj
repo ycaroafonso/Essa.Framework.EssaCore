@@ -2,6 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
+    <RootNamespace>Essa.Framework.Web</RootNamespace>
+    <AssemblyName>Essa.Framework.Web</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

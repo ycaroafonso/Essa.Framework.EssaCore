@@ -1,4 +1,4 @@
-﻿namespace Essa.Framework.UtilCore.Repository
+﻿namespace Essa.Framework.Util.Repository
 {
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Storage;

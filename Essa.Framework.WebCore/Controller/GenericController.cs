@@ -1,12 +1,12 @@
-﻿namespace Essa.Framework.WebCore.Controller
+﻿namespace Essa.Framework.Web.Controller
 {
     using Helpers.JqGrid;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using Microsoft.AspNetCore.Mvc;
-    using Essa.Framework.UtilCore.Extensions;
-    using Essa.Framework.UtilCore.Models.Controller;
+    using Essa.Framework.Util.Extensions;
+    using Essa.Framework.Util.Models.Controller;
 
     public interface IGenericController<T>
         where T : class

@@ -1,6 +1,6 @@
-﻿namespace Essa.Framework.WebCore.Helpers.TreeView
+﻿namespace Essa.Framework.Web.Helpers.TreeView
 {
-    using Framework.UtilCore.Models.Helpers.TreeView;
+    using Framework.Util.Models.Helpers.TreeView;
     using Microsoft.AspNetCore.Html;
     using Newtonsoft.Json;
     using System;

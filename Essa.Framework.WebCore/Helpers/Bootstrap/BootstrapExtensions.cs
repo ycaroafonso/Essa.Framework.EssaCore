@@ -1,9 +1,9 @@
-﻿namespace Essa.Framework.WebCore.Helpers.Bootstrap
+﻿namespace Essa.Framework.Web.Helpers.Bootstrap
 {
     using DropDown;
-    using Essa.Framework.WebCore.Helpers.Bootstrap.Accordion;
-    using Essa.Framework.WebCore.Helpers.Bootstrap.Modal;
-    using Essa.Framework.WebCore.Helpers.Bootstrap.Tabs;
+    using Essa.Framework.Web.Helpers.Bootstrap.Accordion;
+    using Essa.Framework.Web.Helpers.Bootstrap.Modal;
+    using Essa.Framework.Web.Helpers.Bootstrap.Tabs;
     using Microsoft.AspNetCore.Html;
     using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.AspNetCore.Mvc.ViewFeatures;

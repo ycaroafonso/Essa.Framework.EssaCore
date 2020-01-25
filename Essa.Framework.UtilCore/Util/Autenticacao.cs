@@ -1,7 +1,7 @@
-﻿namespace Essa.Framework.UtilCore.Util
+﻿namespace Essa.Framework.Util.Util
 {
-    using Essa.Framework.UtilCore.Extensions;
-    using Essa.Framework.UtilCore.Models.Autenticacao;
+    using Essa.Framework.Util.Extensions;
+    using Essa.Framework.Util.Models.Autenticacao;
     using System;
 
 

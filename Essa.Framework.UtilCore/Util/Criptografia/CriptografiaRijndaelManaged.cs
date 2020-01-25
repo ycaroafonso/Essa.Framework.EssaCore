@@ -1,4 +1,4 @@
-﻿namespace Essa.Framework.UtilCore.Util.Criptografia
+﻿namespace Essa.Framework.Util.Util.Criptografia
 {
     using System;
     using System.IO;

@@ -1,4 +1,4 @@
-﻿namespace Essa.Framework.WebCore.Helpers.Bootstrap.Modal
+﻿namespace Essa.Framework.Web.Helpers.Bootstrap.Modal
 {
     using Microsoft.AspNetCore.Html;
     using Microsoft.AspNetCore.Mvc.Rendering;

@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Essa.Framework.UtilCore.Extensions;
+using Essa.Framework.Util.Extensions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 
 
-namespace Essa.Framework.WebCore.Helpers.JqGrid
+namespace Essa.Framework.Web.Helpers.JqGrid
 {
     /// <summary>
     /// JqGridOptions class, used to render JqGrid

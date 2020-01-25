@@ -2,6 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
+    <RootNamespace>Essa.Framework.Util</RootNamespace>
+    <AssemblyName>Essa.Framework.Util</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
