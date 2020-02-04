@@ -17,7 +17,7 @@
 
         public CadastrarMensageria(string queue, bool autoDelete = false)
         {
-            _factory = new ConnectionFactory() { HostName = "localhost" };
+            _factory = new ConnectionFactory() { HostName = "127.0.0.1" };
             _connection = _factory.CreateConnection();
             _channel = _connection.CreateModel();
 
