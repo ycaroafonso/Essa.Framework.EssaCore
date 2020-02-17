@@ -29,12 +29,12 @@
 
         public IList<T> SqlQuery<T>(string sql, params object[] parametros) where T : class
         {
-            return Contexto.Query<T>().FromSql(sql, parametros).ToList();
+            return Contexto.Set<T>().FromSqlRaw(sql, parametros).ToList();
         }
 
         public int ExecuteSqlCommand(string sql, params object[] parametros)
         {
-            return Contexto.Database.ExecuteSqlCommand(sql, parametros);
+            return Contexto.Database.ExecuteSqlRaw(sql, parametros);
         }
 
         public IDbContextTransaction BeginTransaction()
