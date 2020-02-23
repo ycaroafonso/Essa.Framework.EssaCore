@@ -1,4 +1,4 @@
-﻿namespace Essa.Framework.UtilCore.Models.Mapeamento
+﻿namespace Essa.Framework.Util.Models.Mapeamento
 {
     public class MapeamentoChavePoco
     {

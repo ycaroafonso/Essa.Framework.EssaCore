@@ -1,4 +1,4 @@
-﻿namespace Essa.Framework.WebCore.Helpers.Bootstrap.Accordion
+﻿namespace Essa.Framework.Web.Helpers.Bootstrap.Accordion
 {
     using Microsoft.AspNetCore.Mvc.Rendering;
     using System;

@@ -1,4 +1,4 @@
-﻿namespace Essa.Framework.WebCore.Helpers
+﻿namespace Essa.Framework.Web.Helpers
 {
     using Microsoft.AspNetCore.Routing;
 

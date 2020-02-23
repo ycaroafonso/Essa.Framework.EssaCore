@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Essa.Framework.WebCore.Helpers.FormValidation
+namespace Essa.Framework.Web.Helpers.FormValidation
 {
     public class FormValidationOptions
     {

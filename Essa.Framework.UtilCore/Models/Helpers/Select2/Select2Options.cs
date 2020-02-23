@@ -1,4 +1,4 @@
-﻿namespace Essa.Framework.UtilCore.Models.Helpers.Select2
+﻿namespace Essa.Framework.Util.Models.Helpers.Select2
 {
     using Newtonsoft.Json.Linq;
     using System.Collections.Generic;

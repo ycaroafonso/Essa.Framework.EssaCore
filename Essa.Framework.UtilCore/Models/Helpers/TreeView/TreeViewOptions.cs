@@ -1,4 +1,4 @@
-﻿namespace Essa.Framework.UtilCore.Models.Helpers.TreeView
+﻿namespace Essa.Framework.Util.Models.Helpers.TreeView
 {
     public class TreeViewOptions
     {

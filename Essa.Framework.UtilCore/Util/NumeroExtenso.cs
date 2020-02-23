@@ -1,4 +1,4 @@
-﻿namespace Essa.Framework.UtilCore.Util
+﻿namespace Essa.Framework.Util.Util
 {
     using System;
     using System.Linq;

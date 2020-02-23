@@ -1,4 +1,4 @@
-﻿namespace Essa.Framework.WebCore.Helpers.Bootstrap.DropDown
+﻿namespace Essa.Framework.Web.Helpers.Bootstrap.DropDown
 {
     using Microsoft.AspNetCore.Html;
     using Microsoft.AspNetCore.Mvc.Rendering;

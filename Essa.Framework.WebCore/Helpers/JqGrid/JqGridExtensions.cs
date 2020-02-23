@@ -1,6 +1,6 @@
-﻿namespace Essa.Framework.WebCore.Helpers.JqGrid
+﻿namespace Essa.Framework.Web.Helpers.JqGrid
 {
-    using Essa.Framework.UtilCore.Extensions;
+    using Essa.Framework.Util.Extensions;
     using Microsoft.AspNetCore.Mvc.ViewFeatures;
     using System.Collections.Generic;
     using System.Linq;

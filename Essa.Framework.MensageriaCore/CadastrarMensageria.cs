@@ -1,12 +1,11 @@
-﻿namespace Essa.Framework.MensageriaCore
+﻿namespace Essa.Framework.Mensageria
 {
-    using Essa.Framework.UtilCore.Extensions;
+    using Essa.Framework.Util.Extensions;
     using RabbitMQ.Client;
     using RabbitMQ.Client.Events;
     using System;
     using System.Collections.Generic;
-
-
+    using System.Text;
 
     public class CadastrarMensageria : IDisposable
     {
@@ -15,9 +14,9 @@
         private IModel _channel;
         string _queue;
 
-        public CadastrarMensageria(string queue)
+        public CadastrarMensageria(string queue, bool autoDelete = false)
         {
-            _factory = new ConnectionFactory() { HostName = "localhost" };
+            _factory = new ConnectionFactory() { HostName = "127.0.0.1" };
             _connection = _factory.CreateConnection();
             _channel = _connection.CreateModel();
 
@@ -36,12 +35,6 @@
 
 
 
-
-
-
-
-
-
         private ulong CodigoRecebimento;
 
         public void Receber(Action<byte[]> received)
@@ -57,6 +50,12 @@
             _channel.BasicConsume(queue: _queue,
                                  autoAck: false,
                                  consumer: consumer);
+        }
+
+
+        public void Receber<T>(Action<T> received)
+        {
+            Receber(c => received(Encoding.UTF8.GetString(c, 0, c.Length).ToOjectFromJson<T>()));
         }
 
 
@@ -84,23 +83,23 @@
 
 
 
-        public void Publicar(byte[] body, string routingKey = "")
+        public void Publicar(byte[] body)
+        {
+            Publicar(_queue, body);
+        }
+
+
+        public void Publicar<T>(T body)
+        {
+            Publicar(body.ToJson().ToByteArray());
+        }
+
+        public void Publicar(string routingKey, byte[] body)
         {
             _channel.BasicPublish(exchange: "",
                             routingKey: routingKey,
                             basicProperties: null,
                             body: body);
-        }
-
-
-        public void Publicar<T>(T body, string routingKey)
-        {
-            Publicar(body.ToJson().ToByteArray(), routingKey);
-        }
-
-        public void Publicar<T>(T body)
-        {
-            Publicar(body.ToJson().ToByteArray(), _queue);
         }
 
 

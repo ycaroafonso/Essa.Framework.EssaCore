@@ -1,4 +1,4 @@
-﻿namespace Essa.Framework.UtilCore.Models.Controller
+﻿namespace Essa.Framework.Util.Models.Controller
 {
     public interface IResultModel
     {

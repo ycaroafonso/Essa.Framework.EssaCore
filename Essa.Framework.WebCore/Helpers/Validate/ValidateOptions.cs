@@ -1,4 +1,4 @@
-﻿namespace Essa.Framework.WebCore.Helpers.Validate
+﻿namespace Essa.Framework.Web.Helpers.Validate
 {
     using Newtonsoft.Json.Linq;
     using System;

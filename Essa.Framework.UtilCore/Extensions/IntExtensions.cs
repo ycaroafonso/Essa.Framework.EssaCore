@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Essa.Framework.UtilCore.Extensions
+namespace Essa.Framework.Util.Extensions
 {
     public static class IntExtensions
     {

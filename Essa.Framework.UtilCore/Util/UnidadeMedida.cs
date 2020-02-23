@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Essa.Framework.UtilCore.Util
+namespace Essa.Framework.Util.Util
 {
     public class UnidadeMedida
     {

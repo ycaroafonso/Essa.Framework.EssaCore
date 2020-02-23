@@ -1,6 +1,6 @@
-﻿namespace Essa.Framework.UtilCore.Util
+﻿namespace Essa.Framework.Util.Util
 {
-    using Essa.Framework.UtilCore.Extensions;
+    using Essa.Framework.Util.Extensions;
     using System;
     using System.Linq;
 

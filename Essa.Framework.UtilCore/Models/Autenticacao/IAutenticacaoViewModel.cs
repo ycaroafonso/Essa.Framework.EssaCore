@@ -1,4 +1,4 @@
-﻿namespace Essa.Framework.UtilCore.Models.Autenticacao
+﻿namespace Essa.Framework.Util.Models.Autenticacao
 {
     using System;
 

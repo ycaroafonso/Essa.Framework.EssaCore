@@ -1,4 +1,4 @@
-﻿namespace Essa.Framework.WebCore.Extensions
+﻿namespace Essa.Framework.Web.Extensions
 {
     using Microsoft.AspNetCore.Mvc.Rendering;
     using System;

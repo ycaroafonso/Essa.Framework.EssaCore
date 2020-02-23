@@ -1,4 +1,4 @@
-﻿namespace Essa.Framework.WebCore.Helpers.Bootstrap.Tabs
+﻿namespace Essa.Framework.Web.Helpers.Bootstrap.Tabs
 {
     using Microsoft.AspNetCore.Mvc.Rendering;
     using System;
