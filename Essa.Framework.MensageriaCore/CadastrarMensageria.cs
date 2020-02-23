@@ -5,8 +5,7 @@
     using RabbitMQ.Client.Events;
     using System;
     using System.Collections.Generic;
-
-
+    using System.Text;
 
     public class CadastrarMensageria : IDisposable
     {
@@ -51,6 +50,12 @@
             _channel.BasicConsume(queue: _queue,
                                  autoAck: false,
                                  consumer: consumer);
+        }
+
+
+        public void Receber<T>(Action<T> received)
+        {
+            Receber(c => received(Encoding.UTF8.GetString(c, 0, c.Length).ToOjectFromJson<T>()));
         }
 
 
