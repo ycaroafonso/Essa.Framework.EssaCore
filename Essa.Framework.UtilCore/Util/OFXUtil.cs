@@ -58,7 +58,7 @@
                         str.AppendLine("");
                 }
 
-                _xml.LoadXml(str.ToString());
+                _xml.LoadXml(str.Replace("&", "&amp;").ToString());
             }
 
 
