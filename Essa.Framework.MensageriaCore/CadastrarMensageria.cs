@@ -7,12 +7,14 @@
     using System.Collections.Generic;
     using System.Text;
 
+
     public class CadastrarMensageria : IDisposable
     {
         private ConnectionFactory _factory;
         private IConnection _connection;
         private IModel _channel;
         string _queue;
+
 
         public CadastrarMensageria(string queue, bool autoDelete = false)
         {
@@ -26,7 +28,12 @@
 
         public void CriarFila(bool autoDelete = false, IDictionary<string, object> arguments = null)
         {
-            _channel.QueueDeclare(queue: _queue,
+            CriarFila(_queue, autoDelete, arguments);
+        }
+
+        public void CriarFila(string queue, bool autoDelete = false, IDictionary<string, object> arguments = null)
+        {
+            _channel.QueueDeclare(queue: queue,
                      durable: true,
                      exclusive: false,
                      autoDelete: autoDelete,
