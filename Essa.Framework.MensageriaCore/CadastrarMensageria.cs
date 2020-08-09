@@ -42,16 +42,12 @@
 
 
 
-        private ulong CodigoRecebimento;
-
-        public void Receber(Action<byte[]> received)
+        public void Receber(Action<ulong, byte[]> received)
         {
             var consumer = new EventingBasicConsumer(_channel);
             consumer.Received += (model, ea) =>
             {
-                CodigoRecebimento = ea.DeliveryTag;
-
-                received(ea.Body);
+                received(ea.DeliveryTag, ea.Body);
             };
 
             _channel.BasicConsume(queue: _queue,
@@ -60,20 +56,18 @@
         }
 
 
-        public void Receber<T>(Action<T> received)
+        public void Receber<T>(Action<ulong, T> received)
         {
-            Receber(c => received(Encoding.UTF8.GetString(c, 0, c.Length).ToOjectFromJson<T>()));
+            Receber((t, c) => received(t, Encoding.UTF8.GetString(c, 0, c.Length).ToOjectFromJson<T>()));
         }
 
 
 
 
 
-
-
-        public void ConfirmarRecebimento()
+        public void ConfirmarRecebimento(ulong deliveryTag)
         {
-            _channel.BasicAck(CodigoRecebimento, false);
+            _channel.BasicAck(deliveryTag, false);
         }
 
 
