@@ -47,7 +47,7 @@
             var consumer = new EventingBasicConsumer(_channel);
             consumer.Received += (model, ea) =>
             {
-                received(ea.DeliveryTag, ea.Body);
+                received(ea.DeliveryTag, ea.Body.Span.ToArray());
             };
 
             _channel.BasicConsume(queue: _queue,
