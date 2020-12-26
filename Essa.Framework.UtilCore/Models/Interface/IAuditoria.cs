@@ -1,0 +1,11 @@
+﻿namespace Essa.Framework.Util.Models.Interface
+{
+    using System;
+
+
+    public interface IAuditoria
+    {
+        int? auditoriausuarioid { get; set; }
+        DateTime? auditoriadatahora { get; set; }
+    }
+}
