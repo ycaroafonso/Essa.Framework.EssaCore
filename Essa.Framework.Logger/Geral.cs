@@ -9,18 +9,27 @@
         public static Serilog.Core.Logger Log(string nomePrograma = "", string diretoriolog = "")
         {
             string arquivolog = diretoriolog;
+
+            switch (diretoriolog)
+            {
+                case "mongodb":
+                    return LogMongoDb(nomePrograma, diretoriolog);
+                default:
+
 #if DEBUG
-            arquivolog += @"DEBUG\";
+                    arquivolog += @"DEBUG\";
 #endif
 
-            return new LoggerConfiguration()
-.MinimumLevel.Debug()
-.MinimumLevel.Override("Microsoft", LogEventLevel.Information)
-.Enrich.FromLogContext()
-.Enrich.WithProperty("Sistema", nomePrograma)
-.WriteTo.Console()
-.WriteTo.File($"{arquivolog}log_{nomePrograma}_.txt", rollingInterval: RollingInterval.Day)
-.CreateLogger();
+                    return new LoggerConfiguration()
+        .MinimumLevel.Debug()
+        .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+        .Enrich.FromLogContext()
+        .Enrich.WithProperty("Sistema", nomePrograma)
+        .WriteTo.Console()
+        .WriteTo.File($"{arquivolog}log_{nomePrograma}_.txt", rollingInterval: RollingInterval.Day)
+        .CreateLogger();
+            }
+
         }
 
 
