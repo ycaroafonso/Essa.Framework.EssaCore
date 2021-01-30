@@ -17,5 +17,14 @@
                 return (T)obj;
             }
         }
+
+        public static Stream ToStream(this byte[] file)
+        {
+            MemoryStream theMemStream = new MemoryStream();
+
+            theMemStream.Write(file, 0, file.Length);
+
+            return theMemStream;
+        }
     }
 }
