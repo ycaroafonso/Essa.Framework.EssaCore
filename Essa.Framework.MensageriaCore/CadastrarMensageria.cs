@@ -16,9 +16,15 @@
         string _queue;
 
 
-        public CadastrarMensageria(string queue, bool autoDelete = false)
+
+
+        public CadastrarMensageria(string queue, bool autoDelete = false) : this(queue, "127.0.0.1")
         {
-            _factory = new ConnectionFactory() { HostName = "127.0.0.1", UserName="guest", Password="guest" };
+        }
+
+        public CadastrarMensageria(string queue, string hostName, bool autoDelete = false)
+        {
+            _factory = new ConnectionFactory() { HostName = hostName, UserName = "senarms", Password = "15975328" };
             _connection = _factory.CreateConnection();
             _channel = _connection.CreateModel();
 
