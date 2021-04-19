@@ -2,6 +2,7 @@
 {
     using Serilog;
     using Serilog.Events;
+    using System;
     using System.IO;
 
     public static class Geral
@@ -13,7 +14,7 @@
             switch (diretoriolog)
             {
                 case "mongodb":
-                    return LogMongoDb(nomePrograma, diretoriolog);
+                    return LogMongoDb(nomePrograma);
                 default:
 
 #if DEBUG
@@ -33,8 +34,13 @@
 
         }
 
+        [Obsolete]
+        public static Serilog.Core.Logger LogMongoDb(string nomePrograma, string diretoriolog)
+        {
+            return LogMongoDb(nomePrograma);
+        }
 
-        public static Serilog.Core.Logger LogMongoDb(string nomePrograma = "", string diretoriolog = "")
+        public static Serilog.Core.Logger LogMongoDb(string nomePrograma = "")
         {
             return new LoggerConfiguration()
 .MinimumLevel.Debug()
