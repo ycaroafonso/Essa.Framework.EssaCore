@@ -61,6 +61,12 @@
             AnoMes = anomes;
         }
 
+        public AnoMesUtil(DateTime data)
+        {
+            Ano = data.Year;
+            Mes = data.Month;
+        }
+
         public int AddMes(int qtdeMeses)
         {
             AnoMes = ToDateTime(1).AddMonths(qtdeMeses).ToAnoMes();

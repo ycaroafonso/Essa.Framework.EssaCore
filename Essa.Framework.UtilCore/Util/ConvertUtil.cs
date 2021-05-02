@@ -14,7 +14,7 @@ namespace Essa.Framework.Util.Util
         /// <returns></returns>
         public static DateTime ToDateTime(string valor, string formato = "dd/MM/yyyy")
         {
-            return DateTime.ParseExact(valor, formato, System.Globalization.CultureInfo.InvariantCulture);
+            return DateTime.ParseExact(valor, formato, System.Globalization.CultureInfo.CreateSpecificCulture("pt-BR"));
         }
     }
 }
