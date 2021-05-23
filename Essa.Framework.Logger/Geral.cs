@@ -51,5 +51,21 @@
 .WriteTo.MongoDB("mongodb://localhost/logs")
 .CreateLogger();
         }
+
+
+
+        public static Serilog.Core.Logger LogMySql(string nomePrograma, string connectionString)
+        {
+            return new LoggerConfiguration()
+.MinimumLevel.Debug()
+.MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+.Enrich.FromLogContext()
+.Enrich.WithProperty("Sistema", nomePrograma)
+.WriteTo.Console()
+.WriteTo.MySQL(connectionString, tableName: "log")
+.CreateLogger();
+        }
+
+
     }
 }
