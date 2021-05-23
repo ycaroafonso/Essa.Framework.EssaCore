@@ -5,9 +5,10 @@
     using System;
     using System.IO;
 
+
     public static class Geral
     {
-        public static Serilog.Core.Logger Log(string nomePrograma = "", string diretoriolog = "")
+        public static Serilog.Core.Logger Log(string nomePrograma = "", string diretoriolog = "", string connectionStringMySql = "")
         {
             string arquivolog = diretoriolog;
 
@@ -15,6 +16,8 @@
             {
                 case "mongodb":
                     return LogMongoDb(nomePrograma);
+                case "mysql":
+                    return LogMySql(nomePrograma, connectionStringMySql);
                 default:
 
 #if DEBUG
