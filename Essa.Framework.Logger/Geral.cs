@@ -5,9 +5,10 @@
     using System;
     using System.IO;
 
+
     public static class Geral
     {
-        public static Serilog.Core.Logger Log(string nomePrograma = "", string diretoriolog = "")
+        public static Serilog.Core.Logger Log(string nomePrograma = "", string diretoriolog = "", string connectionStringMySql = "")
         {
             string arquivolog = diretoriolog;
 
@@ -15,6 +16,8 @@
             {
                 case "mongodb":
                     return LogMongoDb(nomePrograma);
+                case "mysql":
+                    return LogMySql(nomePrograma, connectionStringMySql);
                 default:
 
 #if DEBUG
@@ -51,5 +54,21 @@
 .WriteTo.MongoDB("mongodb://localhost/logs")
 .CreateLogger();
         }
+
+
+
+        public static Serilog.Core.Logger LogMySql(string nomePrograma, string connectionString)
+        {
+            return new LoggerConfiguration()
+.MinimumLevel.Debug()
+.MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+.Enrich.FromLogContext()
+.Enrich.WithProperty("Sistema", nomePrograma)
+.WriteTo.Console()
+.WriteTo.MySQL(connectionString, tableName: "log")
+.CreateLogger();
+        }
+
+
     }
 }
