@@ -49,6 +49,12 @@
 
             return this;
         }
+        public Email AddDestinatarioCc(string email)
+        {
+            _mailMessage.CC.Add(email);
+
+            return this;
+        }
 
         public Email AddDestinatarioCco(string email)
         {
