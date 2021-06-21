@@ -1,4 +1,4 @@
-﻿namespace SENAR.Framework.Util.Util
+﻿namespace Essa.Framework.Util.Util
 {
     using Flurl;
     using Flurl.Http;
