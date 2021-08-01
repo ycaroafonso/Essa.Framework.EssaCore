@@ -2,7 +2,7 @@
 {
     public interface IMicroservice
     {
-        static string NomeExecutavel { get; }
+        static string NomeExcutavel { get; }
 
     }
 }
