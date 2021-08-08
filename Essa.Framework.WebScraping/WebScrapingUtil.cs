@@ -2,6 +2,7 @@
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 using System;
+using System.Drawing;
 using System.IO;
 
 namespace Essa.Framework.WebScraping
@@ -15,28 +16,119 @@ namespace Essa.Framework.WebScraping
 
         public bool IsBrowserAberto { get; private set; } = false;
 
-        public WebScrapingUtil(string diretorioCache)
+        public WebScrapingUtil(string diretorioCache, bool isDesabilitarImagens = true)
         {
 
             _chromeOptions = new ChromeOptions();
             //chromeOptions.AddUserProfilePreference("download.default_directory", _diretorio);
-            _chromeOptions.AddUserProfilePreference("profile.default_content_setting_values.images", 2);
+            if (isDesabilitarImagens)
+                _chromeOptions.AddUserProfilePreference("profile.default_content_setting_values.images", 2);
             _chromeOptions.AddArgument(@"--user-data-dir=" + Path.GetFullPath(@"browsercache", diretorioCache));
+        }
 
+
+
+
+
+        bool _isRedimensionar = false;
+        Size _size;
+        public void Redimensionar(int w, int h)
+        {
+            _isRedimensionar = true;
+            _size = new Size(w, h);
+        }
+
+
+
+
+
+
+
+        public string Html { get => ChromeDriver.PageSource; }
+
+
+
+
+        public void SalvarPagina(string caminho)
+        {
+            File.WriteAllText(caminho, ChromeDriver.PageSource);
         }
 
         public void Abrir()
         {
-            ChromeDriver = new ChromeDriver(AppDomain.CurrentDomain.BaseDirectory, _chromeOptions);
+            ChromeDriver = new ChromeDriver(AppDomain.CurrentDomain.BaseDirectory, _chromeOptions, TimeSpan.FromSeconds(180));
+
+            if (_isRedimensionar)
+                ChromeDriver.Manage().Window.Size = _size;
+
             IsBrowserAberto = true;
-            _wait = new WebDriverWait(ChromeDriver, TimeSpan.FromSeconds(60));
+            _wait = new WebDriverWait(ChromeDriver, TimeSpan.FromSeconds(180));
             //_chromeDriver.Manage().Window.Maximize();
         }
+
+
+
+
+
+
+
+
+
 
         public void Ir(string url)
         {
             ChromeDriver.Navigate().GoToUrl(url);
         }
+
+
+
+
+
+
+
+
+        public void Ir(string url, string arquivocachehtml, bool isatualizarcache)
+        {
+            if (isatualizarcache || !File.Exists(arquivocachehtml))
+                IrAtualizarCache(url, arquivocachehtml);
+            else
+                Ir(arquivocachehtml);
+        }
+
+        public void IrAtualizarCache(string url, string arquivocachehtml)
+        {
+            Ir(url);
+
+            File.WriteAllText(arquivocachehtml, ChromeDriver.PageSource);
+        }
+
+
+
+
+
+
+
+
+        public void Fechar()
+        {
+            ChromeDriver.Close();
+            IsBrowserAberto = false;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         public bool Esperar(Func<IWebDriver, bool> condition)
         {
