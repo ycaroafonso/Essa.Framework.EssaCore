@@ -16,21 +16,37 @@
         string _queue;
 
 
-
-
-        public CadastrarMensageria(string queue, bool autoDelete = false) : this(queue, "127.0.0.1")
+        public enum LocalRabbitMqEnum
         {
+            Localhost,
+            CloudAmqp,
+            Customizado
         }
 
-        public CadastrarMensageria(string queue, string hostName, bool autoDelete = false)
+
+        public CadastrarMensageria(string queue, LocalRabbitMqEnum localRabbitMq = LocalRabbitMqEnum.Localhost)
         {
-            _factory = new ConnectionFactory() { HostName = hostName, UserName = "guest", Password = "guest" };
-            _connection = _factory.CreateConnection();
-            _channel = _connection.CreateModel();
+            switch (localRabbitMq)
+            {
+                case LocalRabbitMqEnum.Localhost:
+                    Conecta("localhost", "guest", "guest");
+                    break;
+                default:
+                    break;
+            }
 
             _queue = queue;
         }
 
+
+
+        public void Conecta(string hostname, string userName, string password, bool autoDelete = false)
+        {
+            _factory = new ConnectionFactory() { HostName = hostname, UserName = userName, Password = password };
+
+            _connection = _factory.CreateConnection();
+            _channel = _connection.CreateModel();
+        }
 
         public void CriarFila(bool autoDelete = false, IDictionary<string, object> arguments = null)
         {
@@ -53,7 +69,7 @@
             var consumer = new EventingBasicConsumer(_channel);
             consumer.Received += (model, ea) =>
             {
-                received(ea.DeliveryTag, ea.Body.Span.ToArray());
+                received(ea.DeliveryTag, ea.Body.ToArray());
             };
 
             _channel.BasicConsume(queue: _queue,
