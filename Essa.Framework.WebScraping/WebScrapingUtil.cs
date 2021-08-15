@@ -26,6 +26,14 @@ namespace Essa.Framework.WebScraping
             _chromeOptions.AddArgument(@"--user-data-dir=" + Path.GetFullPath(@"browsercache", diretorioCache));
         }
 
+        public void SetBinary(string binaryLocalition)
+        {
+            //_chromeOptions.BinaryLocation = binaryLocalition;
+            //_chromeOptions.AddArguments("--headless");
+            //_chromeOptions.AddArguments("--no-sandbox");
+            //_chromeOptions.AddArguments("--disable-dev-shm-usage");
+        }
+
 
 
 
@@ -36,6 +44,10 @@ namespace Essa.Framework.WebScraping
         {
             _isRedimensionar = true;
             _size = new Size(w, h);
+        }
+        public void Maximizar()
+        {
+            ChromeDriver.Manage().Window.Maximize();
         }
 
 
@@ -56,7 +68,7 @@ namespace Essa.Framework.WebScraping
 
         public void Abrir()
         {
-            ChromeDriver = new ChromeDriver(AppDomain.CurrentDomain.BaseDirectory, _chromeOptions, TimeSpan.FromSeconds(180));
+            ChromeDriver = new ChromeDriver(@"G:\ycaro\EssaTecnologia\browsercache\_geral\chromedriver_win32\", _chromeOptions, TimeSpan.FromSeconds(180));
 
             if (_isRedimensionar)
                 ChromeDriver.Manage().Window.Size = _size;
@@ -94,6 +106,7 @@ namespace Essa.Framework.WebScraping
             else
                 Ir(arquivocachehtml);
         }
+
 
         public void IrAtualizarCache(string url, string arquivocachehtml)
         {
