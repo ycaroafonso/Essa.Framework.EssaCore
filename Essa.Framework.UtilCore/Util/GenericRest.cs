@@ -1,11 +1,10 @@
-﻿namespace SENAR.Framework.Util.Util
+﻿namespace Essa.Framework.Util.Util
 {
     using Flurl;
     using Flurl.Http;
     using Flurl.Http.Content;
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Threading.Tasks;
 
 
