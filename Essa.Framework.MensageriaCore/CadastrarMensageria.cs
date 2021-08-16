@@ -24,7 +24,18 @@
         }
 
 
-        public CadastrarMensageria(string queue, LocalRabbitMqEnum localRabbitMq = LocalRabbitMqEnum.Localhost)
+        public CadastrarMensageria(string queue)
+        {
+            _queue = queue;
+        }
+
+        public CadastrarMensageria(string queue, string stringconexao)
+        {
+            _queue = queue;
+            Conecta(stringconexao);
+        }
+
+        public CadastrarMensageria(string queue, LocalRabbitMqEnum localRabbitMq)// = LocalRabbitMqEnum.Localhost
         {
             switch (localRabbitMq)
             {
@@ -40,9 +51,20 @@
 
 
 
-        public void Conecta(string hostname, string userName, string password, bool autoDelete = false)
+        public void Conecta(string hostname, string userName, string password, string virtualHost = null, bool autoDelete = false)
         {
-            _factory = new ConnectionFactory() { HostName = hostname, UserName = userName, Password = password };
+            _factory = new ConnectionFactory() { HostName = hostname, UserName = userName, Password = password, VirtualHost = virtualHost };
+
+            _connection = _factory.CreateConnection();
+            _channel = _connection.CreateModel();
+        }
+
+
+        public void Conecta(string conexao)
+        {
+            var url = new Uri(conexao);
+
+            _factory = new ConnectionFactory() { HostName = url.Authority, UserName = url.UserInfo.Split(":")[0], Password = url.UserInfo.Split(":")[1], VirtualHost = url.LocalPath.Replace("/", "") };
 
             _connection = _factory.CreateConnection();
             _channel = _connection.CreateModel();
