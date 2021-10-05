@@ -1,8 +1,8 @@
 ﻿namespace Mapeia
 {
+    using Essa.Framework.Util.Repository;
     using Mapeia.Models;
     using Microsoft.EntityFrameworkCore;
-    using Microsoft.Extensions.DependencyInjection;
     using System;
     using System.Collections.Generic;
     using System.IO;
@@ -16,10 +16,7 @@
 
         static void Main(string[] args)
         {
-            var serviceCollection = new ServiceCollection();
-            serviceCollection.AddDbContext<FoccusContext>(o => o.UseMySql("server=127.0.0.1;userid=root;password=A15268495a;database=gis_local;"));
-            _contexto = serviceCollection.BuildServiceProvider().GetService<FoccusContext>();
-
+            _contexto = new NovoContexto<FoccusContext>().Conectar("server=127.0.0.1;userid=root;password=A15268495a;database=gis_local;");
 
             var ret = P01ChavePrimaria();
             ret += "\n";
@@ -31,7 +28,7 @@
             File.WriteAllText(Directory.GetCurrentDirectory() + "/../../../MAPEAMENTO.txt", ret);
 
             Console.WriteLine("Finalizado, copie o conteúdo do arquivo MAPEAMENTO.txt da raiz desse projeto.");
-            Console.ReadLine();
+            Console.ReadKey();
         }
 
 

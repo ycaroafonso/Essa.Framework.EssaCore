@@ -1,8 +1,3 @@
-modelBuilder.Entity<fw_mapear>().HasKey(c => new { c.sistema, c.De });
-modelBuilder.Entity<fw_mapear_coluna>().HasKey(c => new { c.sistema, c.tabela, c.coluna });
-modelBuilder.Entity<indice>().HasKey(c => new { c.edicaobibliaid, c.livroid });
 
-modelBuilder.Entity<edicaobiblia>().HasMany(e => e.indice).WithOne(e => e.edicaobiblia).HasForeignKey(e => e.edicaobibliaid);
-modelBuilder.Entity<livro>().HasMany(e => e.capitulo).WithOne(e => e.livro).HasForeignKey(e => e.livroid);
-modelBuilder.Entity<livro>().HasMany(e => e.indice).WithOne(e => e.livro).HasForeignKey(e => e.livroid);
+modelBuilder.Entity<calendario>().HasMany(e => e.agenda).WithOne(e => e.calendario).HasForeignKey(e => e.calendarioid);
 

@@ -1,6 +1,7 @@
 ﻿namespace Essa.Framework.Util
 {
     using Essa.Framework.Util.Extensions;
+    using Essa.Framework.Util.Models.Interface;
     using Essa.Framework.Util.Models.OFX;
     using System;
     using System.Collections.Generic;
@@ -111,6 +112,24 @@
             var trans = (BANKTRANLIST)serializer.Deserialize(new XmlNodeReader(transactions[0]));
 
             return trans;
+        }
+
+
+
+
+        public static T PorEmpresa<T>(this T objOriginal, IEmpresa empresa) where T : IEmpresa
+        {
+            objOriginal.empresaid = empresa.empresaid;
+            return objOriginal;
+        }
+        public static IQueryable<T> PorEmpresa<T>(this IQueryable<T> objOriginal, IEmpresa empresa) where T : IEmpresa
+        {
+            return objOriginal.PorEmpresa(empresa.empresaid);
+        }
+        public static IQueryable<T> PorEmpresa<T>(this IQueryable<T> objOriginal, int empresaid) where T : IEmpresa
+        {
+            objOriginal = objOriginal.Where(c => c.empresaid == empresaid);
+            return objOriginal;
         }
 
     }
