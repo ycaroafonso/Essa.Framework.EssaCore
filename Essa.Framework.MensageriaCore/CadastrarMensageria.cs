@@ -1,88 +1,84 @@
-﻿namespace Essa.Framework.Mensageria
+﻿using Essa.Framework.Util.Extensions;
+using RabbitMQ.Client;
+using RabbitMQ.Client.Events;
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+
+namespace Essa.Framework.MensageriaCore
 {
-    using Essa.Framework.Util.Extensions;
-    using RabbitMQ.Client;
-    using RabbitMQ.Client.Events;
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-
-
-    public class CadastrarMensageria : IDisposable
+    public partial class CadastrarMensageria : IDisposable
     {
-        private ConnectionFactory _factory;
-        private IConnection _connection;
         private IModel _channel;
         string _queue;
+        string _routingKey;
+        string _exchange = "";
 
+        ConexaoMensageria _conexaoMensageria;
 
-        public enum LocalRabbitMqEnum
+        public CadastrarMensageria(ConexaoMensageria conexaoMensageria)
         {
-            Localhost,
-            CloudAmqp,
-            Customizado
+            _conexaoMensageria = conexaoMensageria;
         }
 
 
-        public CadastrarMensageria(string queue)
+        public CadastrarMensageria(string stringconexao)
         {
-            _queue = queue;
-        }
-
-        public CadastrarMensageria(string queue, string stringconexao)
-        {
-            _queue = queue;
             Conecta(stringconexao);
         }
 
-        public CadastrarMensageria(string queue, LocalRabbitMqEnum localRabbitMq)// = LocalRabbitMqEnum.Localhost
+        public void Conecta(string hostname, string userName, string password, string virtualHost = null)
         {
-            switch (localRabbitMq)
-            {
-                case LocalRabbitMqEnum.Localhost:
-                    Conecta("localhost", "guest", "guest");
-                    break;
-                default:
-                    break;
-            }
-
-            _queue = queue;
+            _conexaoMensageria = new ConexaoMensageria(hostname, userName, password, virtualHost);
         }
-
-
-
-        public void Conecta(string hostname, string userName, string password, string virtualHost = null, bool autoDelete = false)
-        {
-            _factory = new ConnectionFactory() { HostName = hostname, UserName = userName, Password = password, VirtualHost = virtualHost };
-
-            _connection = _factory.CreateConnection();
-            _channel = _connection.CreateModel();
-        }
-
 
         public void Conecta(string conexao)
         {
-            var url = new Uri(conexao);
-
-            _factory = new ConnectionFactory() { HostName = url.Authority, UserName = url.UserInfo.Split(":")[0], Password = url.UserInfo.Split(":")[1], VirtualHost = url.LocalPath.Replace("/", "") };
-
-            _connection = _factory.CreateConnection();
-            _channel = _connection.CreateModel();
+            _conexaoMensageria = new ConexaoMensageria(conexao);
         }
 
-        public void CriarFila(bool autoDelete = false, IDictionary<string, object> arguments = null)
-        {
-            CriarFila(_queue, autoDelete, arguments);
-        }
 
         public void CriarFila(string queue, bool autoDelete = false, IDictionary<string, object> arguments = null)
         {
-            _channel.QueueDeclare(queue: queue,
-                     durable: true,
+            _queue = queue;
+            _routingKey = queue;
+
+            CriarFila(durable: true,
+                     autoDelete: autoDelete,
+                     arguments: arguments);
+        }
+        public void CriarFila(string queue, bool durable, bool autoDelete = false, IDictionary<string, object> arguments = null)
+        {
+            _queue = queue;
+            _routingKey = queue;
+
+            CriarFila(durable: durable,
+                     autoDelete: autoDelete,
+                     arguments: arguments);
+        }
+        private void CriarFila(bool durable, bool autoDelete = false, IDictionary<string, object> arguments = null)
+        {
+            _channel = _conexaoMensageria.Conexao.CreateModel();
+            _channel.QueueDeclare(queue: _queue,
+                     durable: durable,
                      exclusive: false,
                      autoDelete: autoDelete,
                      arguments: arguments);
         }
+
+
+        public void CriarBind(string exchange, string routingKey)
+        {
+            _routingKey = routingKey;
+            _exchange = exchange;
+
+            _channel.QueueBind(queue: _queue,
+                     exchange: _exchange,
+                     routingKey: _routingKey);
+        }
+
+
 
 
 
@@ -128,22 +124,14 @@
 
 
 
-        public void Publicar(byte[] body)
-        {
-            Publicar(_queue, body);
-        }
-
-
         public void Publicar<T>(T body)
         {
             Publicar(body.ToJson().ToByteArray());
         }
-
-        public void Publicar(string routingKey, byte[] body)
+        public void Publicar(byte[] body)
         {
-            _channel.BasicPublish(exchange: "",
-                            routingKey: routingKey,
-                            basicProperties: null,
+            _channel.BasicPublish(exchange: _exchange,
+                            routingKey: _routingKey,
                             body: body);
         }
 
@@ -155,8 +143,65 @@
 
         public void Dispose()
         {
-            _connection.Dispose();
+            _conexaoMensageria.Dispose();
             _channel.Dispose();
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        [Obsolete]
+        public enum LocalRabbitMqEnum
+        {
+            Localhost,
+            CloudAmqp,
+            Customizado
+        }
+        [Obsolete]
+        public CadastrarMensageria(string queue, string stringconexao)
+        {
+            _queue = queue;
+            Conecta(stringconexao);
+        }
+
+        [Obsolete]
+        public CadastrarMensageria(string queue, LocalRabbitMqEnum localRabbitMq)// = LocalRabbitMqEnum.Localhost
+        {
+            switch (localRabbitMq)
+            {
+                case LocalRabbitMqEnum.Localhost:
+                    Conecta("localhost", "guest", "guest");
+                    break;
+                default:
+                    break;
+            }
+
+            _queue = queue;
+            _routingKey = queue;
+        }
+
+        [Obsolete]
+        public void CriarFila(bool autoDelete = false, IDictionary<string, object> arguments = null)
+        {
+            CriarFila(_queue, autoDelete, arguments);
         }
     }
 }
