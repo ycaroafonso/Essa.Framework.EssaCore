@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Text;
 
 
-namespace Essa.Framework.MensageriaCore
+namespace Essa.Framework.Mensageria
 {
     public partial class CadastrarMensageria : IDisposable
     {
