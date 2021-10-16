@@ -21,7 +21,7 @@
                 .Enrich.FromLogContext()
                 .Enrich.WithProperty("Sistema", nomePrograma)
                 .WriteTo.Console();
-            
+
             _nomePrograma = nomePrograma;
         }
 
@@ -41,19 +41,11 @@
 
 
 
-        public void LogMongoDb()
-        {
-            _loggerConfiguration
-                .WriteTo.MongoDB("mongodb://localhost/logs")
-                ;
-        }
-
-
 
         public void LogMySql(string connectionString)
         {
             _loggerConfiguration
-               .WriteTo.MySQL(connectionString, tableName: "log");
+               .WriteTo.MySQL(connectionString, tableName: "portallogservico");
         }
 
 

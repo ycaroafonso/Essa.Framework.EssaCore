@@ -2,7 +2,6 @@
 {
     using Serilog;
     using Serilog.Events;
-    using System;
     using System.IO;
 
 
@@ -14,8 +13,6 @@
 
             switch (diretoriolog)
             {
-                case "mongodb":
-                    return LogMongoDb(nomePrograma);
                 case "mysql":
                     return LogMySql(nomePrograma, connectionStringMySql);
                 default:
@@ -37,24 +34,6 @@
 
         }
 
-        [Obsolete]
-        public static Serilog.Core.Logger LogMongoDb(string nomePrograma, string diretoriolog)
-        {
-            return LogMongoDb(nomePrograma);
-        }
-
-        public static Serilog.Core.Logger LogMongoDb(string nomePrograma = "")
-        {
-            return new LoggerConfiguration()
-.MinimumLevel.Debug()
-.MinimumLevel.Override("Microsoft", LogEventLevel.Information)
-.Enrich.FromLogContext()
-.Enrich.WithProperty("Sistema", nomePrograma)
-.WriteTo.Console()
-.WriteTo.MongoDB("mongodb://localhost/logs")
-.CreateLogger();
-        }
-
 
 
         public static Serilog.Core.Logger LogMySql(string nomePrograma, string connectionString)
@@ -63,9 +42,8 @@
 .MinimumLevel.Debug()
 .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
 .Enrich.FromLogContext()
-.Enrich.WithProperty("Sistema", nomePrograma)
 .WriteTo.Console()
-.WriteTo.MySQL(connectionString, tableName: "log")
+.WriteTo.MySQL(connectionString, tableName: "portallogservico", tag: nomePrograma)
 .CreateLogger();
         }
 
