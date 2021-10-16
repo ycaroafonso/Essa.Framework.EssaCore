@@ -2,7 +2,7 @@
 using System;
 
 
-namespace Essa.Framework.MensageriaCore
+namespace Essa.Framework.Mensageria
 {
     public class ConexaoMensageria : IDisposable
     {
