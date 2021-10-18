@@ -143,7 +143,6 @@ namespace Essa.Framework.Mensageria
 
         public void Dispose()
         {
-            _conexaoMensageria.Dispose();
             _channel.Dispose();
         }
 
