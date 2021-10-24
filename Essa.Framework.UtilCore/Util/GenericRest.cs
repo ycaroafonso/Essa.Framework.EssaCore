@@ -30,6 +30,23 @@
             _token = token;
         }
 
+
+
+
+        protected async Task<T> Get<T>(string path, object parametros = null)
+        {
+            _url.AppendPathSegments(_controllerUrl, path);
+
+
+            if (parametros != null)
+                _url.SetQueryParams(parametros);
+
+            var ret = await _url.GetJsonAsync<T>();
+
+            return ret;
+        }
+
+
         protected async Task<T> GetOneAsync<T>(string path, object parametros = null)
         {
             _url.AppendPathSegments(_controllerUrl, path);
