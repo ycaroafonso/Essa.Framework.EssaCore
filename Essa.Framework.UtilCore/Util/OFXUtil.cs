@@ -16,8 +16,8 @@
         public string NumeroCartao { get; private set; }
 
 
-        public DateTime DataInicio { get; private set; }
-        public DateTime DataFim { get; private set; }
+        public DateTime? DataInicio { get; private set; }
+        public DateTime? DataFim { get; private set; }
         public int? AnoMes { get; private set; } = null;
 
 
@@ -57,7 +57,6 @@
                     else
                         str.AppendLine("");
                 }
-
                 _xml.LoadXml(str.Replace("&", "&amp;").ToString());
             }
 

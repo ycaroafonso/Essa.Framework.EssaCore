@@ -26,7 +26,7 @@ namespace Essa.Framework.Util.Models.OFX
         [XmlIgnore]
         public DateTime DTPOSTED { get; set; }
         [XmlElement("DTPOSTED")]
-        public string _DTPOSTED { get { return DTPOSTED.ToShortDateString(); } set { DTPOSTED = DateTime.ParseExact(value.Substring(0, 8), "yyyyMMdd", CultureInfo.InvariantCulture); } }
+        public string _DTPOSTED { get { return DTPOSTED.ToString("yyyyMMdd"); } set { DTPOSTED = DateTime.ParseExact(value.Substring(0, 8), "yyyyMMdd", CultureInfo.InvariantCulture); } }
 
 
 
