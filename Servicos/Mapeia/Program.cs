@@ -16,7 +16,7 @@
 
         static void Main(string[] args)
         {
-            _contexto = new NovoContexto<FoccusContext>().Conectar("server=127.0.0.1;userid=root;password=A15268495a;database=gis_local;");
+            _contexto = new NovoContexto<FoccusContext>().Conectar(EssaGestaoCore.DTO.Util.StringDeConexaoPadrao);
 
             var ret = P01ChavePrimaria();
             ret += "\n";

@@ -25,8 +25,17 @@
 
     public partial class OFX
     {
-
+        public BANKMSGSRSV1 BANKMSGSRSV1 { get; set; }
     }
+    public class BANKMSGSRSV1
+    {
+        public STMTTRNRS STMTTRNRS { get; set; }
+    }
+    public class STMTTRNRS
+    {
+        public STMTRS STMTRS { get; set; }
+    }
+
 
 
 
@@ -73,17 +82,17 @@
 
 
         [XmlIgnore]
-        public DateTime DTSTART { get; set; }
+        public DateTime? DTSTART { get; set; }
         [XmlIgnore]
-        public DateTime DTEND { get; set; }
+        public DateTime? DTEND { get; set; }
 
 
 
         [XmlElement("DTSTART")]
-        public string _DTSTART { get { return DTSTART.ToShortDateString(); } set { DTSTART = DateTime.ParseExact(value.Substring(0, 8), "yyyyMMdd", CultureInfo.InvariantCulture); } }
+        public string _DTSTART { get { return DTSTART?.ToShortDateString(); } set { DTSTART = DateTime.ParseExact(value.Substring(0, 8), "yyyyMMdd", CultureInfo.InvariantCulture); } }
 
         [XmlElement("DTEND")]
-        public string _DTEND { get { return DTEND.ToShortDateString(); } set { DTEND = DateTime.ParseExact(value.Substring(0, 8), "yyyyMMdd", CultureInfo.InvariantCulture); } }
+        public string _DTEND { get { return DTEND?.ToShortDateString(); } set { DTEND = DateTime.ParseExact(value.Substring(0, 8), "yyyyMMdd", CultureInfo.InvariantCulture); } }
 
 
 

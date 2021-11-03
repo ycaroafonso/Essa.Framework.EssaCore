@@ -41,9 +41,10 @@
             if (parametros != null)
                 _url.SetQueryParams(parametros);
 
-            var ret = await _url.GetJsonAsync<T>();
-
-            return ret;
+            if (!string.IsNullOrEmpty(_token))
+                return await _url.WithOAuthBearerToken(_token).GetJsonAsync<T>();
+            else
+                return await _url.GetJsonAsync<T>();
         }
 
 
@@ -55,9 +56,12 @@
             if (parametros != null)
                 _url.SetQueryParams(parametros);
 
-            var ret = await _url.GetJsonAsync<T>();
 
-            return ret;
+            if (!string.IsNullOrEmpty(_token))
+                return await _url.WithOAuthBearerToken(_token).GetJsonAsync<T>();
+            else
+                return await _url.GetJsonAsync<T>();
+
             //      catch (FlurlHttpException ex)
             //{
             //    var status = ex.Call.HttpResponseMessage.StatusCode;

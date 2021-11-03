@@ -10,6 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\EssaGestaoCore.DTO\EssaGestaoCore.DTO.csproj" />
     <ProjectReference Include="..\..\Essa.Framework.UtilCore\Essa.Framework.UtilCore.csproj" />
   </ItemGroup>
 
