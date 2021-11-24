@@ -12,7 +12,13 @@ namespace Essa.Framework.GoogleApi.Calendario
         private string _diretorio;
         private string _emailautenticacao;
 
-        string[] Scopes = { CalendarService.Scope.Calendar };
+        string[] Scopes = {
+            CalendarService.Scope.Calendar,
+            Google.Apis.PeopleService.v1.PeopleServiceService.Scope.Contacts,
+            Google.Apis.PeopleService.v1.PeopleServiceService.Scope.DirectoryReadonly,
+            Google.Apis.PeopleService.v1.PeopleServiceService.Scope.UserAddressesRead,
+            Google.Apis.PeopleService.v1.PeopleServiceService.Scope.UserBirthdayRead,
+        };
 
 
 
