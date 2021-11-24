@@ -1,29 +1,36 @@
-﻿using EssaGestaoCore.DTO.Calendario;
+﻿using Google.Apis.Calendar.v3;
 using Google.Apis.Calendar.v3.Data;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Essa.Framework.GoogleApi.Calendario.Calendario
 {
     public class ObterEventosService
     {
-        private GetCalendarioService getCalendarioService;
-        private string googlecalendarioid;
-        private string diretorio;
+        private GetCalendarioService _getCalendarioService;
+        private string _googlecalendarioid;
 
-        public ObterEventosService(GetCalendarioService getCalendarioService, string googlecalendarioid, string diretorio)
+        public ObterEventosService(GetCalendarioService getCalendarioService, string googlecalendarioid)
         {
-            this.getCalendarioService = getCalendarioService;
-            this.googlecalendarioid = googlecalendarioid;
-            this.diretorio = diretorio;
+            this._getCalendarioService = getCalendarioService;
+            this._googlecalendarioid = googlecalendarioid;
         }
 
-        public List<Event> ObterEventos()
+
+        public IList<Event> ObterEventos()
         {
-            throw new NotImplementedException();
+            // Define parameters of request.
+            EventsResource.ListRequest request = _getCalendarioService.Service.Events.List(_googlecalendarioid);
+            request.TimeMin = DateTime.Now;
+            request.ShowDeleted = false;
+            request.SingleEvents = true;
+            request.MaxResults = 10;
+            request.OrderBy = EventsResource.ListRequest.OrderByEnum.StartTime;
+
+            // List events.
+            Events events = request.Execute();
+
+            return events.Items;
         }
     }
 }
