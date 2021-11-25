@@ -13,6 +13,8 @@
         private LoggerConfiguration _loggerConfiguration;
         private readonly string _nomePrograma;
 
+
+        [Obsolete]
         public LoggerUtil(string nomePrograma)
         {
             _loggerConfiguration = new LoggerConfiguration()
@@ -24,8 +26,20 @@
 
             _nomePrograma = nomePrograma;
         }
+        public LoggerUtil(LoggerConfiguration loggerConfiguration)
+        {
+            _loggerConfiguration = loggerConfiguration;
+        }
+        public LoggerUtil()
+        {
+        }
 
 
+
+
+
+
+        [Obsolete]
         public void LogTxt(string diretoriolog = "")
         {
             string arquivolog = diretoriolog;
@@ -42,6 +56,7 @@
 
 
 
+        [Obsolete]
         public void LogMySql(string connectionString)
         {
             _loggerConfiguration
@@ -59,6 +74,7 @@
 
 
 
+        [Obsolete]
         public Serilog.Core.Logger Ativar()
         {
             return _loggerConfiguration.CreateLogger();
