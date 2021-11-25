@@ -813,12 +813,32 @@
         }
 
 
+
+
+        public static string SubstringInverso(this string valor, int qtde)
+        {
+            if (valor.Length >= qtde - 1)
+                return valor.Substring(valor.Length - qtde);
+            return valor;
+        }
+        public static string SubstringInversoComReticencia(this string valor, int qtde)
+        {
+            if (valor.Length >= qtde - 1)
+                return string.Concat("...", valor.SubstringInverso(qtde - 3));
+            return valor;
+        }
+
+
         public static string PadRight(this string valor, int totalWidth, string valorRepetir)
         {
             for (int i = 0, total = (totalWidth - valor.Length) / valorRepetir.Length; i <= total; i++)
                 valor += valorRepetir;
 
             return valor.Substring(0, totalWidth);
+        }
+        public static string PadRightComReticencia(this string valor, int totalWidth, char valorRepetir = ' ')
+        {
+            return valor.SubstringComReticencia(totalWidth).PadRight(totalWidth, valorRepetir);
         }
 
 
