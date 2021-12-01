@@ -3,6 +3,7 @@
     using Essa.Framework.Util.Repository;
     using Mapeia.Models;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.DependencyInjection;
     using System;
     using System.Collections.Generic;
     using System.IO;
@@ -16,7 +17,11 @@
 
         static void Main(string[] args)
         {
-            _contexto = new NovoContexto<FoccusContext>().Conectar(EssaGestaoCore.DTO.Util.StringDeConexaoPadrao);
+
+            string connetionString = EssaGestaoCore.DTO.Util.StringDeConexaoPadrao;
+            var serviceCollection = new ServiceCollection();
+            serviceCollection.AddDbContext<FoccusContext>(o => o.UseMySql(connetionString, ServerVersion.AutoDetect(connetionString)));
+            _contexto = serviceCollection.BuildServiceProvider().GetService<FoccusContext>();
 
             var ret = P01ChavePrimaria();
             ret += "\n";
@@ -28,7 +33,7 @@
             File.WriteAllText(Directory.GetCurrentDirectory() + "/../../../MAPEAMENTO.txt", ret);
 
             Console.WriteLine("Finalizado, copie o conteúdo do arquivo MAPEAMENTO.txt da raiz desse projeto.");
-            Console.ReadKey();
+            Console.ReadLine();
         }
 
 
