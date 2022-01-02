@@ -17,7 +17,7 @@
         static void Main(string[] args)
         {
             var serviceCollection = new ServiceCollection();
-            serviceCollection.AddDbContext<FoccusContext>(o => o.UseMySql("server=127.0.0.1;userid=root;password=A15268495a;database=gis_local;"));
+            serviceCollection.AddDbContext<FoccusContext>(o => o.UseMySql(EssaGestaoCore.DTO.Util.StringDeConexaoPadrao));
             _contexto = serviceCollection.BuildServiceProvider().GetService<FoccusContext>();
 
 
