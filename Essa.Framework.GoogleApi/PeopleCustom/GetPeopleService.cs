@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Essa.Framework.GoogleApi.Calendario.PeopleCustom
+namespace Essa.Framework.GoogleApi.PeopleCustom
 {
     public class GetPeopleService
     {
