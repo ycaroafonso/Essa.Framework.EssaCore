@@ -17,7 +17,7 @@
         static void Main(string[] args)
         {
             var serviceCollection = new ServiceCollection();
-            serviceCollection.AddDbContext<FoccusContext>(o => o.UseMySql(EssaGestaoCore.DTO.Util.StringDeConexaoPadrao));
+            serviceCollection.AddDbContext<FoccusContext>(o => o.UseMySql(EssaGestaoCore.DTO.Util.StringDeConexaoPadrao.Replace("gis_local", "gis_local")));
             _contexto = serviceCollection.BuildServiceProvider().GetService<FoccusContext>();
 
 
