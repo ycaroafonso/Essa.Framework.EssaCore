@@ -1,15 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <RootNamespace>Essa.Framework.Web</RootNamespace>
     <AssemblyName>Essa.Framework.Web</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Helpers\DataTables\**" />
-    <EmbeddedResource Remove="Helpers\DataTables\**" />
-    <None Remove="Helpers\DataTables\**" />
+    <Compile Remove="Helpers\**" />
+    <EmbeddedResource Remove="Helpers\**" />
+    <None Remove="Helpers\**" />
   </ItemGroup>
 
   <ItemGroup>

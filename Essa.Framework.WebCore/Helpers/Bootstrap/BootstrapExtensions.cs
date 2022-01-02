@@ -4,13 +4,9 @@
     using Essa.Framework.Web.Helpers.Bootstrap.Accordion;
     using Essa.Framework.Web.Helpers.Bootstrap.Modal;
     using Essa.Framework.Web.Helpers.Bootstrap.Tabs;
-    using Microsoft.AspNetCore.Html;
-    using Microsoft.AspNetCore.Mvc.Rendering;
-    using Microsoft.AspNetCore.Mvc.ViewFeatures;
     using Portlet;
-    using System;
     using System.Collections.Generic;
-    
+
 
     public static class BootstrapExtensions
     {
@@ -72,9 +68,9 @@
             return new PortletBuilder(_id, _htmlHelper.ViewContext, titulo, classPortlet, classIconeTitulo);
         }
 
-        public HtmlString DropDown(string titulo, List<DropDownItem> itens)
-        {
-            return new DropDownBuilder(_id, _htmlHelper.ViewContext).AddItem(itens).Texto(titulo).Montar();
-        }
+        //public HtmlString DropDown(string titulo, List<DropDownItem> itens)
+        //{
+        //    return new DropDownBuilder(_id, _htmlHelper.ViewContext).AddItem(itens).Texto(titulo).Montar();
+        //}
     }
 }

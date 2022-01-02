@@ -1,12 +1,9 @@
 ﻿namespace Essa.Framework.Web.Controller
 {
-    using Helpers.JqGrid;
-    using System;
+    using Essa.Framework.Util.Models.Controller;
+    using Microsoft.AspNetCore.Mvc;
     using System.Collections.Generic;
     using System.Linq;
-    using Microsoft.AspNetCore.Mvc;
-    using Essa.Framework.Util.Extensions;
-    using Essa.Framework.Util.Models.Controller;
 
     public interface IGenericController<T>
         where T : class
@@ -81,20 +78,6 @@
             return base.Json(new ResultModel { Situacao = situacao.ToString(), Parametros = parametros });
         }
 
-
-        /// <summary>
-        /// Retorna um json no padrão do JqGrid
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="lista"></param>
-        /// <param name="gridSettings"></param>
-        /// <param name="behavior"></param>
-        /// <param name="parametros"></param>
-        /// <returns></returns>
-        protected internal JsonResult JqGrid<T>(IQueryable<T> lista, GridSettings gridSettings)
-        {
-            return Json(lista.ToJqGrid(gridSettings).ToReturn());
-        }
 
 
 
