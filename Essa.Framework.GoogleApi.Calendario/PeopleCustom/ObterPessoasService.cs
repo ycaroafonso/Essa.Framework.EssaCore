@@ -2,6 +2,7 @@
 using Google.Apis.PeopleService.v1.Data;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Essa.Framework.GoogleApi.Calendario.PeopleCustom
 {
@@ -15,7 +16,13 @@ namespace Essa.Framework.GoogleApi.Calendario.PeopleCustom
         }
 
 
-        public IList<Person> ObterTodos()
+
+
+
+
+
+
+        public IList<Person> ObterTodos(string pageToken = null)
         {
 
             //List<string> sources = new();
@@ -32,10 +39,21 @@ namespace Essa.Framework.GoogleApi.Calendario.PeopleCustom
 
             PeopleResource.ConnectionsResource.ListRequest peopleRequest =
                _getPeopleService.Service.People.Connections.List("people/me");
+
+            if (pageToken != null)
+            {
+                peopleRequest.PageToken = pageToken;
+            }
+
             peopleRequest.PageSize = 2000;
             peopleRequest.PersonFields = "birthdays,names,EmailAddresses,metadata,addresses,photos,coverPhotos";
             ListConnectionsResponse response = peopleRequest.Execute();
-            IList<Person> people = response.Connections;
+            List<Person> people = response.Connections.ToList();
+
+
+            //if (response.NextPageToken != null)
+            //    people.AddRange(ObterTodos(response.NextPageToken));
+
 
             return people;
         }
