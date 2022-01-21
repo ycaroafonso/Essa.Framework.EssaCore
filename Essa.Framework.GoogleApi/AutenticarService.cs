@@ -1,10 +1,11 @@
 ﻿using Google.Apis.Auth.OAuth2;
 using Google.Apis.Calendar.v3;
 using Google.Apis.Util.Store;
+using Google.Apis.YouTube.v3;
 using System.IO;
 using System.Threading;
 
-namespace Essa.Framework.GoogleApi.Calendario
+namespace Essa.Framework.GoogleApi
 {
     public class AutenticarService
     {
@@ -18,6 +19,8 @@ namespace Essa.Framework.GoogleApi.Calendario
             Google.Apis.PeopleService.v1.PeopleServiceService.Scope.DirectoryReadonly,
             Google.Apis.PeopleService.v1.PeopleServiceService.Scope.UserAddressesRead,
             Google.Apis.PeopleService.v1.PeopleServiceService.Scope.UserBirthdayRead,
+
+            YouTubeService.Scope.YoutubeReadonly
         };
 
 

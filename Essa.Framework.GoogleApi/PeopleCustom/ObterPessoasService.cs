@@ -1,10 +1,9 @@
 ﻿using Google.Apis.PeopleService.v1;
 using Google.Apis.PeopleService.v1.Data;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Essa.Framework.GoogleApi.Calendario.PeopleCustom
+namespace Essa.Framework.GoogleApi.PeopleCustom
 {
     public class ObterPessoasService
     {

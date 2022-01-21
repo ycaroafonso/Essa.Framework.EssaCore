@@ -56,7 +56,7 @@
 
         public void Abrir(string chromeDriveDirectory)
         {
-            ChromeDriver = new ChromeDriver(chromeDriveDirectory, _chromeOptions, TimeSpan.FromSeconds(180));
+            ChromeDriver = new ChromeDriver(Path.Combine(chromeDriveDirectory, "96.0.4664.45"), _chromeOptions, TimeSpan.FromSeconds(180));
 
             if (_isRedimensionar)
                 ChromeDriver.Manage().Window.Size = _size;

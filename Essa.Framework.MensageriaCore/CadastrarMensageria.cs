@@ -81,7 +81,7 @@ namespace Essa.Framework.Mensageria
 
 
 
-
+        public bool AutoAck { get; set; } = false;
         public void Receber(Action<ulong, byte[]> received)
         {
             var consumer = new EventingBasicConsumer(_channel);
@@ -91,7 +91,7 @@ namespace Essa.Framework.Mensageria
             };
 
             _channel.BasicConsume(queue: _queue,
-                                 autoAck: false,
+                                 autoAck: AutoAck,
                                  consumer: consumer);
         }
 
@@ -132,9 +132,19 @@ namespace Essa.Framework.Mensageria
         {
             _channel.BasicPublish(exchange: _exchange,
                             routingKey: _routingKey,
+                            basicProperties: _basicProperties,
                             body: body);
         }
 
+
+        IBasicProperties _basicProperties = null;
+
+        public void CriarBasicProperties(string replyTo)
+        {
+            _basicProperties = _channel.CreateBasicProperties();
+            _basicProperties.ReplyTo = replyTo;
+            _basicProperties.CorrelationId = "aaaaaaaaaaa";
+        }
 
 
 
