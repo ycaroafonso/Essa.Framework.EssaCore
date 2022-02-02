@@ -4,14 +4,14 @@ using Google.Apis.Util.Store;
 using Google.Apis.YouTube.v3;
 using System.IO;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Essa.Framework.GoogleApi
 {
     public class AutenticarService
     {
-        private string _credentialsPath;
-        private string _diretorio;
-        private string _emailautenticacao;
+        private Task<UserCredential> _authorize;
+
 
         string[] Scopes = {
             CalendarService.Scope.Calendar,
@@ -25,30 +25,24 @@ namespace Essa.Framework.GoogleApi
 
 
 
-        public AutenticarService(string credentialsPath, string diretorio, string emailautenticacao)
+        public AutenticarService(string credentialsPath, string emailautenticacao)
         {
-            _credentialsPath = credentialsPath;
-            _diretorio = diretorio;
-            _emailautenticacao = emailautenticacao;
-
-
-
-
             using (var stream =
                 new FileStream(credentialsPath, FileMode.Open, FileAccess.Read))
             {
-                // The file token.json stores the user's access and refresh tokens, and is created
-                // automatically when the authorization flow completes for the first time.
                 string credPath = "token.json";
 
-                Credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
+
+                _authorize = GoogleWebAuthorizationBroker.AuthorizeAsync(
                     GoogleClientSecrets.FromStream(stream).Secrets,
                     Scopes,
                     emailautenticacao,
                     CancellationToken.None,
-                    new FileDataStore(credPath, true)).Result;
-            }
+                    new FileDataStore(credPath, true));
 
+                Credential = _authorize.Result;
+
+            }
         }
 
         public UserCredential Credential { get; }
