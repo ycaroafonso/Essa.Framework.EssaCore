@@ -5,11 +5,11 @@ using System.Linq;
 
 namespace Essa.Framework.GoogleApi.PeopleCustom
 {
-    public class ObterPessoasService
+    public class PessoasService
     {
         private readonly GetPeopleService _getPeopleService;
 
-        public ObterPessoasService(GetPeopleService getPeopleService)
+        public PessoasService(GetPeopleService getPeopleService)
         {
             this._getPeopleService = getPeopleService;
         }
@@ -45,7 +45,7 @@ namespace Essa.Framework.GoogleApi.PeopleCustom
             }
 
             peopleRequest.PageSize = 2000;
-            peopleRequest.PersonFields = "birthdays,names,EmailAddresses,metadata,addresses,photos,coverPhotos";
+            peopleRequest.PersonFields = "addresses,ageRanges,biographies,birthdays,calendarUrls,clientData,coverPhotos,emailAddresses,events,externalIds,genders,imClients,interests,locales,locations,memberships,metadata,miscKeywords,names,nicknames,occupations,organizations,phoneNumbers,photos,relations,sipAddresses,skills,urls,userDefined";
             ListConnectionsResponse response = peopleRequest.Execute();
             List<Person> people = response.Connections.ToList();
 
@@ -56,5 +56,34 @@ namespace Essa.Framework.GoogleApi.PeopleCustom
 
             return people;
         }
+
+
+
+        public void Cadastrar()
+        {
+            var c = _getPeopleService.Service.People.CreateContact(new Person
+            {
+                Names = new List<Name>
+                {
+                    new Name
+                    {
+                        DisplayName="__Testeeeee3",
+                        GivenName="__Testeeeee3",
+                    }
+                },
+                PhoneNumbers = new List<PhoneNumber>
+                {
+                    new PhoneNumber
+                    {
+                        Type= "mobile",
+                        Value="(67) 88888-7777"
+                    }
+                }
+            });
+
+            var cc = c.Execute();
+        }
+
+
     }
 }
