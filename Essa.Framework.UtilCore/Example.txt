@@ -1,0 +1,132 @@
+﻿namespace SV_EssaGestao_ExtratoBanco_EscanearArquivosOfx.Util
+{
+    using CommandLine;
+    using EssaGestaoCore.DTO.Usuario;
+    using EssaGestaoCore.ModelData.GIS.ViewModel;
+    using EssaGestaoCoreConsumirApi.WebApiRepository;
+    using EssaGestaoCoreConsumirApi.WebApiService;
+    using Serilog;
+    using SV_EssaGestao_ExtratoBanco_EscanearArquivosOfx.Models;
+    using System;
+    using System.Threading.Tasks;
+
+    public abstract class ProgramGeneric
+    {
+        public static string NomeExecutavel { get; } = System.Reflection.Assembly.GetExecutingAssembly().GetName().Name;
+
+        //public static ModelGIS Contexto { get => new ModelGIS(new DbContextOptionsBuilder<ModelGIS>().UseMySql(EssaGestaoCore.DTO.Util.StringDeConexao).Options); }
+
+
+        protected static Options _options = new Options();
+
+        protected static void IniciarCommandLine(string[] args)
+        {
+            Parser.Default.ParseArguments<Options>(args)
+                .WithParsed(o =>
+                {
+                    _options = o;
+                })
+                .WithNotParsed((errs) =>
+                {
+                    throw new Exception("Faltam os parâmetros obrigatórios");
+                });
+        }
+        protected static void IniciarLogger()
+        {
+            Log.Logger = Essa.Framework.Logger.Geral.Log(NomeExecutavel, _options.Log, connectionStringMySql: EssaGestaoCore.DTO.Util.StringDeConexaoLog);
+        }
+
+
+
+
+
+
+
+        public static async Task IniciarAutenticacaoAsync()
+        {
+            if (string.IsNullOrEmpty(_options.Usuario))
+            {
+                Console.WriteLine("Digite seu usuário de acesso:");
+                _options.Usuario = Console.ReadLine();
+            }
+            else
+                Console.WriteLine("Usuário selecionado: " + _options.Usuario);
+
+            if (string.IsNullOrEmpty(_options.Senha))
+            {
+                Console.WriteLine("Digite sua senha de acesso:");
+                string pass = "";
+                ConsoleKey key;
+                do
+                {
+                    var keyInfo = Console.ReadKey(intercept: true);
+                    key = keyInfo.Key;
+
+                    if (key == ConsoleKey.Backspace && pass.Length > 0)
+                    {
+                        Console.Write("\b \b");
+                        pass = pass[0..^1];
+                    }
+                    else if (!char.IsControl(keyInfo.KeyChar))
+                    {
+                        Console.Write("*");
+                        pass += keyInfo.KeyChar;
+                    }
+                } while (key != ConsoleKey.Enter);
+
+                _options.Senha = pass;
+            }
+            else
+                Console.WriteLine("Senha de acesso preenchida com sucesso");
+
+            UsuarioDTO usuario = await RepositoryRestfulWrapper.UsuarioService.ObterPorLogin(_options.Usuario, _options.Senha);
+            Config.Token = usuario.Token;
+            _pessoaSessaoViewModel = new PessoaSessaoViewModel
+            {
+                EmpresaId = usuario.empresaid,
+                UsuarioId = usuario.usuarioid,
+                PessoaId = usuario.pessoaid
+            };
+        }
+
+        protected static PessoaSessaoViewModel _pessoaSessaoViewModel;
+
+        private static RepositoryRestfulWrapper _RepositoryRestfulWrapper;
+
+        public static RepositoryRestfulWrapper RepositoryRestfulWrapper
+        {
+            get
+            {
+                if (_RepositoryRestfulWrapper == null)
+                {
+                    _RepositoryRestfulWrapper = new RepositoryRestfulWrapper(_options.Local);
+                }
+                else if (DateTime.UtcNow > Config.DataExpiracaoToken && _options.Usuario != null && _options.Senha != null)
+                {
+                    var obterPorLogin = _RepositoryRestfulWrapper.UsuarioService.ObterPorLogin(_options.Usuario, _options.Senha).GetAwaiter().GetResult();
+                    Config.Token = obterPorLogin.Token;
+                }
+
+                return _RepositoryRestfulWrapper;
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    }
+}
