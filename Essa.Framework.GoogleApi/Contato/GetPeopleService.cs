@@ -1,7 +1,7 @@
 ﻿using Google.Apis.PeopleService.v1;
 using Google.Apis.Services;
 
-namespace Essa.Framework.GoogleApi.PeopleCustom
+namespace Essa.Framework.GoogleApi.Contato
 {
     public class GetPeopleService
     {

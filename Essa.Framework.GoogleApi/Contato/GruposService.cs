@@ -1,7 +1,7 @@
 ﻿using Google.Apis.PeopleService.v1.Data;
 using System.Collections.Generic;
 
-namespace Essa.Framework.GoogleApi.PeopleCustom
+namespace Essa.Framework.GoogleApi.Contato
 {
     public class GruposService
     {

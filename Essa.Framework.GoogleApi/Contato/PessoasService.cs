@@ -3,7 +3,7 @@ using Google.Apis.PeopleService.v1.Data;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Essa.Framework.GoogleApi.PeopleCustom
+namespace Essa.Framework.GoogleApi.Contato
 {
     public class PessoasService
     {
@@ -11,7 +11,7 @@ namespace Essa.Framework.GoogleApi.PeopleCustom
 
         public PessoasService(GetPeopleService getPeopleService)
         {
-            this._getPeopleService = getPeopleService;
+            _getPeopleService = getPeopleService;
         }
 
 
@@ -35,7 +35,7 @@ namespace Essa.Framework.GoogleApi.PeopleCustom
 
             //var x = _getPeopleService.Service.ContactGroups.List().Execute();
 
-
+            
             PeopleResource.ConnectionsResource.ListRequest peopleRequest =
                _getPeopleService.Service.People.Connections.List("people/me");
 
@@ -58,31 +58,6 @@ namespace Essa.Framework.GoogleApi.PeopleCustom
         }
 
 
-
-        public void Cadastrar()
-        {
-            var c = _getPeopleService.Service.People.CreateContact(new Person
-            {
-                Names = new List<Name>
-                {
-                    new Name
-                    {
-                        DisplayName="__Testeeeee3",
-                        GivenName="__Testeeeee3",
-                    }
-                },
-                PhoneNumbers = new List<PhoneNumber>
-                {
-                    new PhoneNumber
-                    {
-                        Type= "mobile",
-                        Value="(67) 88888-7777"
-                    }
-                }
-            });
-
-            var cc = c.Execute();
-        }
 
 
     }

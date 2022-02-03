@@ -1,4 +1,5 @@
-﻿using Google.Apis.Auth.OAuth2;
+﻿using Essa.Framework.Util.Extensions;
+using Google.Apis.Auth.OAuth2;
 using Google.Apis.Calendar.v3;
 using Google.Apis.Util.Store;
 using Google.Apis.YouTube.v3;
@@ -25,7 +26,7 @@ namespace Essa.Framework.GoogleApi
 
 
 
-        public AutenticarService(string credentialsPath, string emailautenticacao)
+        public AutenticarService(string credentialsPath, string diretorio, string emailautenticacao)
         {
             using (var stream =
                 new FileStream(credentialsPath, FileMode.Open, FileAccess.Read))
@@ -39,9 +40,10 @@ namespace Essa.Framework.GoogleApi
                     emailautenticacao,
                     CancellationToken.None,
                     new FileDataStore(credPath, true));
-
+                
                 Credential = _authorize.Result;
 
+                //File.WriteAllText(Path.Combine(diretorio, "token_cache.json"), Credential.Token.ToJson());
             }
         }
 
