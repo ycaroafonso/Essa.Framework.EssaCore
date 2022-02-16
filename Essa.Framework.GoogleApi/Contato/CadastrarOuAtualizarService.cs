@@ -85,10 +85,18 @@ namespace Essa.Framework.GoogleApi.Contato
                     {
                         ContactGroupMembership = new ContactGroupMembership
                         {
-                            ContactGroupResourceName = item.descricaomarcador,
-                            ContactGroupId = item.codigogooglecontatoapi
+                            ContactGroupResourceName = item.codigogooglecontatoapi,
+                            ContactGroupId = item.codigogooglecontatoapi.Replace("contactGroups/", "")
                         }
                     });
+            }
+
+
+            if (Envio.notas != null)
+            {
+                Person.Biographies = new List<Biography> {
+                    new Biography { Value=Envio.notas }
+                };
             }
         }
 
