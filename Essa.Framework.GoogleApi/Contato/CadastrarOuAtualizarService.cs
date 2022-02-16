@@ -39,24 +39,32 @@ namespace Essa.Framework.GoogleApi.Contato
 
 
             if (Envio.Telefones.Any())
+            {
+                Person.PhoneNumbers = new List<PhoneNumber>();
+
                 foreach (var item in Envio.Telefones)
                     Person.PhoneNumbers.Add(new PhoneNumber
                     {
                         Type = item.Type,
                         Value = item.Value
                     });
-
+            }
 
             if (Envio.Emails.Any())
+            {
+                Person.EmailAddresses = new List<EmailAddress>();
                 foreach (var item in Envio.Emails)
                     Person.EmailAddresses.Add(new EmailAddress
                     {
                         Type = item.Type,
                         Value = item.Value
                     });
-
+            }
 
             if (Envio.Enderecos != null)
+            {
+                Person.Addresses = new List<Address>();
+
                 foreach (var item in Envio.Enderecos)
                     Person.Addresses.Add(new Address
                     {
@@ -66,8 +74,22 @@ namespace Essa.Framework.GoogleApi.Contato
                         Region = item.Uf,
                         Type = item.Type
                     });
+            }
 
-            Executar();
+            if (Envio.Marcadores != null)
+            {
+                Person.Memberships = new List<Membership>();
+
+                foreach (var item in Envio.Marcadores.Where(c => c.codigogooglecontatoapi != null))
+                    Person.Memberships.Add(new Membership
+                    {
+                        ContactGroupMembership = new ContactGroupMembership
+                        {
+                            ContactGroupResourceName = item.descricaomarcador,
+                            ContactGroupId = item.codigogooglecontatoapi
+                        }
+                    });
+            }
         }
 
         public void Executar()
@@ -86,7 +108,8 @@ namespace Essa.Framework.GoogleApi.Contato
 
                 Person = c.Execute();
             }
-        }
 
+
+        }
     }
 }

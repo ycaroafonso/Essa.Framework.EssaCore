@@ -14,7 +14,7 @@ namespace Essa.Framework.GoogleApi.Contato
 
         public IList<ContactGroup> ObterTodos()
         {
-            var req =
+            ListContactGroupsResponse req =
                _getPeopleService.Service.ContactGroups.List().Execute();
 
             return req.ContactGroups;
