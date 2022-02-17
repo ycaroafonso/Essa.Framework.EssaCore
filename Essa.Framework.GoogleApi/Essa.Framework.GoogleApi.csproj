@@ -6,9 +6,10 @@
 
   <ItemGroup>
     <PackageReference Include="Google.Apis.Auth" Version="1.55.0" />
-    <PackageReference Include="Google.Apis.Calendar.v3" Version="1.55.0.2500" />
-    <PackageReference Include="Google.Apis.PeopleService.v1" Version="1.55.0.2437" />
+    <PackageReference Include="Google.Apis.Calendar.v3" Version="1.55.0.2554" />
+    <PackageReference Include="Google.Apis.PeopleService.v1" Version="1.55.0.2567" />
     <PackageReference Include="Google.Apis.YouTube.v3" Version="1.55.0.2449" />
+    <PackageReference Include="System.Collections" Version="4.3.0" />
   </ItemGroup>
 
   <ItemGroup>

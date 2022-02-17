@@ -1,20 +1,27 @@
 ﻿using Google.Apis.PeopleService.v1;
 using Google.Apis.PeopleService.v1.Data;
 using System.Collections.Generic;
+using System.Linq;
 
-namespace Essa.Framework.GoogleApi.PeopleCustom
+namespace Essa.Framework.GoogleApi.Contato
 {
-    public class ObterPessoasService
+    public class PessoasService
     {
         private readonly GetPeopleService _getPeopleService;
 
-        public ObterPessoasService(GetPeopleService getPeopleService)
+        public PessoasService(GetPeopleService getPeopleService)
         {
-            this._getPeopleService = getPeopleService;
+            _getPeopleService = getPeopleService;
         }
 
 
-        public IList<Person> ObterTodos()
+
+
+
+
+
+
+        public IList<Person> ObterTodos(string pageToken = null)
         {
 
             //List<string> sources = new();
@@ -28,15 +35,30 @@ namespace Essa.Framework.GoogleApi.PeopleCustom
 
             //var x = _getPeopleService.Service.ContactGroups.List().Execute();
 
-
+            
             PeopleResource.ConnectionsResource.ListRequest peopleRequest =
                _getPeopleService.Service.People.Connections.List("people/me");
+
+            if (pageToken != null)
+            {
+                peopleRequest.PageToken = pageToken;
+            }
+
             peopleRequest.PageSize = 2000;
-            peopleRequest.PersonFields = "birthdays,names,EmailAddresses,metadata,addresses,photos,coverPhotos";
+            peopleRequest.PersonFields = "addresses,ageRanges,biographies,birthdays,calendarUrls,clientData,coverPhotos,emailAddresses,events,externalIds,genders,imClients,interests,locales,locations,memberships,metadata,miscKeywords,names,nicknames,occupations,organizations,phoneNumbers,photos,relations,sipAddresses,skills,urls,userDefined";
             ListConnectionsResponse response = peopleRequest.Execute();
-            IList<Person> people = response.Connections;
+            List<Person> people = response.Connections.ToList();
+
+
+            //if (response.NextPageToken != null)
+            //    people.AddRange(ObterTodos(response.NextPageToken));
+
 
             return people;
         }
+
+
+
+
     }
 }

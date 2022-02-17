@@ -10,20 +10,30 @@ namespace Essa.Framework.Mensageria
         public IConnection Conexao { get; private set; }
 
 
-        public ConexaoMensageria(string hostname, string userName, string password, string virtualHost = null)
+        public ConexaoMensageria(string hostname, string userName, string password, string virtualHost = null
+            , int consumerDispatchConcurrency = 1)
         {
-            _factory = new ConnectionFactory() { HostName = hostname, UserName = userName, Password = password, VirtualHost = virtualHost };
+            _factory = new ConnectionFactory()
+            {
+                HostName = hostname,
+                UserName = userName,
+                Password = password,
+                VirtualHost = virtualHost,
+
+                ConsumerDispatchConcurrency = consumerDispatchConcurrency
+            };
 
             Conexao = _factory.CreateConnection();
         }
-
-        public ConexaoMensageria(string stringconexao)
+        public ConexaoMensageria(Uri url
+            , int consumerDispatchConcurrency = 1) 
+            : this(url.Authority, url.UserInfo.Split(':')[0], url.UserInfo.Split(':')[1], url.LocalPath.Replace("/", ""), consumerDispatchConcurrency)
         {
-            var url = new Uri(stringconexao);
+        }
 
-            _factory = new ConnectionFactory() { HostName = url.Authority, UserName = url.UserInfo.Split(':')[0], Password = url.UserInfo.Split(':')[1], VirtualHost = url.LocalPath.Replace("/", "") };
-
-            Conexao = _factory.CreateConnection();
+        public ConexaoMensageria(string stringconexao
+            , int consumerDispatchConcurrency = 1) : this(new Uri(stringconexao), consumerDispatchConcurrency)
+        {
         }
 
         public void Dispose()
