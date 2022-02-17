@@ -1,14 +1,14 @@
 ﻿using DataTables.AspNet.AspNetCore;
 using DataTables.AspNet.Core;
 using Essa.Framework.Web.Helpers.DataTables;
-using SENAR.Framework.Util;
+using Essa.Framework.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using static SENAR.Framework.Web.Helpers.DataTables.DataTablesUtil;
+using static Essa.Framework.Web.Helpers.DataTables.DataTablesUtil;
 
-namespace SENAR.Framework.Web.Helpers.DataTables
+namespace Essa.Framework.Web.Helpers.DataTables
 {
     public static class DataTablesUtil
     {
