@@ -1,6 +1,5 @@
 ﻿namespace Essa.Framework.Web.Extensions
 {
-    using Microsoft.AspNetCore.Mvc.Rendering;
     using System;
     using System.Collections;
     using System.Collections.Generic;
@@ -8,59 +7,59 @@
 
     public static class UtilExtensions
     {
-        public static SelectList ToSelectList<T>(this T[] lista)
-        {
-            return new SelectList(lista);
-        }
-        public static SelectList ToSelectList<T>(this List<T> lista)
-        {
-            return new SelectList(lista);
-        }
+        //public static SelectList ToSelectList<T>(this T[] lista)
+        //{
+        //    return new SelectList(lista);
+        //}
+        //public static SelectList ToSelectList<T>(this List<T> lista)
+        //{
+        //    return new SelectList(lista);
+        //}
 
-        public static SelectList ToSelectList(this IDictionary lista)
-        {
-            return new SelectList(lista, "Key", "Value");
-        }
+        //public static SelectList ToSelectList(this IDictionary lista)
+        //{
+        //    return new SelectList(lista, "Key", "Value");
+        //}
 
-        public static SelectList ToSelectList(this IDictionary lista, object valorSelecionado)
-        {
-            return new SelectList(lista, "Key", "Value", valorSelecionado);
-        }
-
-
-        public static SelectList ToSelectList<T>(this T enumerable, Func<T, object> valor, Func<T, object> texto)
-        {
-            return ToSelectList(new List<T> { enumerable }, valor, texto, null, null, null);
-        }
-        public static SelectList ToSelectList<T>(this IEnumerable<T> enumerable, Func<T, object> valor, Func<T, object> texto)
-        {
-            return ToSelectList(enumerable, valor, texto, "SELECIONE…", null, null);
-        }
-        public static SelectList ToSelectList<T>(this IEnumerable<T> enumerable, Func<T, object> valor, Func<T, object> texto, object valorSelecionado)
-        {
-            return ToSelectList(enumerable, valor, texto, "SELECIONE…", null, valorSelecionado);
-        }
+        //public static SelectList ToSelectList(this IDictionary lista, object valorSelecionado)
+        //{
+        //    return new SelectList(lista, "Key", "Value", valorSelecionado);
+        //}
 
 
+        //public static SelectList ToSelectList<T>(this T enumerable, Func<T, object> valor, Func<T, object> texto)
+        //{
+        //    return ToSelectList(new List<T> { enumerable }, valor, texto, null, null, null);
+        //}
+        //public static SelectList ToSelectList<T>(this IEnumerable<T> enumerable, Func<T, object> valor, Func<T, object> texto)
+        //{
+        //    return ToSelectList(enumerable, valor, texto, "SELECIONE…", null, null);
+        //}
+        //public static SelectList ToSelectList<T>(this IEnumerable<T> enumerable, Func<T, object> valor, Func<T, object> texto, object valorSelecionado)
+        //{
+        //    return ToSelectList(enumerable, valor, texto, "SELECIONE…", null, valorSelecionado);
+        //}
 
-        public static SelectList ToSelectList<T>(this IEnumerable<T> enumerable, Func<T, object> valor, Func<T, object> texto
-            , string nomePrimeiroCampo, string valorPrimeiroCampo, object valorSelecionado = null)
-        {
-            var list = enumerable.Select(x => new SelectListItem
-            {
-                Value = valor.Invoke(x).ToString(),
-                Text = texto.Invoke(x).ToString(),
-            });
 
-            if (nomePrimeiroCampo != null)
-            {
-                var x = list.ToList();
-                x.Insert(0, new SelectListItem { Value = valorPrimeiroCampo, Text = nomePrimeiroCampo });
-                list = x;
-            }
 
-            return new SelectList(list, "Value", "Text", valorSelecionado);
-        }
+        //public static SelectList ToSelectList<T>(this IEnumerable<T> enumerable, Func<T, object> valor, Func<T, object> texto
+        //    , string nomePrimeiroCampo, string valorPrimeiroCampo, object valorSelecionado = null)
+        //{
+        //    var list = enumerable.Select(x => new SelectListItem
+        //    {
+        //        Value = valor.Invoke(x).ToString(),
+        //        Text = texto.Invoke(x).ToString(),
+        //    });
+
+        //    if (nomePrimeiroCampo != null)
+        //    {
+        //        var x = list.ToList();
+        //        x.Insert(0, new SelectListItem { Value = valorPrimeiroCampo, Text = nomePrimeiroCampo });
+        //        list = x;
+        //    }
+
+        //    return new SelectList(list, "Value", "Text", valorSelecionado);
+        //}
         public static DateTime StrToDateTime(this String valor)
         {
             if (valor.IndexOf("/") == -1 && valor.IndexOf("-") == -1)

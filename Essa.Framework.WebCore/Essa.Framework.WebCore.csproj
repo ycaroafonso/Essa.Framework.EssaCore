@@ -1,19 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <RootNamespace>Essa.Framework.Web</RootNamespace>
     <AssemblyName>Essa.Framework.Web</AssemblyName>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="Helpers\DataTables\**" />
-    <EmbeddedResource Remove="Helpers\DataTables\**" />
-    <None Remove="Helpers\DataTables\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.App" Version="2.2.0" />
+  
+	<ItemGroup>
+    <PackageReference Include="DataTables.AspNet.AspNetCore" Version="2.0.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Formatters.Json" Version="2.2.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 

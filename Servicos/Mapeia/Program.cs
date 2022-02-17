@@ -18,7 +18,7 @@
         static void Main(string[] args)
         {
 
-            string connetionString = EssaGestaoCore.DTO.Util.StringDeConexaoPadrao;
+            string connetionString = EssaGestaoCore.DTO.Util.StringDeConexaoPadrao.Replace("gis_local", "gis_local");
             var serviceCollection = new ServiceCollection();
             serviceCollection.AddDbContext<FoccusContext>(o => o.UseMySql(connetionString, ServerVersion.AutoDetect(connetionString)));
             _contexto = serviceCollection.BuildServiceProvider().GetService<FoccusContext>();

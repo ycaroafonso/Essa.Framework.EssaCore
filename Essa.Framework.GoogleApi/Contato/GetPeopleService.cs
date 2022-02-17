@@ -1,20 +1,13 @@
-﻿using Google.Apis.Calendar.v3;
-using Google.Apis.PeopleService.v1;
-using Google.Apis.PeopleService.v1.Data;
+﻿using Google.Apis.PeopleService.v1;
 using Google.Apis.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Essa.Framework.GoogleApi.PeopleCustom
+namespace Essa.Framework.GoogleApi.Contato
 {
     public class GetPeopleService
     {
         public PeopleServiceService Service { get; private set; }
 
-        string ApplicationName = "Google Calendar API .NET Quickstart";
+        readonly string ApplicationName = "Google Calendar API .NET Quickstart";
 
         public GetPeopleService(AutenticarService _autenticarService)
         {
