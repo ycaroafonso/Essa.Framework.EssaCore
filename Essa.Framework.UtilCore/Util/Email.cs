@@ -3,7 +3,7 @@
     using System.IO;
     using System.Net.Mail;
     using System.Net.Mime;
-
+    using System.Threading.Tasks;
 
     public class Email
     {
@@ -82,6 +82,10 @@
         public void Enviar()
         {
             _smtp.Send(_mailMessage);
+        }
+        public async Task EnviarAsync()
+        {
+            await _smtp.SendMailAsync(_mailMessage);
         }
     }
 }
