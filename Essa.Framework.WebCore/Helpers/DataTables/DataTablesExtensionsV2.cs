@@ -1,4 +1,4 @@
-﻿namespace SENAR.Framework.Web.Helpers.DataTables
+﻿namespace Essa.Framework.Web.Helpers.DataTables
 {
     using global::DataTables.AspNet.Core;
     using System.Collections.Generic;

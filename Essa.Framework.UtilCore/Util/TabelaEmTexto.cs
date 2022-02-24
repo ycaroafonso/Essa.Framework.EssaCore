@@ -1,9 +1,9 @@
-﻿namespace SENAR.Framework.Util.Util
+﻿namespace Essa.Framework.Util.Util
 {
     using Essa.Framework.Util.Extensions;
     using System;
     using System.Collections.Generic;
-    using static SENAR.Framework.Util.Util.TabelaEmTextoColuna;
+    using static Essa.Framework.Util.Util.TabelaEmTextoColuna;
 
     public interface ITabelaEmTextoAddColuna
     {

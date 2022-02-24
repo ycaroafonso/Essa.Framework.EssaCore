@@ -12,5 +12,7 @@
         public string Situacao { get; set; }
         public string Mensagem { get; set; }
         public object Parametros { get; set; }
+
+        public string Erro { get; set; }
     }
 }
