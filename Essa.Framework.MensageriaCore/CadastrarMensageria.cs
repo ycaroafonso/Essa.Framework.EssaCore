@@ -78,6 +78,15 @@ namespace Essa.Framework.Mensageria
                      routingKey: _routingKey);
         }
 
+        public void TravarFinalizacao()
+        {
+            do
+            {
+                Console.WriteLine("");
+                Console.WriteLine("Mensageria em execução. Digite \"F\" para finalizar!");
+            } while (Console.ReadKey().Key.ToString() != "F");
+        }
+
 
 
 
