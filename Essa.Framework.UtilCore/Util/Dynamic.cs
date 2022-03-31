@@ -1,6 +1,6 @@
 ﻿//Copyright (C) Microsoft Corporation.  All rights reserved.
 
-namespace SENAR.Framework.Util
+namespace Essa.Framework.Util
 {
     using System;
     using System.Collections.Generic;
