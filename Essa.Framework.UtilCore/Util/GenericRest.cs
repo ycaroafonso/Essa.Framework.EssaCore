@@ -1,26 +1,25 @@
-﻿namespace Essa.Framework.Util.Util
+﻿using Flurl;
+using Flurl.Http;
+using Flurl.Http.Content;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
+namespace Essa.Framework.Util.Util
 {
-    using Flurl;
-    using Flurl.Http;
-    using Flurl.Http.Content;
-    using System;
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
-
-
     public class GenericRest
     {
         protected bool IsSuccessStatusCode { get; private set; } = true;
 
 
         Url _url;
-        private readonly string _servidor;
+        public string Servidor { get; protected set; }
         private readonly string _controllerUrl;
 
         public GenericRest(string servidor, string controllerUrl)
         {
             _url = servidor;
-            _servidor = servidor;
+            Servidor = servidor;
             _controllerUrl = controllerUrl;
         }
 
