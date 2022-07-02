@@ -1,1 +1,2 @@
 # Essa.Framework.EssaCore
+TESTE
