@@ -97,18 +97,53 @@ namespace Essa.Framework.Web.Helpers.DataTables
                     _listaFiltrada = _listaFiltrada.OrderBy(sortColumm.Name + " desc");
                 else
                     _listaFiltrada = _listaFiltrada.OrderBy(sortColumm.Name);
-
-                _listaFiltrada = _listaFiltrada.Skip(_request.Start);
-
-                if (_request.Length > 0)
-                    _listaFiltrada = _listaFiltrada.Take(_request.Length);
             }
+
+            _listaFiltrada = _listaFiltrada.Skip(_request.Start);
+
+            if (_request.Length > 0)
+                _listaFiltrada = _listaFiltrada.Take(_request.Length);
 
             var listaFinal = _listaFiltrada.ToList().Select(select);
 
             var response = DataTablesResponse.Create(_request, _qtdeTotal, qtdeFiltrado, listaFinal, additionalParameters);
             return new DataTablesJsonResult(response);
         }
+
+        public DataTablesJsonResult ToReturn<TResult>(Func<T, TResult> select, bool isOrdernar, IDictionary<string, object> additionalParameters = null)
+        {
+            var qtdeFiltrado = _listaFiltrada.Count();
+
+            if (isOrdernar)
+            {
+                var sortColumm = _request.Columns.FirstOrDefault(x => x.Sort != null);
+                if (sortColumm != null)
+                {
+                    if (sortColumm.Sort.Direction == SortDirection.Descending)
+                        _listaFiltrada = _listaFiltrada.OrderBy(sortColumm.Name + " desc");
+                    else
+                        _listaFiltrada = _listaFiltrada.OrderBy(sortColumm.Name);
+                }
+            }
+
+            _listaFiltrada = _listaFiltrada.Skip(_request.Start);
+
+            if (_request.Length > 0)
+                _listaFiltrada = _listaFiltrada.Take(_request.Length);
+
+            var listaFinal = _listaFiltrada.ToList().Select(select);
+
+            var response = DataTablesResponse.Create(_request, _qtdeTotal, qtdeFiltrado, listaFinal, additionalParameters);
+            return new DataTablesJsonResult(response);
+        }
+
+
+
+
+
+
+
+
 
 
         private string ProcessaValor(string valor)

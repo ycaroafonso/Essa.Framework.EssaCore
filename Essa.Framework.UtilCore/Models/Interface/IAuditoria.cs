@@ -8,4 +8,8 @@
         int? auditoriausuarioid { get; set; }
         DateTime? auditoriadatahora { get; set; }
     }
+    public interface IAuditoriaUsuarioCadastro
+    {
+        public int? usuarioidcadastro { get; set; }
+    }
 }
