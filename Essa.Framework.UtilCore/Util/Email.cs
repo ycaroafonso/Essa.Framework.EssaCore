@@ -12,6 +12,8 @@
 
         MailMessage _mailMessage;
 
+        public bool EnableSsl { get; set; }
+
         public Email Titulo(string titulo)
         {
             _mailMessage.Subject = titulo;
