@@ -3,7 +3,7 @@
     using System.IO;
     using System.Net.Mail;
     using System.Net.Mime;
-
+    using System.Threading.Tasks;
 
     public class Email
     {
@@ -11,6 +11,8 @@
         private SmtpClient _smtp;
 
         MailMessage _mailMessage;
+
+        public bool EnableSsl { get; set; }
 
         public Email Titulo(string titulo)
         {
@@ -49,6 +51,12 @@
 
             return this;
         }
+        public Email AddDestinatarioCc(string email)
+        {
+            _mailMessage.CC.Add(email);
+
+            return this;
+        }
 
         public Email AddDestinatarioCco(string email)
         {
@@ -76,6 +84,10 @@
         public void Enviar()
         {
             _smtp.Send(_mailMessage);
+        }
+        public async Task EnviarAsync()
+        {
+            await _smtp.SendMailAsync(_mailMessage);
         }
     }
 }

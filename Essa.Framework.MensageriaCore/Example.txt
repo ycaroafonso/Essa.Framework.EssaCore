@@ -1,0 +1,16 @@
+﻿            using (var conexao = new ConexaoMensageria(EssaGestaoCore.DTO.Util.ConexaoRabbitPadrao))
+            using (var mensageria = new CadastrarMensageria(conexao))
+            {
+                mensageria.CriarFila(MensageriaNome.essagestao_work_extratobanco_ImportarOfx);
+
+                mensageria.Receber<ImportarOfxEnvioDTO>((tag, envio) => 
+                {
+                    Log.Information("NOVO " + envio.NomeArquivo);
+
+                    // Execução
+                    
+
+                    mensageria.ConfirmarRecebimento(tag);
+                });
+                Console.ReadLine();
+            }

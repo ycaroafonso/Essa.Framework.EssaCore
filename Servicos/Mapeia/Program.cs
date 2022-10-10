@@ -1,5 +1,6 @@
 ﻿namespace Mapeia
 {
+    using Essa.Framework.Util.Repository;
     using Mapeia.Models;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
@@ -16,10 +17,11 @@
 
         static void Main(string[] args)
         {
-            var serviceCollection = new ServiceCollection();
-            serviceCollection.AddDbContext<FoccusContext>(o => o.UseMySql(EssaGestaoCore.DTO.Util.StringDeConexaoPadrao.Replace("gis_local", "gis_local")));
-            _contexto = serviceCollection.BuildServiceProvider().GetService<FoccusContext>();
 
+            string connetionString = EssaGestaoCore.DTO.Util.StringDeConexaoPadrao.Replace("gis_local", "gis_local");
+            var serviceCollection = new ServiceCollection();
+            serviceCollection.AddDbContext<FoccusContext>(o => o.UseMySql(connetionString, ServerVersion.AutoDetect(connetionString)));
+            _contexto = serviceCollection.BuildServiceProvider().GetService<FoccusContext>();
 
             var ret = P01ChavePrimaria();
             ret += "\n";

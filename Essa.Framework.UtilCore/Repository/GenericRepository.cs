@@ -122,11 +122,7 @@
         {
             return Contexto.Set<T>();
         }
-
-        IDbContextTransaction IGenericBaseRepository.BeginTransaction()
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 
 

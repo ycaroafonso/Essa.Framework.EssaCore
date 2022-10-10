@@ -1,11 +1,11 @@
-﻿namespace Essa.Framework.Web.Extensions
-{
-    using Microsoft.AspNetCore.Mvc.Rendering;
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Linq;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
+namespace Essa.Framework.Web.Extensions
+{
     public static class UtilExtensions
     {
         public static SelectList ToSelectList<T>(this T[] lista)
@@ -61,6 +61,7 @@
 
             return new SelectList(list, "Value", "Text", valorSelecionado);
         }
+
         public static DateTime StrToDateTime(this String valor)
         {
             if (valor.IndexOf("/") == -1 && valor.IndexOf("-") == -1)
