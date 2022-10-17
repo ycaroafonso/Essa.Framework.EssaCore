@@ -6,6 +6,14 @@
     using System.IO;
 
 
+    public static class LogV2
+    {
+        public static void Information(string messageTemplate)
+        {
+            Log.Information(messageTemplate);
+        }
+    }
+
     public class LoggerUtil
     {
         public Serilog.Core.Logger Log { get; set; }
