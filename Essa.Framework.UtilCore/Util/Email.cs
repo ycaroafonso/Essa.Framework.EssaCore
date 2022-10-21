@@ -28,7 +28,7 @@
             _smtp = new SmtpClient(servidor, porta);
             _smtp.EnableSsl = true;
             _smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
-            _smtp.UseDefaultCredentials = true;
+            _smtp.UseDefaultCredentials = false;
             _smtp.Credentials = _credencial;
 
             _mailMessage = new MailMessage();
