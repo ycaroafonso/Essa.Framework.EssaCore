@@ -14,17 +14,17 @@
             return Convert.ToInt32(valor);
         }
 
-        public static byte[] ToByteArray(this object obj)
-        {
-            if (obj == null)
-                return null;
-            BinaryFormatter bf = new BinaryFormatter();
-            using (MemoryStream ms = new MemoryStream())
-            {
-                bf.Serialize(ms, obj);
-                return ms.ToArray();
-            }
-        }
+        //public static byte[] ToByteArray(this object obj)
+        //{
+        //    if (obj == null)
+        //        return null;
+        //    BinaryFormatter bf = new BinaryFormatter();
+        //    using (MemoryStream ms = new MemoryStream())
+        //    {
+        //        bf.Serialize(ms, obj);
+        //        return ms.ToArray();
+        //    }
+        //}
 
         public static bool IfNegative<T>(this T value) where T : IComparable<T>
         {

@@ -33,17 +33,17 @@
             return Encrypt();
         }
 
-        public string Encrypt(object obj)
-        {
-            BinaryFormatter bf = new BinaryFormatter();
+        //public string Encrypt(object obj)
+        //{
+        //    BinaryFormatter bf = new BinaryFormatter();
 
-            using (MemoryStream ms = new MemoryStream())
-            {
-                bf.Serialize(ms, obj);
-                _texto = ms.ToArray();
-            }
+        //    using (MemoryStream ms = new MemoryStream())
+        //    {
+        //        bf.Serialize(ms, obj);
+        //        _texto = ms.ToArray();
+        //    }
 
-            return Encrypt();
-        }
+        //    return Encrypt();
+        //}
     }
 }
