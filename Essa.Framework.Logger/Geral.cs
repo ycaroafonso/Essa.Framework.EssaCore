@@ -42,6 +42,7 @@
 .MinimumLevel.Debug()
 .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
 .Enrich.FromLogContext()
+.Enrich.WithProperty("Sistema", nomePrograma)
 .WriteTo.Console()
 .WriteTo.MySQL(connectionString, tableName: "portallogservico", tag: nomePrograma)
 .CreateLogger();

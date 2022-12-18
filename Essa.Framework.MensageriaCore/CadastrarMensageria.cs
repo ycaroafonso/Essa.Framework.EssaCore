@@ -162,7 +162,7 @@ namespace Essa.Framework.Mensageria
 
         public void Dispose()
         {
-            _channel.Dispose();
+            _channel?.Dispose();
         }
 
 

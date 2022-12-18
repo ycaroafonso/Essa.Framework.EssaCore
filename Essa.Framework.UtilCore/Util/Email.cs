@@ -12,6 +12,8 @@
 
         MailMessage _mailMessage;
 
+        public bool EnableSsl { get; set; }
+
         public Email Titulo(string titulo)
         {
             _mailMessage.Subject = titulo;
@@ -26,7 +28,7 @@
             _smtp = new SmtpClient(servidor, porta);
             _smtp.EnableSsl = true;
             _smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
-            _smtp.UseDefaultCredentials = true;
+            _smtp.UseDefaultCredentials = false;
             _smtp.Credentials = _credencial;
 
             _mailMessage = new MailMessage();
