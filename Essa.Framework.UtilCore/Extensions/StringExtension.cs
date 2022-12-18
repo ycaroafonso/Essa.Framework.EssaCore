@@ -875,9 +875,9 @@
 
 
 
-        public static DateTime ToDate(this string valor)
+        public static DateTime ToDate(this string valor,string formato= "dd/MM/yyyy")
         {
-            return DateTime.ParseExact(valor, "dd/MM/yyyy", //HH:mm:ss,fff
+            return DateTime.ParseExact(valor, formato, //HH:mm:ss,fff
                                        System.Globalization.CultureInfo.InvariantCulture);
         }
 
