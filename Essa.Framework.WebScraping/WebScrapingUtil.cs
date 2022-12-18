@@ -23,6 +23,8 @@
             //chromeOptions.AddUserProfilePreference("download.default_directory", _diretorio);
             if (isDesabilitarImagens)
                 _chromeOptions.AddUserProfilePreference("profile.default_content_setting_values.images", 2);
+            else
+                _chromeOptions.AddUserProfilePreference("profile.default_content_setting_values.images", 1);
             _chromeOptions.AddArgument(@"--user-data-dir=" + Path.GetFullPath(@"browsercache", diretorioCache));
         }
 
