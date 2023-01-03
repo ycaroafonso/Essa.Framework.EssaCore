@@ -32,9 +32,26 @@
             return Contexto.Set<T>().FromSqlRaw(sql, parametros).ToList();
         }
 
+        public IQueryable<T> SqlQueryInterpolated<T>(FormattableString sql) where T : class
+        {
+            return Contexto.Set<T>().FromSqlInterpolated(sql);
+        }
+
         public int ExecuteSqlCommand(string sql, params object[] parametros)
         {
             return Contexto.Database.ExecuteSqlRaw(sql, parametros);
+        }
+        public int ExecuteSqlCommandInterpolated(FormattableString sql)
+        {
+            return Contexto.Database.ExecuteSqlInterpolated(sql);
+        }
+        public Task<int> ExecuteSqlCommandInterpolatedAsync(FormattableString sql)
+        {
+            return Contexto.Database.ExecuteSqlInterpolatedAsync(sql);
+        }
+        public async Task<int> ExecuteSqlCommandAsync(string sql, params object[] parametros)
+        {
+            return await Contexto.Database.ExecuteSqlRawAsync(sql, parametros);
         }
 
         public IDbContextTransaction BeginTransaction()
@@ -122,7 +139,7 @@
         {
             return Contexto.Set<T>();
         }
-        
+
     }
 
 
