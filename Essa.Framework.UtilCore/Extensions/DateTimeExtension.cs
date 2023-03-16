@@ -1,5 +1,6 @@
 ﻿namespace Essa.Framework.Util.Extensions
 {
+    using global::Util.Excel;
     using System;
 
 
@@ -107,6 +108,23 @@
         {
             return data.IsAniversario(DateTime.Today);
         }
+
+
+
+
+
+        public static DateTime ParaDataHoraMG(this DateTime data)
+        {
+            return data.ToUniversalTime().AddHours(-3);
+        }
+
+
+
+
+
+
+
+
 
     }
 }
