@@ -17,7 +17,7 @@
             {
                 _texto = md5Hash.ComputeHash(_texto);
 
-                return string.Join("", _texto.Select(c => c.ToString("X2")));
+                return string.Join("", _texto.Select(c => c.ToString("x2")));
             }
         }
 
