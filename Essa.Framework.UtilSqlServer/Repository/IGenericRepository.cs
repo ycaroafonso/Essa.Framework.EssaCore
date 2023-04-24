@@ -31,6 +31,7 @@
     public interface IGenericSalvarRepository
     {
         int Salvar();
+        Task<int> SalvarAsync();
     }
 
 
@@ -42,11 +43,13 @@
     {
         IGenericRepository<T> Incluir(T instancia);
         IGenericRepository<T> Incluir(ICollection<T> instancia);
+        Task<IGenericRepository<T>> IncluirAsync(T instancia);
     }
     public interface IGenericIncluirRepository
     {
         void Incluir<T>(T instancia) where T : class;
         void Incluir<T>(ICollection<T> instancia) where T : class;
+        Task IncluirAsync<T>(T instancia) where T : class;
     }
 
 

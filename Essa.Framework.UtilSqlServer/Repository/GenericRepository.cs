@@ -121,10 +121,23 @@
         {
             Contexto.Set<T>().Add(instancia);
         }
+        public async Task IncluirAsync<T>(T instancia) where T : class
+        {
+            await Contexto.Set<T>().AddAsync(instancia);
+        }
+
+
+
+
 
         public int Salvar()
         {
             return Contexto.SaveChanges();
+        }
+
+        public Task<int> SalvarAsync()
+        {
+            return Contexto.SaveChangesAsync();
         }
 
 
@@ -161,6 +174,12 @@
         public IGenericRepository<T> Incluir(T instancia)
         {
             Contexto.Set<T>().Add(instancia);
+
+            return this;
+        }
+        public async Task<IGenericRepository<T>> IncluirAsync(T instancia)
+        {
+            await Contexto.Set<T>().AddAsync(instancia);
 
             return this;
         }
