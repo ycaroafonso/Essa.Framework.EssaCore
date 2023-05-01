@@ -156,7 +156,7 @@
     }
 
 
-    public class GenericRepository<T, TContext> : GenericRepository<TContext>, IGenericRepository<T>
+    public class GenericRepository<T, TContext> : GenericRepository<TContext>, IGenericBaseRepository, IGenericRepository<T>
         where T : class
         where TContext : DbContext
     {
@@ -261,6 +261,11 @@
 
 
         #endregion
+
+        public IDbContextTransaction BeginTransaction()
+        {
+            return Contexto.Database.BeginTransaction();
+        }
 
 
     }
