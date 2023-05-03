@@ -115,7 +115,7 @@
 
         public static DateTime ParaDataHoraMG(this DateTime data)
         {
-            return data.ToUniversalTime().AddHours(-3);
+            return DateTime.SpecifyKind(data, DateTimeKind.Local).ToUniversalTime().AddHours(-3);
         }
 
 
