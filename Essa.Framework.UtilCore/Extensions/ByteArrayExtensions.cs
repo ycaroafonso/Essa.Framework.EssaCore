@@ -1,22 +1,14 @@
 ﻿namespace Essa.Framework.Util.Extensions
 {
-    using System.IO;
-    using System.Runtime.Serialization.Formatters.Binary;
+    using System;
 
 
     public static class ByteArrayExtensions
     {
-        //public static T ToObject<T>(this byte[] data)
-        //{
-        //    if (data == null)
-        //        return default(T);
-        //    BinaryFormatter bf = new BinaryFormatter();
-        //    using (MemoryStream ms = new MemoryStream(data))
-        //    {
-        //        object obj = bf.Deserialize(ms);
-        //        return (T)obj;
-        //    }
-        //}
+        public static string ToBase64(this byte[] data)
+        {
+            return Convert.ToBase64String(data);
+        }
 
         //public static Stream ToStream(this byte[] file)
         //{

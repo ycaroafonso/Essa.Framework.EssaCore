@@ -405,6 +405,7 @@ namespace Essa.Framework.Util
         {
             void Where(bool predicate);
             void Any();
+            void First();
             void Any(bool predicate);
             void All(bool predicate);
             void Count();

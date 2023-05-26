@@ -121,10 +121,23 @@
         {
             Contexto.Set<T>().Add(instancia);
         }
+        public async Task IncluirAsync<T>(T instancia) where T : class
+        {
+            await Contexto.Set<T>().AddAsync(instancia);
+        }
+
+
+
+
 
         public int Salvar()
         {
             return Contexto.SaveChanges();
+        }
+
+        public Task<int> SalvarAsync()
+        {
+            return Contexto.SaveChangesAsync();
         }
 
 
@@ -143,7 +156,7 @@
     }
 
 
-    public class GenericRepository<T, TContext> : GenericRepository<TContext>, IGenericRepository<T>
+    public class GenericRepository<T, TContext> : GenericRepository<TContext>, IGenericBaseRepository, IGenericRepository<T>
         where T : class
         where TContext : DbContext
     {
@@ -161,6 +174,12 @@
         public IGenericRepository<T> Incluir(T instancia)
         {
             Contexto.Set<T>().Add(instancia);
+
+            return this;
+        }
+        public async Task<IGenericRepository<T>> IncluirAsync(T instancia)
+        {
+            await Contexto.Set<T>().AddAsync(instancia);
 
             return this;
         }
@@ -242,6 +261,11 @@
 
 
         #endregion
+
+        public IDbContextTransaction BeginTransaction()
+        {
+            return Contexto.Database.BeginTransaction();
+        }
 
 
     }
