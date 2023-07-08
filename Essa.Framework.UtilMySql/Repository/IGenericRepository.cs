@@ -31,6 +31,7 @@
     public interface IGenericSalvarRepository
     {
         int Salvar();
+        Task<int> SalvarAsync();
     }
 
 
