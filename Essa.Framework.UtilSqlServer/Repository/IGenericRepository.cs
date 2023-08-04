@@ -7,7 +7,7 @@
     using System.Linq;
 
 
-    public interface IGenericBaseRepository : IDisposable
+    public interface IGenericTransactionRepository : IDisposable
     {
         //DbRawSqlQuery<T> SqlQuery<T>(string sql, params object[] parametros);
         //int ExecuteSqlCommand(string sql, params object[] parametros);
@@ -115,12 +115,12 @@
 
 
 
-    public interface IGenericRepository<T> : IGenericReadRepository<T>, IGenericIncluirRepository<T>, IGenericAlterarRepository<T>, IGenericExcluirRepository<T>, IGenericSalvarRepository
+    public interface IGenericRepository<T> : IGenericTransactionRepository, IGenericReadRepository<T>, IGenericIncluirRepository<T>, IGenericAlterarRepository<T>, IGenericExcluirRepository<T>, IGenericSalvarRepository
         where T : class
     {
     }
 
-    public interface IGenericRepository : IGenericReadRepository, IGenericIncluirRepository, IGenericAlterarRepository, IGenericExcluirRepository, IGenericSalvarRepository
+    public interface IGenericRepository : IGenericTransactionRepository, IGenericReadRepository, IGenericIncluirRepository, IGenericAlterarRepository, IGenericExcluirRepository, IGenericSalvarRepository
     {
     }
 }
