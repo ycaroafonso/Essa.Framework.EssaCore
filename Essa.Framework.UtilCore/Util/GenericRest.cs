@@ -1,13 +1,27 @@
 ﻿using Essa.Framework.Util.Extensions;
 using Flurl;
 using Flurl.Http;
+using Flurl.Http.Configuration;
 using Flurl.Http.Content;
 using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace Essa.Framework.Util.Util
 {
+    public class UntrustedCertClientFactory : DefaultHttpClientFactory
+    {
+        public override HttpMessageHandler CreateMessageHandler()
+        {
+            return new HttpClientHandler
+            {
+                ServerCertificateCustomValidationCallback = (_a, _b, _c, _d) => true
+            };
+        }
+    }
+
+
     public class GenericRest
     {
         protected bool IsSuccessStatusCode { get; private set; } = true;
@@ -22,14 +36,21 @@ namespace Essa.Framework.Util.Util
             Servidor = servidor;
 
             _controllerUrl = controllerUrl;
+
+
+            FlurlHttp.ConfigureClient(Servidor, cli =>
+            cli.Settings.HttpClientFactory = new UntrustedCertClientFactory());
         }
+
+
+
+
 
         string _token = null;
         public virtual void SetToken(string token)
         {
             _token = token;
         }
-
 
 
         protected Url MontarUrl(string path, object parametros = null)
@@ -43,15 +64,34 @@ namespace Essa.Framework.Util.Util
 
             return url;
         }
-
-        protected async Task<T> GetOneAsync<T>(string path, object parametros = null)
+        protected void MontarUrlV2(string path, object parametros = null)
         {
-            Url url = MontarUrl(path, parametros);
+            Url url = Servidor;
+            url.AppendPathSegments(_controllerUrl, path);
 
 
             if (parametros != null)
                 url.SetQueryParams(parametros);
 
+            _url = new FlurlRequest(url);
+        }
+
+        protected async Task<string> GetStringAsync(string path, object parametros = null)
+        {
+            Url url = MontarUrl(path, parametros);
+            string ret;
+
+            if (!string.IsNullOrEmpty(_token))
+                ret = await url.WithOAuthBearerToken(_token).GetStringAsync();
+            else
+                ret = await url.GetStringAsync();
+
+            return ret;
+        }
+
+        protected async Task<T> GetOneAsync<T>(string path, object parametros = null)
+        {
+            Url url = MontarUrl(path, parametros);
             T ret;
 
             if (!string.IsNullOrEmpty(_token))
@@ -67,15 +107,39 @@ namespace Essa.Framework.Util.Util
         {
             Url url = MontarUrl(path, parametros);
 
-
-            if (parametros != null)
-                url.SetQueryParams(parametros);
-
             if (!string.IsNullOrEmpty(_token))
                 return await url.WithOAuthBearerToken(_token).GetJsonListAsync();
             else
                 return await url.GetJsonListAsync();
         }
+
+
+
+
+
+
+        protected FlurlRequest _url;
+        public async Task<List<T>> GetListAsync<T>(string path, object parametros = null) where T : class
+        {
+            Url url = MontarUrl(path, parametros);
+
+            if (!string.IsNullOrEmpty(_token))
+                return (await url.WithOAuthBearerToken(_token).GetStringAsync()).ToOjectFromJson<List<T>>();
+            else
+                return (await url.GetStringAsync()).ToOjectFromJson<List<T>>();
+        }
+        protected async Task<List<T>> GetListAsync<T>() where T : class
+        {
+            if (!string.IsNullOrEmpty(_token))
+                return (await _url.WithOAuthBearerToken(_token).GetStringAsync()).ToOjectFromJson<List<T>>();
+            else
+                return (await _url.GetStringAsync()).ToOjectFromJson<List<T>>();
+        }
+
+
+
+
+
 
 
         protected async Task<T> Put<T>(string path, object obj)
@@ -97,7 +161,10 @@ namespace Essa.Framework.Util.Util
 
 
 
-        protected async Task<T> Post<T>(string path, object obj)
+
+
+
+        public async Task<T> Post<T>(string path, object obj)
         {
 #if DEBUG
             string json = obj.ToJson();
@@ -119,6 +186,27 @@ namespace Essa.Framework.Util.Util
 
 
 
+        protected async Task Post(string path, object obj)
+        {
+#if DEBUG
+            string json = obj.ToJson();
+#endif
+
+            Url url = MontarUrl(path);
+
+            Task<IFlurlResponse> ret;
+
+            IFlurlResponse ret2;
+            if (!string.IsNullOrEmpty(_token))
+                ret2 = await url.WithOAuthBearerToken(_token).PostJsonAsync(obj);
+            else
+                ret2 = await url.PostJsonAsync(obj);
+
+            IsSuccessStatusCode = ret2.StatusCode >= 200 && ret2.StatusCode <= 299;
+        }
+
+
+
 
         protected async Task<T> Post<T>(string path, string filepath, string nomeparametro, string nomearquivo, object obj)
             where T : class
@@ -128,7 +216,7 @@ namespace Essa.Framework.Util.Util
 #if DEBUG
                 string json = obj.ToJson();
 #endif
-                Url url = MontarUrl(path);
+                Url url = Servidor;
                 url.AppendPathSegments(_controllerUrl, path)
                         .WithHeader("Content-Type", "application/json; charset=utf8")
                         .WithHeader("Accept", "application/json")
@@ -183,6 +271,7 @@ namespace Essa.Framework.Util.Util
 
             return await ret.GetJsonAsync<T>();
         }
+
 
 
     }
