@@ -31,6 +31,15 @@ namespace Essa.Framework.Util.Util
 
         private readonly string _controllerUrl;
 
+
+
+
+        public GenericRest()
+        {
+            FlurlHttp.ConfigureClient(Servidor, cli =>
+            cli.Settings.HttpClientFactory = new UntrustedCertClientFactory());
+        }
+
         public GenericRest(string servidor, string controllerUrl)
         {
             Servidor = servidor;
@@ -64,6 +73,20 @@ namespace Essa.Framework.Util.Util
 
             return url;
         }
+        protected void MontarUrlV2(string servidor, string path, object parametros = null)
+        {
+            Servidor = servidor;
+
+            Url url = Servidor;
+            url.AppendPathSegments(_controllerUrl, path);
+
+
+            if (parametros != null)
+                url.SetQueryParams(parametros);
+
+            _url = new FlurlRequest(url);
+        }
+
         protected void MontarUrlV2(string path, object parametros = null)
         {
             Url url = Servidor;
