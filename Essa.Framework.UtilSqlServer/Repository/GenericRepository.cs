@@ -1,25 +1,18 @@
-﻿namespace Essa.Framework.Util.Repository
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
+using System.Linq.Expressions;
+
+namespace Essa.Framework.Util.Repository
 {
-    using Microsoft.EntityFrameworkCore;
-    using Microsoft.EntityFrameworkCore.Storage;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Linq.Expressions;
-
-
     public class GenericRepository<TContext> : IGenericTransactionRepository, IGenericRepository
         where TContext : DbContext
     {
-
-        string _nomeInstancia;
 
 
         protected TContext Contexto { get; private set; }
 
         public GenericRepository(TContext contexto)
         {
-            _nomeInstancia = typeof(TContext).ToString();
             Contexto = contexto;
         }
 
@@ -53,6 +46,10 @@
         {
             return await Contexto.Database.ExecuteSqlRawAsync(sql, parametros);
         }
+
+
+
+
 
         public IDbContextTransaction BeginTransaction()
         {
