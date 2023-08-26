@@ -186,25 +186,65 @@ namespace Essa.Framework.Util.Util
 
 
 
-
+        [Obsolete]
         public async Task<T> Post<T>(string path, object obj)
         {
+            try
+            {
 #if DEBUG
-            string json = obj.ToJson();
+                string json = obj.ToJson();
 #endif
 
-            Url url = MontarUrl(path);
+                Url url = MontarUrl(path);
 
-            Task<IFlurlResponse> ret;
+                Task<IFlurlResponse> ret;
 
-            if (!string.IsNullOrEmpty(_token))
-                ret = url.WithOAuthBearerToken(_token).PostJsonAsync(obj);
-            else
-                ret = url.PostJsonAsync(obj);
+                if (!string.IsNullOrEmpty(_token))
+                    ret = url.WithOAuthBearerToken(_token).PostJsonAsync(obj);
+                else
+                    ret = url.PostJsonAsync(obj);
 
-            IsSuccessStatusCode = ret.IsCompleted;
+                IsSuccessStatusCode = ret.IsCompleted;
 
-            return await ret.ReceiveJson<T>();
+                return await ret.ReceiveJson<T>();
+            }
+            catch (FlurlHttpException ex2)
+            {
+                throw ex2;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        public async Task<T> Post<T>(object obj)
+        {
+            try
+            {
+#if DEBUG
+                string json = obj.ToJson();
+#endif
+
+                Task<IFlurlResponse> ret;
+
+                if (!string.IsNullOrEmpty(_token))
+                    ret = _url.WithOAuthBearerToken(_token).PostJsonAsync(obj);
+                else
+                    ret = _url.PostJsonAsync(obj);
+
+                IsSuccessStatusCode = ret.IsCompleted;
+
+                return await ret.ReceiveJson<T>();
+            }
+            catch (FlurlHttpException ex2)
+            {
+                throw ex2;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
 
 
