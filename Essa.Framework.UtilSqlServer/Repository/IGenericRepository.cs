@@ -1,20 +1,9 @@
-﻿namespace Essa.Framework.Util.Repository
+﻿using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace Essa.Framework.Util.Repository
 {
-    using Microsoft.EntityFrameworkCore;
-    using Microsoft.EntityFrameworkCore.Storage;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-
-
-    public interface IGenericBaseRepository : IDisposable
-    {
-        //DbRawSqlQuery<T> SqlQuery<T>(string sql, params object[] parametros);
-        //int ExecuteSqlCommand(string sql, params object[] parametros);
-        IDbContextTransaction BeginTransaction();
-    }
-
-
     public interface IGenericReadRepository
     {
         IQueryable<T> ObterTodos<T>() where T : class;
@@ -24,14 +13,6 @@
         where T : class
     {
         IQueryable<T> ObterTodos();
-    }
-
-
-
-    public interface IGenericSalvarRepository
-    {
-        int Salvar();
-        Task<int> SalvarAsync();
     }
 
 
@@ -111,16 +92,12 @@
     }
 
 
-
-
-
-
-    public interface IGenericRepository<T> : IGenericReadRepository<T>, IGenericIncluirRepository<T>, IGenericAlterarRepository<T>, IGenericExcluirRepository<T>, IGenericSalvarRepository
+    public interface IGenericRepository<T> : IGenericTransactionRepository, IGenericReadRepository<T>, IGenericIncluirRepository<T>, IGenericAlterarRepository<T>, IGenericExcluirRepository<T>, IGenericSalvarRepository, IGenericSqlCommandRepository
         where T : class
     {
     }
 
-    public interface IGenericRepository : IGenericReadRepository, IGenericIncluirRepository, IGenericAlterarRepository, IGenericExcluirRepository, IGenericSalvarRepository
+    public interface IGenericRepository : IGenericTransactionRepository, IGenericReadRepository, IGenericIncluirRepository, IGenericAlterarRepository, IGenericExcluirRepository, IGenericSalvarRepository, IGenericSqlCommandRepository
     {
     }
 }

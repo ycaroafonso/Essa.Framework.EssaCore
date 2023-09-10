@@ -1,25 +1,18 @@
-﻿namespace Essa.Framework.Util.Repository
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
+using System.Linq.Expressions;
+
+namespace Essa.Framework.Util.Repository
 {
-    using Microsoft.EntityFrameworkCore;
-    using Microsoft.EntityFrameworkCore.Storage;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Linq.Expressions;
-
-
-    public class GenericRepository<TContext> : IGenericBaseRepository, IGenericRepository
+    public class GenericRepository<TContext> : IGenericTransactionRepository, IGenericRepository
         where TContext : DbContext
     {
-
-        string _nomeInstancia;
 
 
         protected TContext Contexto { get; private set; }
 
         public GenericRepository(TContext contexto)
         {
-            _nomeInstancia = typeof(TContext).ToString();
             Contexto = contexto;
         }
 
@@ -54,9 +47,17 @@
             return await Contexto.Database.ExecuteSqlRawAsync(sql, parametros);
         }
 
+
+
+
+
         public IDbContextTransaction BeginTransaction()
         {
             return Contexto.Database.BeginTransaction();
+        }
+        public async Task<IDbContextTransaction> BeginTransactionAsync()
+        {
+            return await Contexto.Database.BeginTransactionAsync();
         }
 
 
@@ -156,7 +157,7 @@
     }
 
 
-    public class GenericRepository<T, TContext> : GenericRepository<TContext>, IGenericBaseRepository, IGenericRepository<T>
+    public class GenericRepository<T, TContext> : GenericRepository<TContext>, IGenericTransactionRepository, IGenericRepository<T>
         where T : class
         where TContext : DbContext
     {
@@ -246,12 +247,13 @@
 
         #region Plus
 
-
+        [Obsolete]
         public void AnexarAdded(T instancia)
         {
             Anexar(instancia, EntityState.Added);
         }
 
+        [Obsolete]
         public virtual IGenericRepository<T> AnexarAdded(ICollection<T> lista)
         {
             Anexar(lista, EntityState.Added);
@@ -262,10 +264,6 @@
 
         #endregion
 
-        public IDbContextTransaction BeginTransaction()
-        {
-            return Contexto.Database.BeginTransaction();
-        }
 
 
     }

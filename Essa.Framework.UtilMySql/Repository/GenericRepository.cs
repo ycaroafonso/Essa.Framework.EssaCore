@@ -6,7 +6,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Linq.Expressions;
-
+    using System.Threading.Tasks;
 
     public class GenericRepository<TContext> : IGenericBaseRepository, IGenericRepository
         where TContext : DbContext
@@ -122,7 +122,11 @@
         {
             return Contexto.Set<T>();
         }
-        
+
+        public Task<int> SalvarAsync()
+        {
+            return Contexto.SaveChangesAsync();
+        }
     }
 
 
