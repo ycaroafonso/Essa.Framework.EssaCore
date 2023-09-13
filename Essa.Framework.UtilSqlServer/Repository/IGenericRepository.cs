@@ -95,6 +95,8 @@ namespace Essa.Framework.Util.Repository
     public interface IGenericRepository<T> : IGenericTransactionRepository, IGenericReadRepository<T>, IGenericIncluirRepository<T>, IGenericAlterarRepository<T>, IGenericExcluirRepository<T>, IGenericSalvarRepository, IGenericSqlCommandRepository
         where T : class
     {
+        IGenericRepository<T> Anexar(T instancia);
+
     }
 
     public interface IGenericRepository : IGenericTransactionRepository, IGenericReadRepository, IGenericIncluirRepository, IGenericAlterarRepository, IGenericExcluirRepository, IGenericSalvarRepository, IGenericSqlCommandRepository
