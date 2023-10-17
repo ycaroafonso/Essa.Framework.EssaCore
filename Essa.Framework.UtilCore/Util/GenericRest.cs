@@ -99,6 +99,7 @@ namespace Essa.Framework.Util.Util
             _url = new FlurlRequest(url);
         }
 
+        [Obsolete]
         protected async Task<string> GetStringAsync(string path, object parametros = null)
         {
             Url url = MontarUrl(path, parametros);
@@ -108,6 +109,19 @@ namespace Essa.Framework.Util.Util
                 ret = await url.WithOAuthBearerToken(_token).GetStringAsync();
             else
                 ret = await url.GetStringAsync();
+
+            return ret;
+        }
+        protected async Task<string> GetStringAsync(object parametros = null)
+        {
+            string ret;
+
+            _url.SetQueryParams(parametros);
+
+            if (!string.IsNullOrEmpty(_token))
+                ret = await _url.WithOAuthBearerToken(_token).GetStringAsync();
+            else
+                ret = await _url.GetStringAsync();
 
             return ret;
         }
