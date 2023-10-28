@@ -132,5 +132,10 @@
             return objOriginal;
         }
 
+
+        public static string GerarTokenUnico(int qtdeCaracteres = 6)
+        {
+            return Guid.NewGuid().ToString().Replace("-", string.Empty)[..qtdeCaracteres].ToUpper();
+        }
     }
 }

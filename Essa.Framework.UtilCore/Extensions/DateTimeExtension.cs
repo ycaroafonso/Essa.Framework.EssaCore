@@ -108,5 +108,22 @@
             return data.IsAniversario(DateTime.Today);
         }
 
+
+
+
+
+        public static DateTime ParaDataHoraMG(this DateTime data)
+        {
+            return DateTime.SpecifyKind(data, DateTimeKind.Local).ToUniversalTime().AddHours(-3);
+        }
+
+
+
+
+
+
+
+
+
     }
 }

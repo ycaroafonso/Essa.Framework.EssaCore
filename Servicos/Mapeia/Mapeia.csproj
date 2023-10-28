@@ -2,16 +2,16 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="6.0.1" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="7.0.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\EssaGestaoCore.DTO\EssaGestaoCore.DTO.csproj" />
     <ProjectReference Include="..\..\Essa.Framework.UtilCore\Essa.Framework.UtilCore.csproj" />
+    <ProjectReference Include="..\..\Essa.Framework.UtilMySql\Essa.Framework.UtilMySql.csproj" />
   </ItemGroup>
 
 </Project>

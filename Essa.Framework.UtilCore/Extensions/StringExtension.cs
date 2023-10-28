@@ -1,5 +1,6 @@
 ﻿namespace Essa.Framework.Util.Extensions
 {
+    using Essa.Framework.Util.Util;
     using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
@@ -604,7 +605,7 @@
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < hash.Length; i++)
             {
-                sb.Append(hash[i].ToString("X2"));
+                sb.Append(hash[i].ToString("x2"));
             }
             return sb.ToString();
         }
@@ -959,28 +960,22 @@
 
 
 
-
+        [Obsolete]
         public static string FormataCpf(this string valor)
         {
-            if (string.IsNullOrEmpty(valor)) return valor;
-            return string.Format(@"{0:000\.000\.000\-00}", Convert.ToInt64(valor));
+            return Formatar.Cpf(valor);
         }
 
+        [Obsolete]
         public static string FormataCnpj(this string valor)
         {
-            if (string.IsNullOrEmpty(valor)) return valor;
-            return string.Format(@"{0:00\.000\.000\/0000\-00}", Convert.ToInt64(valor));
+            return Formatar.Cnpj(valor);
         }
 
+        [Obsolete]
         public static string FormataCpfCnpj(this string valor)
         {
-            if (string.IsNullOrEmpty(valor))
-                return string.Empty;
-
-            if (valor.Length == 11)
-                return valor.FormataCpf();
-            else
-                return valor.FormataCnpj();
+            return Formatar.CpfCnpj(valor);
         }
 
 
