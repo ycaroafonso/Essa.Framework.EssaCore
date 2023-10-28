@@ -42,6 +42,7 @@
         where T : class
     {
         IGenericRepository<T> Incluir(T instancia);
+        Task<IGenericRepository<T>> IncluirAsync(T instancia);
         IGenericRepository<T> Incluir(ICollection<T> instancia);
     }
     public interface IGenericIncluirRepository

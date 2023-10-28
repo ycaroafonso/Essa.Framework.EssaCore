@@ -6,6 +6,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Linq.Expressions;
+    using System.Runtime.CompilerServices;
     using System.Threading.Tasks;
 
     public class GenericRepository<TContext> : IGenericBaseRepository, IGenericRepository
@@ -148,6 +149,12 @@
         public IGenericRepository<T> Incluir(T instancia)
         {
             Contexto.Set<T>().Add(instancia);
+
+            return this;
+        }
+        public async Task<IGenericRepository<T>> IncluirAsync(T instancia)
+        {
+            await Contexto.Set<T>().AddAsync(instancia);
 
             return this;
         }
