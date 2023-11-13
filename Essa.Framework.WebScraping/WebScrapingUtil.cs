@@ -12,6 +12,7 @@
     {
         public ChromeDriver ChromeDriver;
         WebDriverWait _wait;
+        private string _versao;
         ChromeOptions _chromeOptions;
 
 
@@ -19,7 +20,9 @@
 
         public WebScrapingUtil(string diretorioCache, bool isDesabilitarImagens = true)
         {
+            _versao = "119.0.6045.10500";
             _chromeOptions = new ChromeOptions();
+            _chromeOptions.BinaryLocation = Path.Combine(diretorioCache, _versao, "chrome-win64\\chrome.exe");
             //chromeOptions.AddUserProfilePreference("download.default_directory", _diretorio);
             if (isDesabilitarImagens)
                 _chromeOptions.AddUserProfilePreference("profile.default_content_setting_values.images", 2);
@@ -56,7 +59,7 @@
 
         public void Abrir(string chromeDriveDirectory)
         {
-            ChromeDriver = new ChromeDriver(Path.Combine(chromeDriveDirectory, "101.0.4951.41"), _chromeOptions, TimeSpan.FromSeconds(180));
+            ChromeDriver = new ChromeDriver(Path.Combine(chromeDriveDirectory, _versao), _chromeOptions, TimeSpan.FromSeconds(180));
 
             if (_isRedimensionar)
                 ChromeDriver.Manage().Window.Size = _size;
