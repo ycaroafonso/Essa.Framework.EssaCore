@@ -4,7 +4,7 @@ using System;
 
 namespace Essa.Framework.Mensageria
 {
-    public class ConexaoMensageria : IDisposable
+    public class ConexaoMensageria : IConexaoMensageria
     {
         private ConnectionFactory _factory;
         public IConnection Conexao { get; private set; }
@@ -18,15 +18,19 @@ namespace Essa.Framework.Mensageria
                 HostName = hostname,
                 UserName = userName,
                 Password = password,
-                VirtualHost = virtualHost,
 
                 ConsumerDispatchConcurrency = consumerDispatchConcurrency
             };
 
-            Conexao = _factory.CreateConnection();
+            if (!string.IsNullOrEmpty(virtualHost))
+                _factory.VirtualHost = virtualHost;
+
+
+            Conectar();
+
         }
         public ConexaoMensageria(Uri url
-            , int consumerDispatchConcurrency = 1) 
+            , int consumerDispatchConcurrency = 1)
             : this(url.Authority, url.UserInfo.Split(':')[0], url.UserInfo.Split(':')[1], url.LocalPath.Replace("/", ""), consumerDispatchConcurrency)
         {
         }
@@ -35,6 +39,14 @@ namespace Essa.Framework.Mensageria
             , int consumerDispatchConcurrency = 1) : this(new Uri(stringconexao), consumerDispatchConcurrency)
         {
         }
+
+
+        public void Conectar()
+        {
+            Conexao = _factory.CreateConnection();
+        }
+
+
 
         public void Dispose()
         {
