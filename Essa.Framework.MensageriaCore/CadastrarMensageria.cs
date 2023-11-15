@@ -80,6 +80,10 @@ namespace Essa.Framework.Mensageria
                 Console.WriteLine("");
                 Console.WriteLine("Mensageria em execução. Digite \"F\" para finalizar!");
             } while (Console.ReadKey().Key.ToString() != "F");
+
+            Console.WriteLine("");
+            Console.WriteLine("Mensageria finalizada");
+        
         }
 
         public uint MessageCount { get => _channel.MessageCount(Queue); }
