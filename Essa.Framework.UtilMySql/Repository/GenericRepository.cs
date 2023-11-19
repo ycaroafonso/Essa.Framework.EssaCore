@@ -105,6 +105,12 @@
         {
             Contexto.Set<T>().Add(instancia);
         }
+        public async Task<IGenericRepository> IncluirAsync<T>(T instancia) where T : class
+        {
+            await Contexto.Set<T>().AddAsync(instancia);
+
+            return this;
+        }
 
         public int Salvar()
         {
