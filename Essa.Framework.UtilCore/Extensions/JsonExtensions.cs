@@ -54,7 +54,7 @@
         {
             return JsonConvert.DeserializeObject(obj, type);
         }
-        public static T ToOjectFromJson<T>(this string obj)
+        public static T ToObjectFromJson<T>(this string obj)
         {
             return JsonConvert.DeserializeObject<T>(obj);
         }
