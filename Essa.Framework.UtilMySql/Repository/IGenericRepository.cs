@@ -1,12 +1,9 @@
-﻿namespace Essa.Framework.Util.Repository
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
+using System.Linq.Expressions;
+
+namespace Essa.Framework.Util.Repository
 {
-    using Microsoft.EntityFrameworkCore;
-    using Microsoft.EntityFrameworkCore.Storage;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-
-
     public interface IGenericBaseRepository : IDisposable
     {
         //DbRawSqlQuery<T> SqlQuery<T>(string sql, params object[] parametros);

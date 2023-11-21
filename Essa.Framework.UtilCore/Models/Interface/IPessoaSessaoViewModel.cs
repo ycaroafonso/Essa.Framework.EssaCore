@@ -1,4 +1,6 @@
-﻿namespace Essa.Framework.Util.Models.Interface
+﻿using System.Collections.Generic;
+
+namespace Essa.Framework.Util.Models.Interface
 {
     public interface IPessoaSessaoViewModel
     {
@@ -11,5 +13,13 @@
         string Login { get; set; }
 
         int UsuarioId { get; set; }
+        IPessoaPermissaoSessaoViewModel Permissao { get; set; }
+    }
+
+    public interface IPessoaPermissaoSessaoViewModel
+    {
+        IList<int> PessoaIdsLocal { get; set; }
+        IList<int> ContaIds { get; set; }
+
     }
 }

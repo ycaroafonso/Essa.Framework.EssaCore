@@ -1,12 +1,12 @@
 ﻿namespace Essa.Framework.Util.Repository
 {
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.ChangeTracking;
     using Microsoft.EntityFrameworkCore.Storage;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Linq.Expressions;
-    using System.Runtime.CompilerServices;
     using System.Threading.Tasks;
 
     public class GenericRepository<TContext> : IGenericBaseRepository, IGenericRepository
@@ -88,6 +88,14 @@
         //{
         //    return Contexto.Set<T>().RemoveRange(ObterTodos<T>().Where(func));
         //}
+
+
+
+
+
+
+
+
 
 
 
@@ -220,7 +228,6 @@
 
             return this;
         }
-
 
 
 
