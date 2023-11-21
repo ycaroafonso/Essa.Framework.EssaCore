@@ -9,6 +9,10 @@
         {
             return new DateTime(date.Year, date.Month, 1);
         }
+        public static DateTime ToFirstDayOfYear(this DateTime date)
+        {
+            return date.SetMonth(1).ToFirstDayOfMonth();
+        }
 
         public static DateTime ToLastDayOfTheMonth(this DateTime date)
         {
@@ -26,6 +30,11 @@
         public static DateTime ToLastDayOfWeek(this DateTime data)
         {
             return data.AddDays(6 - (int)data.DayOfWeek);
+        }
+
+        public static DateTime SetMonth(this DateTime date, int mes)
+        {
+            return date.AddMonths(mes - date.Month);
         }
 
         public static DateTime SetYear(this DateTime date, int ano)
@@ -112,17 +121,13 @@
 
 
 
+
+
+
         public static DateTime ParaDataHoraMG(this DateTime data)
         {
             return DateTime.SpecifyKind(data, DateTimeKind.Local).ToUniversalTime().AddHours(-3);
         }
-
-
-
-
-
-
-
 
 
     }
