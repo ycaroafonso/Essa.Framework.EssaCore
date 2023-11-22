@@ -22,4 +22,8 @@ namespace Essa.Framework.Util.Models.Interface
         IList<int> ContaIds { get; set; }
 
     }
+    public interface IParametroPessoaViewModel
+    {
+        IPessoaSessaoViewModel PessoaSessaoViewModel { get; set; }
+    }
 }

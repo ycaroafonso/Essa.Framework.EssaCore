@@ -1,7 +1,7 @@
 ﻿namespace Essa.Framework.Util
 {
     using Essa.Framework.Util.Extensions;
-    using Essa.Framework.Util.Models.Interface;
+    using Essa.Framework.Util.Models.Interface;using Essa.Framework.Util.Models.Interface;
     using Essa.Framework.Util.Models.OFX;
     using System;
     using System.Collections.Generic;
@@ -117,14 +117,19 @@
 
 
 
-        public static T PorEmpresa<T>(this T objOriginal, IEmpresa empresa) where T : IEmpresa
+        public static T Prepara<T>(this T objOriginal, IPessoaSessaoViewModel empresa) where T : IParametroPessoaViewModel
         {
-            objOriginal.empresaid = empresa.empresaid;
+            objOriginal.empresaid = empresa.EmpresaId;
             return objOriginal;
         }
-        public static IQueryable<T> PorEmpresa<T>(this IQueryable<T> objOriginal, IEmpresa empresa) where T : IEmpresa
+        public static T PorEmpresa<T>(this T objOriginal, IPessoaSessaoViewModel empresa) where T : IEmpresa
         {
-            return objOriginal.PorEmpresa(empresa.empresaid);
+            objOriginal.empresaid = empresa.EmpresaId;
+            return objOriginal;
+        }
+        public static IQueryable<T> PorEmpresa<T>(this IQueryable<T> objOriginal, IPessoaSessaoViewModel empresa) where T : IEmpresa
+        {
+            return objOriginal.PorEmpresa(empresa.EmpresaId);
         }
         public static IQueryable<T> PorEmpresa<T>(this IQueryable<T> objOriginal, int empresaid) where T : IEmpresa
         {
