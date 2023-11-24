@@ -9,5 +9,6 @@ namespace Essa.Framework.Mensageria
 
         void Conectar();
         void Dispose();
+        ICadastrarMensageria NovaFila();
     }
 }

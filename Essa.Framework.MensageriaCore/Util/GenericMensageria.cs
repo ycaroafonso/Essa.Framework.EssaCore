@@ -4,7 +4,7 @@
     using System;
 
 
-    public abstract class GenericMensageria : IDisposable
+    internal abstract class GenericMensageria : IDisposable
     {
         protected CadastrarMensageria _cadastrarMensageria;
 
@@ -44,7 +44,7 @@
     public abstract class GenericMensageria<T> : IDisposable
         where T : class
     {
-        protected CadastrarMensageria _cadastrarMensageria;
+        private CadastrarMensageria _cadastrarMensageria;
 
         public GenericMensageria()
         {

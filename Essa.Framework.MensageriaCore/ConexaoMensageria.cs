@@ -47,6 +47,11 @@ namespace Essa.Framework.Mensageria
         }
 
 
+        public ICadastrarMensageria NovaFila()
+        {
+            return new CadastrarMensageria(this);
+        }
+
 
         public void Dispose()
         {
