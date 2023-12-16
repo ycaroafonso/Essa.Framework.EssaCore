@@ -49,6 +49,7 @@
     {
         void Incluir<T>(T instancia) where T : class;
         void Incluir<T>(ICollection<T> instancia) where T : class;
+        Task<IGenericRepository> IncluirAsync<T>(T instancia) where T : class;
     }
 
 

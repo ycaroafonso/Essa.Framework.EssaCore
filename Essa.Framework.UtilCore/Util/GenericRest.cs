@@ -161,16 +161,16 @@ namespace Essa.Framework.Util.Util
             Url url = MontarUrl(path, parametros);
 
             if (!string.IsNullOrEmpty(_token))
-                return (await url.WithOAuthBearerToken(_token).GetStringAsync()).ToOjectFromJson<List<T>>();
+                return (await url.WithOAuthBearerToken(_token).GetStringAsync()).ToObjectFromJson<List<T>>();
             else
-                return (await url.GetStringAsync()).ToOjectFromJson<List<T>>();
+                return (await url.GetStringAsync()).ToObjectFromJson<List<T>>();
         }
         protected async Task<List<T>> GetListAsync<T>() where T : class
         {
             if (!string.IsNullOrEmpty(_token))
-                return (await _url.WithOAuthBearerToken(_token).GetStringAsync()).ToOjectFromJson<List<T>>();
+                return (await _url.WithOAuthBearerToken(_token).GetStringAsync()).ToObjectFromJson<List<T>>();
             else
-                return (await _url.GetStringAsync()).ToOjectFromJson<List<T>>();
+                return (await _url.GetStringAsync()).ToObjectFromJson<List<T>>();
         }
 
 
