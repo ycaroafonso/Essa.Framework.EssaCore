@@ -79,7 +79,35 @@
 
         public Task BindModelAsync(ModelBindingContext bindingContext)
         {
-            throw new System.NotImplementedException();
+            try
+            {
+                var controllerContext = bindingContext.ActionContext;
+                var request = controllerContext.HttpContext.Request;
+
+                // Synchronous logic wrapped in a completed task
+                var result = new GridSettings
+                {
+                    IsSearch = bool.Parse(request.Form["_search"].ToString() ?? "false"),
+                    PageIndex = int.Parse(request.Form["page"].ToString() ?? "1"),
+                    PageSize = int.Parse(request.Form["rows"].ToString() ?? "10"),
+                    SortColumn = request.Form["sidx"].ToString() ?? "",
+                    SortOrder = request.Form["sord"].ToString() ?? "asc",
+                    Where = Filter.Create(request.Form["filters"].ToString() ?? "")
+                };
+
+                // Set the result in ModelBindingContext.Result
+                bindingContext.Result = ModelBindingResult.Success(result);
+
+                // Return a completed task
+                return Task.CompletedTask;
+            }
+            catch
+            {
+                // Return a completed task with a null result in case of an exception
+                bindingContext.Result = ModelBindingResult.Failed();
+                return Task.CompletedTask;
+            }
         }
+
     }
 }

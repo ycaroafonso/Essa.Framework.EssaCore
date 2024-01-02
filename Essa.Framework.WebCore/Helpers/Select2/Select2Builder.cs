@@ -4,6 +4,7 @@
     using Framework.Util.Models.Helpers.Select2;
     using Microsoft.AspNetCore.Html;
     using Microsoft.AspNetCore.Mvc.Rendering;
+    using Microsoft.AspNetCore.Mvc.ViewFeatures;
     using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
@@ -14,26 +15,26 @@
     {
         private readonly string _idControle;
         private Select2Options _select2Options;
-        private Dictionary<string, object> _htmlAttributes;
+        private IDictionary<string, object> _htmlAttributes;
         private string _complementoScript = string.Empty;
 
 
         public Select2Builder(string id)
         {
             _idControle = id;
-            Inicializate(new Dictionary<string, object>());
+            Inicializate(new { });
         }
 
-        public Select2Builder(string id, Dictionary<string, object> htmlAttributes)
+        public Select2Builder(string id, object htmlAttributes)
         {
             _idControle = id;
             Inicializate(htmlAttributes);
         }
 
-        public Select2Builder(string id, string url, Dictionary<string, object> htmlAttributes = null)
+        public Select2Builder(string id, string url, object htmlAttributes = null)
         {
             _idControle = id;
-            Inicializate(htmlAttributes ?? new Dictionary<string, object>());
+            Inicializate(htmlAttributes ?? new { });
 
             _select2Options.SetAjax(url);
         }
@@ -55,21 +56,25 @@
 
         public Select2Builder SetHtmlAttributesIfNull(string chave, string valor)
         {
-            _htmlAttributes[chave] = _htmlAttributes[chave] ?? valor;
+            if (valor != null)
+                if (_htmlAttributes.ContainsKey(chave))
+                    _htmlAttributes[chave] = valor;
+                else
+                    _htmlAttributes.Add(chave, valor);
 
             return this;
         }
 
 
-        void Inicializate(Dictionary<string, object> htmlAttributes)
+        void Inicializate(object htmlAttributes)
         {
             _select2Options = new Select2Options();
 
-            _htmlAttributes = new Dictionary<string, object>();
+            _htmlAttributes = htmlAttributes as IDictionary<string, object> ?? new Dictionary<string, object>();
 
             SetHtmlAttributesIfNull("style", "width: 100%");
             SetHtmlAttributesIfNull("class", "form-control");
-            SetHtmlAttributesIfNull("name", (_htmlAttributes["name"] ?? _idControle) + (_select2Options.multiple ? "[]" : string.Empty));
+            SetHtmlAttributesIfNull("name", (_htmlAttributes.ContainsKey("name") ? _htmlAttributes["name"] : _idControle) + (_select2Options.multiple ? "[]" : string.Empty));
         }
 
 
@@ -174,7 +179,7 @@
         }
 
 
-        public HtmlString Montar()
+        public IHtmlContent Montar()
         {
             string
                 script = JsonConvert.SerializeObject(_select2Options ?? new Select2Options(), new JsonSerializerSettings
@@ -186,12 +191,13 @@
                 js = string.Format("function {0}_ToSelect2(pConfig){{ var config = $.extend({1}, pConfig == undefined ? {{}} : pConfig); $(\"#{0}\").select2(config){2}; }}jQuery(document).ready(function () {{ {0}_ToSelect2(); }});"
                                 , id, script, _complementoScript);
 
-            return new HtmlString(string.Format(@"
+
+            return new HtmlContentBuilder().AppendHtml(string.Format(@"
                 <script>
                     {0}
                 </script>
                 <select id=""{1}"" {2}></select>"
-                , js, id, _htmlAttributes.ToString()));
+                , js, id, string.Join(" ", _htmlAttributes.Select(c => $"{c.Key}=\"{c.Value}\""))));
         }
 
     }

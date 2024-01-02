@@ -16,6 +16,7 @@
 
         public JqGridReturnBuilder(IQueryable<T> lista, GridSettings gridSettings)
         {
+            gridSettings ??= new GridSettings();
             _GridSettings = gridSettings;
             _lista = lista;
 
