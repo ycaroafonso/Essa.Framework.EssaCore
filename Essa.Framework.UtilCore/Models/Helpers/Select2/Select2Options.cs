@@ -107,6 +107,13 @@
 
 
 
+        public JRaw matcher { get; set; }
+        public Select2Options SetMatcher(string js)
+        {
+            this.matcher = new JRaw(js);
+            return this;
+        }
+
         public Select2Options SetAllowClear(bool allowClear = true)
         {
             this.allowClear = allowClear;

@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
+using System.Linq.Expressions;
 
 namespace Essa.Framework.Util.Repository
 {
@@ -98,12 +99,14 @@ namespace Essa.Framework.Util.Repository
     {
         IGenericRepository<T> Excluir(T instancia);
         IGenericRepository<T> Excluir(List<T> instancia);
+        int Excluir(Expression<Func<T, bool>> func);
     }
 
     public interface IGenericExcluirRepository
     {
         void Excluir<T>(T instancia) where T : class;
         void Excluir<T>(List<T> instancia) where T : class;
+        int Excluir<T>(Expression<Func<T, bool>> func) where T : class;
     }
 
 

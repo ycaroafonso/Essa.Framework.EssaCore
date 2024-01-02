@@ -117,9 +117,9 @@
 
 
 
-        public static T Prepara<T>(this T objOriginal, IPessoaSessaoViewModel empresa) where T : IParametroPessoaViewModel
+        public static T Prepara<T>(this T objOriginal, IPessoaSessaoViewModel pessoaSessao) where T : IParametroPessoaViewModel
         {
-            objOriginal.empresaid = empresa.EmpresaId;
+            objOriginal.PessoaSessaoViewModel = pessoaSessao;
             return objOriginal;
         }
         public static T PorEmpresa<T>(this T objOriginal, IPessoaSessaoViewModel empresa) where T : IEmpresa

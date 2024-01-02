@@ -11,42 +11,42 @@ namespace Essa.Framework.Web.Extensions
 {
     public static class UtilExtensions
     {
-        public static SelectList ToSelectList<T>(this T[] lista)
+        public static List<SelectListItem> ToSelectList<T>(this T[] lista)
         {
-            return new SelectList(lista);
+            return new SelectList(lista).Items.Cast<SelectListItem>().ToList();
         }
-        public static SelectList ToSelectList<T>(this List<T> lista)
+        public static List<SelectListItem> ToSelectList<T>(this List<T> lista)
         {
-            return new SelectList(lista);
-        }
-
-        public static SelectList ToSelectList(this IDictionary lista)
-        {
-            return new SelectList(lista, "Key", "Value");
+            return new SelectList(lista).Items.Cast<SelectListItem>().ToList();
         }
 
-        public static SelectList ToSelectList(this IDictionary lista, object valorSelecionado)
+        public static List<SelectListItem> ToSelectList(this IDictionary lista)
         {
-            return new SelectList(lista, "Key", "Value", valorSelecionado);
+            return new SelectList(lista, "Key", "Value").Items.Cast<SelectListItem>().ToList();
+        }
+
+        public static List<SelectListItem> ToSelectList(this IDictionary lista, object valorSelecionado)
+        {
+            return new SelectList(lista, "Key", "Value", valorSelecionado).Items.Cast<SelectListItem>().ToList();
         }
 
 
-        public static SelectList ToSelectList<T>(this T enumerable, Func<T, object> valor, Func<T, object> texto)
+        public static List<SelectListItem> ToSelectList<T>(this T enumerable, Func<T, object> valor, Func<T, object> texto)
         {
             return ToSelectList(new List<T> { enumerable }, valor, texto, null, null, null);
         }
-        public static SelectList ToSelectList<T>(this IEnumerable<T> enumerable, Func<T, object> valor, Func<T, object> texto)
+        public static List<SelectListItem> ToSelectList<T>(this IEnumerable<T> enumerable, Func<T, object> valor, Func<T, object> texto)
         {
             return ToSelectList(enumerable, valor, texto, "SELECIONE…", null, null);
         }
-        public static SelectList ToSelectList<T>(this IEnumerable<T> enumerable, Func<T, object> valor, Func<T, object> texto, object valorSelecionado)
+        public static List<SelectListItem> ToSelectList<T>(this IEnumerable<T> enumerable, Func<T, object> valor, Func<T, object> texto, object valorSelecionado)
         {
             return ToSelectList(enumerable, valor, texto, "SELECIONE…", null, valorSelecionado);
         }
 
 
 
-        public static SelectList ToSelectList<T>(this IEnumerable<T> enumerable, Func<T, object> valor, Func<T, object> texto
+        public static List<SelectListItem> ToSelectList<T>(this IEnumerable<T> enumerable, Func<T, object> valor, Func<T, object> texto
             , string nomePrimeiroCampo, string valorPrimeiroCampo, object valorSelecionado = null)
         {
             var list = enumerable.Select(x => new SelectListItem
@@ -62,7 +62,7 @@ namespace Essa.Framework.Web.Extensions
                 list = x;
             }
 
-            return new SelectList(list, "Value", "Text", valorSelecionado);
+            return new SelectList(list, "Value", "Text", valorSelecionado).Items.Cast<SelectListItem>().ToList();
         }
 
         public static DateTime StrToDateTime(this String valor)
