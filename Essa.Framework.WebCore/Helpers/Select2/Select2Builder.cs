@@ -4,7 +4,7 @@
     using Framework.Util.Models.Helpers.Select2;
     using Microsoft.AspNetCore.Html;
     using Microsoft.AspNetCore.Mvc.Rendering;
-    using Microsoft.AspNetCore.Mvc.ViewFeatures;
+    using Microsoft.AspNetCore.Routing;
     using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
@@ -70,7 +70,7 @@
         {
             _select2Options = new Select2Options();
 
-            _htmlAttributes = htmlAttributes as IDictionary<string, object> ?? new Dictionary<string, object>();
+            _htmlAttributes = htmlAttributes == null ? new Dictionary<string, object>() : new RouteValueDictionary(htmlAttributes);
 
             SetHtmlAttributesIfNull("style", "width: 100%");
             SetHtmlAttributesIfNull("class", "form-control");
