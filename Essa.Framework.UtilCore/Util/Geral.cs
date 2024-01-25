@@ -142,5 +142,30 @@
         {
             return Guid.NewGuid().ToString().Replace("-", string.Empty)[..qtdeCaracteres].ToUpper();
         }
+
+
+        public static string FormatarTelefone(string phoneNumber)
+        {
+            string formattedPhoneNumber = phoneNumber;
+
+            if (phoneNumber.Length == 10)
+            {
+                formattedPhoneNumber = string.Format("({0}) {1}-{2}",
+                    phoneNumber.Substring(0, 2),
+                    phoneNumber.Substring(2, 4),
+                    phoneNumber.Substring(6, 4));
+            }
+            else if (phoneNumber.Length == 11)
+            {
+                formattedPhoneNumber = string.Format("({0}) {1}-{2}",
+                    phoneNumber.Substring(0, 2),
+                    phoneNumber.Substring(2, 5),
+                    phoneNumber.Substring(7, 4));
+            }
+
+            return formattedPhoneNumber;
+        }
+
+
     }
 }

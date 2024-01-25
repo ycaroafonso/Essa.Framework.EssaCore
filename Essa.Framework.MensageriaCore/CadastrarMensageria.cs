@@ -1,14 +1,15 @@
-﻿using RabbitMQ.Client;
+﻿using Essa.Framework.Util.Extensions;
+using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
-using Essa.Framework.Util.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Channels;
 
 
 namespace Essa.Framework.Mensageria
 {
-    public partial class CadastrarMensageria : IDisposable, ICadastrarMensageria
+    internal class CadastrarMensageria : IDisposable, ICadastrarMensageria
     {
         private IModel _channel;
         public string Queue { get; set; }
@@ -70,6 +71,11 @@ namespace Essa.Framework.Mensageria
         }
 
 
+        public void CriarExchange(string exchange, string type, IDictionary<string, object> args)
+        {
+            _channel.ExchangeDeclare(exchange, type, durable: true, arguments: args);
+        }
+
 
 
 
@@ -83,7 +89,7 @@ namespace Essa.Framework.Mensageria
 
             Console.WriteLine("");
             Console.WriteLine("Mensageria finalizada");
-        
+
         }
 
         public uint MessageCount { get => _channel.MessageCount(Queue); }
@@ -154,12 +160,17 @@ namespace Essa.Framework.Mensageria
 
         IBasicProperties _basicProperties = null;
 
-        public void CriarBasicProperties(string replyTo)
+        public void CriarBasicProperties(string? replyTo = null)
         {
             _basicProperties = _channel.CreateBasicProperties();
             _basicProperties.ReplyTo = replyTo;
         }
 
+        public void Delay(TimeSpan delay)
+        {
+            _basicProperties.Headers ??= new Dictionary<string, object>();
+            _basicProperties.Headers.Add("x-delay", (int)delay.TotalMilliseconds);
+        }
 
 
 
@@ -169,9 +180,9 @@ namespace Essa.Framework.Mensageria
             _channel.Dispose();
         }
 
-
-
-
-
+        public void BasicReject(ulong tag)
+        {
+            _channel.BasicReject(tag, true);
+        }
     }
 }
