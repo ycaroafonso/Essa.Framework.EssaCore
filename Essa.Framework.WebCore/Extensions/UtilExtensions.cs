@@ -13,21 +13,21 @@ namespace Essa.Framework.Web.Extensions
     {
         public static List<SelectListItem> ToSelectList<T>(this T[] lista)
         {
-            return new SelectList(lista).Items.Cast<SelectListItem>().ToList();
+            return new SelectList(lista).ToList();
         }
         public static List<SelectListItem> ToSelectList<T>(this List<T> lista)
         {
-            return new SelectList(lista).Items.Cast<SelectListItem>().ToList();
+            return new SelectList(lista).ToList();
         }
 
         public static List<SelectListItem> ToSelectList(this IDictionary lista)
         {
-            return new SelectList(lista, "Key", "Value").Items.Cast<SelectListItem>().ToList();
+            return new SelectList(lista, "Key", "Value").ToList();
         }
 
         public static List<SelectListItem> ToSelectList(this IDictionary lista, object valorSelecionado)
         {
-            return new SelectList(lista, "Key", "Value", valorSelecionado).Items.Cast<SelectListItem>().ToList();
+            return new SelectList(lista, "Key", "Value", valorSelecionado).ToList();
         }
 
 
@@ -62,7 +62,7 @@ namespace Essa.Framework.Web.Extensions
                 list = x;
             }
 
-            return new SelectList(list, "Value", "Text", valorSelecionado).Items.Cast<SelectListItem>().ToList();
+            return new SelectList(list, "Value", "Text", valorSelecionado).ToList();
         }
 
         public static DateTime StrToDateTime(this String valor)
