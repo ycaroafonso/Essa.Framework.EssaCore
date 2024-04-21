@@ -7,6 +7,7 @@
     using System.Text;
     using System.Threading.Tasks;
 
+
     public class GridSettings
     {
         public bool IsSearch { get; set; }
