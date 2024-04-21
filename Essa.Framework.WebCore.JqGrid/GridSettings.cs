@@ -1,4 +1,4 @@
-﻿namespace Essa.Framework.Web.Helpers.JqGrid
+﻿namespace Essa.Framework.WebCore.JqGrid
 {
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.ModelBinding;
@@ -8,6 +8,7 @@
     using System.Threading.Tasks;
 
 
+    [ModelBinder(typeof(GridModelBinder))]
     public class GridSettings
     {
         public bool IsSearch { get; set; }
