@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Essa.Framework.Web.Extensions
@@ -97,6 +98,16 @@ namespace Essa.Framework.Web.Extensions
             await using var memoryStream = new MemoryStream();
             await formFile.CopyToAsync(memoryStream);
             return memoryStream.ToArray();
+        }
+
+        public static async Task<string> GetConteudoArquivoAsync(this IFormFile file)
+        {
+            using var memoryStream = new MemoryStream();
+            await file.CopyToAsync(memoryStream);
+
+            memoryStream.Seek(0, SeekOrigin.Begin);
+            using var reader = new StreamReader(memoryStream, Encoding.UTF8);
+            return await reader.ReadToEndAsync();
         }
 
         public static byte[] GetBytes(this IFormFile formFile)
