@@ -7,7 +7,6 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    [ModelBinder(typeof(GridModelBinder))]
     public class GridSettings
     {
         public bool IsSearch { get; set; }
