@@ -1,4 +1,4 @@
-﻿namespace Essa.Framework.Web.Helpers.JqGrid
+﻿namespace Essa.Framework.WebCore.JqGrid
 {
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;

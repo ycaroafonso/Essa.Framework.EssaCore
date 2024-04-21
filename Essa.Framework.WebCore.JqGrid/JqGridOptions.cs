@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 
 
-namespace Essa.Framework.Web.Helpers.JqGrid
+namespace Essa.Framework.WebCore.JqGrid
 {
     /// <summary>
     /// JqGridOptions class, used to render JqGrid
