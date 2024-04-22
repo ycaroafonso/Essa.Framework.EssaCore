@@ -4,4 +4,8 @@
     {
         int empresaid { get; set; }
     }
+    public interface IEmpresaV2
+    {
+        int EmpresaId { get; set; }
+    }
 }

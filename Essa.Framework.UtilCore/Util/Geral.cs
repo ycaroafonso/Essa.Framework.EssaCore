@@ -127,13 +127,28 @@
             objOriginal.empresaid = empresa.EmpresaId;
             return objOriginal;
         }
+        public static T PorEmpresaV2<T>(this T objOriginal, IPessoaSessaoViewModel empresa) where T : IEmpresaV2
+        {
+            objOriginal.EmpresaId = empresa.EmpresaId;
+            return objOriginal;
+        }
+
         public static IQueryable<T> PorEmpresa<T>(this IQueryable<T> objOriginal, IPessoaSessaoViewModel empresa) where T : IEmpresa
         {
             return objOriginal.PorEmpresa(empresa.EmpresaId);
         }
+        public static IQueryable<T> PorEmpresaV2<T>(this IQueryable<T> objOriginal, IPessoaSessaoViewModel empresa) where T : IEmpresaV2
+        {
+            return objOriginal.PorEmpresaV2(empresa.EmpresaId);
+        }
         public static IQueryable<T> PorEmpresa<T>(this IQueryable<T> objOriginal, int empresaid) where T : IEmpresa
         {
             objOriginal = objOriginal.Where(c => c.empresaid == empresaid);
+            return objOriginal;
+        }
+        public static IQueryable<T> PorEmpresaV2<T>(this IQueryable<T> objOriginal, int empresaid) where T : IEmpresaV2
+        {
+            objOriginal = objOriginal.Where(c => c.EmpresaId == empresaid);
             return objOriginal;
         }
 
