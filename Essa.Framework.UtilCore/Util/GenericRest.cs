@@ -1,26 +1,13 @@
 ﻿using Essa.Framework.Util.Extensions;
 using Flurl;
 using Flurl.Http;
-using Flurl.Http.Configuration;
 using Flurl.Http.Content;
 using System;
 using System.Collections.Generic;
-using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace Essa.Framework.Util.Util
 {
-    public class UntrustedCertClientFactory : DefaultHttpClientFactory
-    {
-        public override HttpMessageHandler CreateMessageHandler()
-        {
-            return new HttpClientHandler
-            {
-                ServerCertificateCustomValidationCallback = (_a, _b, _c, _d) => true
-            };
-        }
-    }
-
 
     public class GenericRest
     {
@@ -36,8 +23,6 @@ namespace Essa.Framework.Util.Util
 
         public GenericRest()
         {
-            FlurlHttp.ConfigureClient(Servidor, cli =>
-            cli.Settings.HttpClientFactory = new UntrustedCertClientFactory());
         }
 
         public GenericRest(string servidor, string controllerUrl)
@@ -45,15 +30,7 @@ namespace Essa.Framework.Util.Util
             Servidor = servidor;
 
             _controllerUrl = controllerUrl;
-
-
-            FlurlHttp.ConfigureClient(Servidor, cli =>
-            cli.Settings.HttpClientFactory = new UntrustedCertClientFactory());
         }
-
-
-
-
 
         string _token = null;
         public virtual void SetToken(string token)
@@ -145,9 +122,9 @@ namespace Essa.Framework.Util.Util
             Url url = MontarUrl(path, parametros);
 
             if (!string.IsNullOrEmpty(_token))
-                return await url.WithOAuthBearerToken(_token).GetJsonListAsync();
+                return await url.WithOAuthBearerToken(_token).GetJsonAsync<List<dynamic>>();
             else
-                return await url.GetJsonListAsync();
+                return await url.GetJsonAsync<List<dynamic>>();
         }
 
 
