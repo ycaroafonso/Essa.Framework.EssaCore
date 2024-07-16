@@ -9,6 +9,7 @@ namespace Essa.Framework.Util.Repository
         //DbRawSqlQuery<T> SqlQuery<T>(string sql, params object[] parametros);
         //int ExecuteSqlCommand(string sql, params object[] parametros);
         IDbContextTransaction BeginTransaction();
+        Task<IDbContextTransaction> BeginTransactionAsync();
     }
 
 
@@ -100,6 +101,7 @@ namespace Essa.Framework.Util.Repository
         IGenericRepository<T> Excluir(T instancia);
         IGenericRepository<T> Excluir(List<T> instancia);
         int Excluir(Expression<Func<T, bool>> func);
+        Task<int> ExcluirAsync(Expression<Func<T, bool>> func);
     }
 
     public interface IGenericExcluirRepository

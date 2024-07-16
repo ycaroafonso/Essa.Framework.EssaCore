@@ -42,6 +42,10 @@
         {
             return Contexto.Database.BeginTransaction();
         }
+        public async Task<IDbContextTransaction> BeginTransactionAsync()
+        {
+            return await Contexto.Database.BeginTransactionAsync();
+        }
 
 
 
@@ -204,10 +208,14 @@
 
             return this;
         }
-        
+
         public int Excluir(Expression<Func<T, bool>> func)
         {
             return Contexto.Set<T>().Where(func).ExecuteDelete();
+        }
+        public async Task<int> ExcluirAsync(Expression<Func<T, bool>> func)
+        {
+            return await Contexto.Set<T>().Where(func).ExecuteDeleteAsync();
         }
 
 
