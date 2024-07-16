@@ -1,6 +1,4 @@
-﻿using Essa.Framework.Util;
-using Essa.Framework.Util.Util.Hash;
-using System;
+﻿using System;
 
 namespace Essa.Framework.Util.Util.Hash
 {
