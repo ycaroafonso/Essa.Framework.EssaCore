@@ -1,7 +1,7 @@
 ﻿namespace Essa.Framework.Util
 {
     using Essa.Framework.Util.Extensions;
-    using Essa.Framework.Util.Models.Interface;using Essa.Framework.Util.Models.Interface;
+    using Essa.Framework.Util.Models.Interface;
     using Essa.Framework.Util.Models.OFX;
     using System;
     using System.Collections.Generic;
