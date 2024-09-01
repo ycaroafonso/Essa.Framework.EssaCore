@@ -132,6 +132,11 @@
             objOriginal.EmpresaId = empresa.EmpresaId;
             return objOriginal;
         }
+        public static T PorEmpresaV2AllowNull<T>(this T objOriginal, IPessoaSessaoViewModel empresa) where T : IEmpresaV2AllowNull
+        {
+            objOriginal.EmpresaId = empresa.EmpresaId;
+            return objOriginal;
+        }
 
         public static IQueryable<T> PorEmpresa<T>(this IQueryable<T> objOriginal, IPessoaSessaoViewModel empresa) where T : IEmpresa
         {
@@ -141,6 +146,10 @@
         {
             return objOriginal.PorEmpresaV2(empresa.EmpresaId);
         }
+        public static IQueryable<T> PorEmpresaV2AllowNull<T>(this IQueryable<T> objOriginal, IPessoaSessaoViewModel empresa) where T : IEmpresaV2AllowNull
+        {
+            return objOriginal.PorEmpresaV2AllowNull(empresa.EmpresaId);
+        }
         public static IQueryable<T> PorEmpresa<T>(this IQueryable<T> objOriginal, int empresaid) where T : IEmpresa
         {
             objOriginal = objOriginal.Where(c => c.empresaid == empresaid);
@@ -149,6 +158,11 @@
         public static IQueryable<T> PorEmpresaV2<T>(this IQueryable<T> objOriginal, int empresaid) where T : IEmpresaV2
         {
             objOriginal = objOriginal.Where(c => c.EmpresaId == empresaid);
+            return objOriginal;
+        }
+        public static IQueryable<T> PorEmpresaV2AllowNull<T>(this IQueryable<T> objOriginal, int empresaid) where T : IEmpresaV2AllowNull
+        {
+            objOriginal = objOriginal.Where(c => (c.EmpresaId == empresaid || c.EmpresaId == null));
             return objOriginal;
         }
 
