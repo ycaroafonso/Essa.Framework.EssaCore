@@ -8,4 +8,8 @@
     {
         int EmpresaId { get; set; }
     }
+    public interface IEmpresaV2AllowNull
+    {
+        int? EmpresaId { get; set; }
+    }
 }
