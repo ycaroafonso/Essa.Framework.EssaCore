@@ -20,13 +20,15 @@
 
         public WebScrapingUtil(string diretorioCache, bool isDesabilitarImagens = true)
         {
-            _versao = "119.0.6045.10500";
+            _versao = "128.0.6613.8400";
             _chromeOptions = new ChromeOptions();
             _chromeOptions.BinaryLocation = Path.Combine(diretorioCache, _versao, "chrome-win64\\chrome.exe");
             //chromeOptions.AddUserProfilePreference("download.default_directory", _diretorio);
             if (isDesabilitarImagens)
                 _chromeOptions.AddUserProfilePreference("profile.default_content_setting_values.images", 2);
             _chromeOptions.AddArgument(@"--user-data-dir=" + Path.GetFullPath(@"browsercache", diretorioCache));
+            _chromeOptions.AddArgument("ignore-certificate-errors");
+            
         }
 
 
