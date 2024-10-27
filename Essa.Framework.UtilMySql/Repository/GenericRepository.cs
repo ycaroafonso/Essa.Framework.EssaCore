@@ -4,24 +4,20 @@ using System.Linq.Expressions;
 
 namespace Essa.Framework.Util.Repository;
 
-public class GenericRepository<TContext> : IGenericBaseRepository, IGenericRepository
+public class GenericRepository<TContext>(TContext contexto) : IGenericBaseRepository, IGenericRepository
     where TContext : DbContext
 {
 
-    protected TContext Contexto { get; private set; }
+    protected TContext Contexto { get; private set; } = contexto;
 
-    public GenericRepository(TContext contexto)
-    {
-        Contexto = contexto;
-    }
-
-
-
-
-
+    [Obsolete("SqlQuery não é só List")]
     public IList<T> SqlQuery<T>(string sql, params object[] parametros) where T : class
     {
         return Contexto.Set<T>().FromSqlRaw(sql, parametros).ToList();
+    }
+    public async Task<IList<T>> SqlQueryAsync<T>(string sql, params object[] parametros) where T : class
+    {
+        return await Contexto.Set<T>().FromSqlRaw(sql, parametros).ToListAsync();
     }
 
     public int ExecuteSqlCommand(string sql, params object[] parametros)
