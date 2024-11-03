@@ -22,6 +22,7 @@ public interface IPessoaPermissaoSessaoViewModel
     IList<int> ContaIds { get; set; }
     IList<int> CentroCustoIds { get; set; }
     IList<int> ContaGerencialds { get; set; }
+    IList<int> ClassificacaoIds { get; set; }
 }
 public interface IParametroPessoaViewModel
 {
