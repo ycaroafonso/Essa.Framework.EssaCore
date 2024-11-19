@@ -60,6 +60,10 @@
         {
             AnoMes = anomes;
         }
+        public AnoMesUtil(string mesBarraAno)
+        {
+            AnoMes = string.Join("", mesBarraAno.Split("/").Reverse()).ToInt32();
+        }
 
         public AnoMesUtil(DateTime data)
         {

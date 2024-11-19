@@ -1,4 +1,5 @@
 ﻿using Essa.Framework.Util.Extensions;
+using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System;
@@ -121,9 +122,9 @@ namespace Essa.Framework.Mensageria
         }
 
 
-        public void Receber<T>(Action<ulong, T> received)
+        public void Receber<T>(Action<ulong, T> received, JsonSerializerSettings settings = null)
         {
-            Receber((t, c) => received(t, Encoding.UTF8.GetString(c, 0, c.Length).ToObjectFromJson<T>()));
+            Receber((t, c) => received(t, Encoding.UTF8.GetString(c, 0, c.Length).ToObjectFromJson<T>(settings)));
         }
 
 

@@ -1,4 +1,5 @@
-﻿using RabbitMQ.Client;
+﻿using Newtonsoft.Json;
+using RabbitMQ.Client;
 using System;
 using System.Collections.Generic;
 
@@ -21,7 +22,7 @@ namespace Essa.Framework.Mensageria
         void Publicar(byte[] body);
         void Publicar<T>(T body);
         void Receber(Action<ulong, byte[]> received);
-        void Receber<T>(Action<ulong, T> received);
+        void Receber<T>(Action<ulong, T> received, JsonSerializerSettings settings = null);
         void BasicReject(ulong tag);
         void TravarFinalizacao();
         void Delay(TimeSpan delay);
