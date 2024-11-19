@@ -4,6 +4,7 @@ using RabbitMQ.Client.Events;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Channels;
 
 
 namespace Essa.Framework.Mensageria
@@ -44,7 +45,11 @@ namespace Essa.Framework.Mensageria
         public void CriarCanal()
         {
             if (_channel == null)
+            {
                 _channel = _conexaoMensageria.Conexao.CreateModel();
+                _channel.BasicQos(0, 100, false); // Permite até 10 mensagens por consumidor
+
+            }
         }
         public IModel Canal { get => _channel; }
 
