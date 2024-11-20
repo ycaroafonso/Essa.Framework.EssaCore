@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Storage;
 
 namespace Essa.Framework.UtilSqlServer.Repository
 {
-    public class GenericRepository<TContext> : IGenericTransactionRepository, IGenericRepository
+    public class GenericRepository<TContext> : IGenericRepository
         where TContext : DbContext
     {
 
