@@ -10,10 +10,9 @@ public class GenericRepository<TContext>(TContext contexto) : IGenericBaseReposi
 
     protected TContext Contexto { get; private set; } = contexto;
 
-    [Obsolete("SqlQuery não é só List")]
     public IList<T> SqlQuery<T>(string sql, params object[] parametros) where T : class
     {
-        return Contexto.Set<T>().FromSqlRaw(sql, parametros).ToList();
+        return [.. Contexto.Set<T>().FromSqlRaw(sql, parametros)];
     }
     public async Task<IList<T>> SqlQueryAsync<T>(string sql, params object[] parametros) where T : class
     {
