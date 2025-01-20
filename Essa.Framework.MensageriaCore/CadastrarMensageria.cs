@@ -17,6 +17,8 @@ namespace Essa.Framework.Mensageria
         public string RoutingKey { get; set; }
         public string Exchange { get; set; } = "";
 
+        public ushort PrefetchCount { get; set; } = 100;
+
         IConexaoMensageria _conexaoMensageria;
 
         public CadastrarMensageria(IConexaoMensageria conexaoMensageria)
@@ -48,7 +50,7 @@ namespace Essa.Framework.Mensageria
             if (_channel == null)
             {
                 _channel = _conexaoMensageria.Conexao.CreateModel();
-                _channel.BasicQos(0, 100, false); // Permite até 10 mensagens por consumidor
+                _channel.BasicQos(0, PrefetchCount, false); // Permite até 10 mensagens por consumidor
 
             }
         }

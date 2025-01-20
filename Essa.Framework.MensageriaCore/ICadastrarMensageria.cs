@@ -12,6 +12,7 @@ namespace Essa.Framework.Mensageria
         uint MessageCount { get; }
         string Queue { get; set; }
         string RoutingKey { get; set; }
+        ushort PrefetchCount { get; set; }
 
         void ConfirmarRecebimento(ulong deliveryTag);
         void CriarBasicProperties(string? replyTo = null);
