@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace pix_payload_generator.net.Models.PayloadModels
+﻿namespace pix_payload_generator.net.Models.PayloadModels
 {
     public class Merchant
     {
         public Merchant(string _name, string _city)
         {
+            if (!string.IsNullOrEmpty(_name) && _name.Length > 25) _name = _name.Substring(0, 25);
             Name = _name;
             City = _city;
         }
