@@ -1,17 +1,17 @@
-﻿using Essa.Framework.Util;
-using Essa.Framework.Util.Util.Hash;
+﻿using BCrypt.Net;
+using Org.BouncyCastle.Crypto.Generators;
 using System;
+using System.Text;
 
 namespace Essa.Framework.Util.Util.Hash
 {
     [Serializable]
-    [Obsolete("Utilizar GenericGeraHashV2")]
-    public abstract class GenericGeraHash : IGeraHash
+    public abstract class GenericGeraHashV2 : IGeraHash
     {
         private readonly string _chavePrivada;
 
-        public GenericGeraHash() { }
-        public GenericGeraHash(string chavePrivada)
+        public GenericGeraHashV2() { }
+        public GenericGeraHashV2(string chavePrivada)
         {
             _chavePrivada = chavePrivada;
         }
@@ -24,14 +24,14 @@ namespace Essa.Framework.Util.Util.Hash
 
         public virtual void GerarHash()
         {
-            Hash = null;
-            Hash = new CriptografiaMd5().Encrypt(_chavePrivada + ToHashText());
+            Hash = BCrypt.Net.BCrypt.HashPassword(ToHashText());
         }
 
 
         public bool IsHashValido(string hashParametro)
         {
-            return Hash == hashParametro;
+            Hash = null;
+            return BCrypt.Net.BCrypt.Verify(ToHashText(), hashParametro);
         }
 
         public void ValidaHash(string hashParametro)
