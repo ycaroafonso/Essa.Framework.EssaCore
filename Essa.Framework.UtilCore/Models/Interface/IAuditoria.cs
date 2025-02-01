@@ -1,7 +1,8 @@
 ﻿namespace Essa.Framework.Util.Models.Interface
 {
     using System;
-
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     public interface IAuditoria
     {
@@ -10,6 +11,7 @@
         /// <summary>
         /// Hora UTC
         /// </summary>
+        [Column(TypeName = "datetime")]
         DateTime? auditoriadatahora { get; set; }
     }
     public interface IAuditoriaUsuarioCadastro
