@@ -1,5 +1,6 @@
 ﻿using RabbitMQ.Client;
 using System;
+using System.Threading.Tasks;
 
 namespace Essa.Framework.Mensageria
 {
@@ -7,8 +8,7 @@ namespace Essa.Framework.Mensageria
     {
         IConnection Conexao { get; }
 
-        void Conectar();
-        void Dispose();
+        Task Conectar();
         ICadastrarMensageria NovaFila();
     }
 }

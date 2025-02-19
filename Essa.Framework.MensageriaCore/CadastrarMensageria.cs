@@ -5,138 +5,128 @@ using RabbitMQ.Client.Events;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Threading.Channels;
+using System.Threading.Tasks;
 
 
-namespace Essa.Framework.Mensageria
+namespace Essa.Framework.Mensageria;
+
+internal class CadastrarMensageria(IConexaoMensageria conexaoMensageria) : IDisposable, ICadastrarMensageria
 {
-    internal class CadastrarMensageria : IDisposable, ICadastrarMensageria
+    private IChannel channel;
+    public string Queue { get; set; }
+    public string RoutingKey { get; set; }
+    public string Exchange { get; set; } = "";
+
+    public void CriarFila(string queue, bool autoDelete = false, IDictionary<string, object> arguments = null)
     {
-        private IModel _channel;
-        public string Queue { get; set; }
-        public string RoutingKey { get; set; }
-        public string Exchange { get; set; } = "";
+        Queue = queue;
 
-        public ushort PrefetchCount { get; set; } = 100;
+        CriarFila(durable: true,
+                 autoDelete: autoDelete,
+                 arguments: arguments);
+    }
+    public void CriarFila(string queue, bool durable, bool autoDelete = false, IDictionary<string, object> arguments = null)
+    {
+        Queue = queue;
 
-        IConexaoMensageria _conexaoMensageria;
+        CriarFila(durable: durable,
+                 autoDelete: autoDelete,
+                 arguments: arguments);
+    }
 
-        public CadastrarMensageria(IConexaoMensageria conexaoMensageria)
+
+    public async Task CriarCanal()
+    {
+        if (channel == null)
         {
-            _conexaoMensageria = conexaoMensageria;
+            channel = await conexaoMensageria.Conexao.CreateChannelAsync();
+            await channel.BasicQosAsync(0, PrefetchCount, false); // Permite até 10 mensagens por consumidor
+
         }
+    }
+    public IChannel Canal { get => channel; }
+
+    private async void CriarFila(bool durable, bool autoDelete = false, IDictionary<string, object> arguments = null)
+    {
+        await CriarCanal();
+        await channel.QueueDeclareAsync(queue: Queue,
+                         durable: durable,
+                         exclusive: false,
+                         autoDelete: autoDelete,
+                         arguments: arguments);
+    }
 
 
-        public void CriarFila(string queue, bool autoDelete = false, IDictionary<string, object> arguments = null)
+    public async Task CriarBind(string exchange, string routingKey)
+    {
+        RoutingKey = routingKey;
+        Exchange = exchange;
+
+        await channel.QueueBindAsync(queue: Queue,
+                         exchange: Exchange,
+                         routingKey: RoutingKey ?? Queue);
+    }
+
+
+    public async Task CriarExchange(string exchange, string type, IDictionary<string, object> args)
+    {
+        await channel.ExchangeDeclareAsync(exchange, type, durable: true, arguments: args);
+    }
+
+
+
+
+    public void TravarFinalizacao()
+    {
+        do
         {
-            Queue = queue;
-
-            CriarFila(durable: true,
-                     autoDelete: autoDelete,
-                     arguments: arguments);
-        }
-        public void CriarFila(string queue, bool durable, bool autoDelete = false, IDictionary<string, object> arguments = null)
-        {
-            Queue = queue;
-
-            CriarFila(durable: durable,
-                     autoDelete: autoDelete,
-                     arguments: arguments);
-        }
-
-
-        public void CriarCanal()
-        {
-            if (_channel == null)
-            {
-                _channel = _conexaoMensageria.Conexao.CreateModel();
-                _channel.BasicQos(0, PrefetchCount, false); // Permite até 10 mensagens por consumidor
-
-            }
-        }
-        public IModel Canal { get => _channel; }
-
-        private void CriarFila(bool durable, bool autoDelete = false, IDictionary<string, object> arguments = null)
-        {
-            CriarCanal();
-            _channel.QueueDeclare(queue: Queue,
-                     durable: durable,
-                     exclusive: false,
-                     autoDelete: autoDelete,
-                     arguments: arguments);
-        }
-
-
-        public void CriarBind(string exchange, string routingKey)
-        {
-            RoutingKey = routingKey;
-            Exchange = exchange;
-
-            _channel.QueueBind(queue: Queue,
-                     exchange: Exchange,
-                     routingKey: RoutingKey ?? Queue);
-        }
-
-
-        public void CriarExchange(string exchange, string type, IDictionary<string, object> args)
-        {
-            _channel.ExchangeDeclare(exchange, type, durable: true, arguments: args);
-        }
-
-
-
-
-        public void TravarFinalizacao()
-        {
-            do
-            {
-                Console.WriteLine("");
-                Console.WriteLine("Mensageria em execução. Digite \"F\" para finalizar!");
-            } while (Console.ReadKey().Key.ToString() != "F");
-
             Console.WriteLine("");
-            Console.WriteLine("Mensageria finalizada");
+            Console.WriteLine("Mensageria em execução. Digite \"F\" para finalizar!");
+        } while (Console.ReadKey().Key.ToString() != "F");
 
-        }
+        Console.WriteLine("");
+        Console.WriteLine("Mensageria finalizada");
 
-        public uint MessageCount { get => _channel.MessageCount(Queue); }
+    }
 
-
-
-
-
-
-
-
-
-
-        public void Receber(Action<ulong, byte[]> received)
+    public Task<uint> MessageCount
+    {
+        get
         {
-            var consumer = new EventingBasicConsumer(_channel);
-            consumer.Received += (model, ea) =>
-            {
-                received(ea.DeliveryTag, ea.Body.ToArray());
-            };
-
-            _channel.BasicConsume(queue: Queue,
-                                 autoAck: false,
-                                 consumer: consumer);
+            return channel.MessageCountAsync(Queue);
         }
+    }
 
+    public ushort PrefetchCount { get; set; }
 
-        public void Receber<T>(Action<ulong, T> received, JsonSerializerSettings settings = null)
+    public async Task<string> Receber(Func<ulong, byte[], Task> received)
+    {
+        var consumer = new AsyncEventingBasicConsumer(channel);
+        consumer.ReceivedAsync += async (model, ea) =>
         {
-            Receber((t, c) => received(t, Encoding.UTF8.GetString(c, 0, c.Length).ToObjectFromJson<T>(settings)));
-        }
+            await received(ea.DeliveryTag, ea.Body.ToArray());
+        };
+
+        return await channel.BasicConsumeAsync(queue: Queue,
+                                     autoAck: false,
+                                     consumer: consumer);
+
+    }
+
+
+    public async Task Receber<T>(Func<ulong, T, Task> received, JsonSerializerSettings settings = null)
+    {
+        await Receber(async (t, c) => await received(t, Encoding.UTF8.GetString(c, 0, c.Length).ToObjectFromJson<T>(settings)));
+    }
 
 
 
 
 
-        public void ConfirmarRecebimento(ulong deliveryTag)
-        {
-            _channel.BasicAck(deliveryTag, false);
-        }
+    public async Task ConfirmarRecebimento(ulong deliveryTag)
+    {
+        await channel.BasicAckAsync(deliveryTag, false);
+    }
 
 
 
@@ -152,44 +142,44 @@ namespace Essa.Framework.Mensageria
 
 
 
-        public void Publicar<T>(T body)
-        {
-            Publicar(body.ToJson().ToByteArray());
-        }
-        public void Publicar(byte[] body)
-        {
-            _channel.BasicPublish(exchange: Exchange,
-                   routingKey: RoutingKey ?? Queue,
-                   basicProperties: _basicProperties,
-                   body: body);
-        }
+    public async Task Publicar<T>(T body)
+    {
+        await Publicar(body.ToJson().ToByteArray());
+    }
+    public async Task Publicar(byte[] body)
+    {
+        //await _channel.BasicPublishAsync(Exchange, RoutingKey ?? Queue, false, _basicProperties, body);
+
+        await channel.BasicPublishAsync(exchange: Exchange, routingKey: RoutingKey ?? Queue,
+                mandatory: false
+                //, basicProperties: _basicProperties
+                , body: body);
+    }
+
+    private IReadOnlyBasicProperties _basicProperties;
+
+    //public void CriarBasicProperties(string? replyTo = null)
+    //{
+    //    _basicProperties = new BasicProperties();
+    //    _basicProperties.ReplyTo = replyTo;
+    //}
+
+    //public void Delay(TimeSpan delay)
+    //{
+    //    _basicProperties.Headers ??= new Dictionary<string, object>();
+    //    _basicProperties.Headers.Add("x-delay", (int)delay.TotalMilliseconds);
+    //}
 
 
-        IBasicProperties _basicProperties = null;
-
-        public void CriarBasicProperties(string? replyTo = null)
-        {
-            _basicProperties = _channel.CreateBasicProperties();
-            _basicProperties.ReplyTo = replyTo;
-        }
-
-        public void Delay(TimeSpan delay)
-        {
-            _basicProperties.Headers ??= new Dictionary<string, object>();
-            _basicProperties.Headers.Add("x-delay", (int)delay.TotalMilliseconds);
-        }
 
 
+    public void Dispose()
+    {
+        channel.Dispose();
+    }
 
-
-        public void Dispose()
-        {
-            _channel.Dispose();
-        }
-
-        public void BasicReject(ulong tag)
-        {
-            _channel.BasicReject(tag, true);
-        }
+    public async Task BasicReject(ulong tag)
+    {
+        await channel.BasicRejectAsync(tag, true);
     }
 }

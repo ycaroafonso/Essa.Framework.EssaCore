@@ -1,92 +1,81 @@
-﻿namespace Essa.Framework.MensageriaCore.Util
+﻿using System;
+using System.Threading.Tasks;
+
+namespace Essa.Framework.Mensageria.Util;
+internal abstract class GenericMensageria : IDisposable
 {
-    using Essa.Framework.Mensageria;
-    using System;
+    protected CadastrarMensageria _cadastrarMensageria;
 
 
-    internal abstract class GenericMensageria : IDisposable
+    public GenericMensageria(ConexaoMensageria conexao, string fila)
     {
-        protected CadastrarMensageria _cadastrarMensageria;
+        _cadastrarMensageria = new CadastrarMensageria(conexao);
+        _cadastrarMensageria.CriarFila(fila, arguments: null);
+    }
 
-
-        public GenericMensageria(ConexaoMensageria conexao, string fila)
-        {
-            _cadastrarMensageria = new CadastrarMensageria(conexao);
-            _cadastrarMensageria.CriarFila(fila, arguments: null);
-        }
-
-        public void Publicar<T>(T envio)
-        {
-            _cadastrarMensageria.Publicar(envio);
-        }
-
-
-
-
-
-        public void Receber<T>(Action<ulong, T> received)
-        {
-            _cadastrarMensageria.Receber(received);
-            Console.ReadLine();
-        }
-        public void ConfirmarRecebimento(ulong tag)
-        {
-            _cadastrarMensageria.ConfirmarRecebimento(tag);
-        }
-
-        public void Dispose()
-        {
-            _cadastrarMensageria.Dispose();
-        }
+    public async Task Publicar<T>(T envio)
+    {
+        await _cadastrarMensageria.Publicar(envio);
     }
 
 
-    public abstract class GenericMensageria<T> : IDisposable
-        where T : class
+
+
+
+    public async Task Receber<T>(Func<ulong, T, Task> received)
     {
-        private CadastrarMensageria _cadastrarMensageria;
+        await _cadastrarMensageria.Receber(received);
+        Console.ReadLine();
+    }
+    public async Task ConfirmarRecebimento(ulong tag)
+    {
+        await _cadastrarMensageria.ConfirmarRecebimento(tag);
+    }
 
-        public GenericMensageria()
-        {
-
-        }
-
-        public GenericMensageria(ConexaoMensageria conexao, string fila)
-        {
-            _cadastrarMensageria = new CadastrarMensageria(conexao);
-            _cadastrarMensageria.CriarFila(fila, arguments: null);
-        }
-
-
-        public virtual void Publicar(T envio)
-        {
-            _cadastrarMensageria.Publicar(envio);
-        }
+    public void Dispose()
+    {
+        _cadastrarMensageria.Dispose();
+    }
+}
 
 
+public abstract class GenericMensageria<T> : IDisposable
+    where T : class
+{
+    private CadastrarMensageria _cadastrarMensageria;
+
+    public GenericMensageria()
+    {
+
+    }
+
+    public GenericMensageria(ConexaoMensageria conexao, string fila)
+    {
+        _cadastrarMensageria = new CadastrarMensageria(conexao);
+        _cadastrarMensageria.CriarFila(fila, arguments: null);
+    }
 
 
-        [Obsolete]
-        public void Receber(Action<ulong, T> received)
-        {
-            _cadastrarMensageria.Receber(received);
-            Console.ReadLine();
-        }
-
-        public void Receber2(Action<ulong, T> received)
-        {
-            _cadastrarMensageria.Receber(received);
-        }
+    public virtual async void Publicar(T envio)
+    {
+        await _cadastrarMensageria.Publicar(envio);
+    }
 
 
-        public void ConfirmarRecebimento(ulong tag)
-        {
-            _cadastrarMensageria.ConfirmarRecebimento(tag);
-        }
 
-        public void Dispose()
-        {
-            _cadastrarMensageria.Dispose();
-        }
+    public async Task Receber(Func<ulong, T, Task> received)
+    {
+        await _cadastrarMensageria.Receber(received);
+    }
+
+
+    public async Task ConfirmarRecebimento(ulong tag)
+    {
+        await _cadastrarMensageria.ConfirmarRecebimento(tag);
+    }
+
+    public void Dispose()
+    {
+        _cadastrarMensageria.Dispose();
     }
 }

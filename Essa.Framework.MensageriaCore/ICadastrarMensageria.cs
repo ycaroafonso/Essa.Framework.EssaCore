@@ -2,31 +2,29 @@
 using RabbitMQ.Client;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
-namespace Essa.Framework.Mensageria
+namespace Essa.Framework.Mensageria;
+
+public interface ICadastrarMensageria : IDisposable
 {
-    public interface ICadastrarMensageria : IDisposable
-    {
-        IModel Canal { get; }
-        string Exchange { get; set; }
-        uint MessageCount { get; }
-        string Queue { get; set; }
-        string RoutingKey { get; set; }
-        ushort PrefetchCount { get; set; }
+    string Exchange { get; set; }
+    string Queue { get; set; }
+    string RoutingKey { get; set; }
+    IChannel Canal { get; }
+    Task<uint> MessageCount { get; }
+    ushort PrefetchCount { get; set; }
 
-        void ConfirmarRecebimento(ulong deliveryTag);
-        void CriarBasicProperties(string? replyTo = null);
-        void CriarBind(string exchange, string routingKey);
-        void CriarCanal();
-        void CriarFila(string queue, bool autoDelete = false, IDictionary<string, object> arguments = null);
-        void CriarFila(string queue, bool durable, bool autoDelete = false, IDictionary<string, object> arguments = null);
-        void Publicar(byte[] body);
-        void Publicar<T>(T body);
-        void Receber(Action<ulong, byte[]> received);
-        void Receber<T>(Action<ulong, T> received, JsonSerializerSettings settings = null);
-        void BasicReject(ulong tag);
-        void TravarFinalizacao();
-        void Delay(TimeSpan delay);
-        void CriarExchange(string exchange, string type, IDictionary<string, object> args);
-    }
+    Task BasicReject(ulong tag);
+    Task ConfirmarRecebimento(ulong deliveryTag);
+    Task CriarBind(string exchange, string routingKey);
+    Task CriarCanal();
+    Task CriarExchange(string exchange, string type, IDictionary<string, object> args);
+    void CriarFila(string queue, bool autoDelete = false, IDictionary<string, object> arguments = null);
+    void CriarFila(string queue, bool durable, bool autoDelete = false, IDictionary<string, object> arguments = null);
+    Task Publicar<T>(T body);
+    Task Publicar(byte[] body);
+    Task<string> Receber(Func<ulong, byte[], Task> received);
+    Task Receber<T>(Func<ulong, T, Task> received, JsonSerializerSettings settings = null);
+    void TravarFinalizacao();
 }

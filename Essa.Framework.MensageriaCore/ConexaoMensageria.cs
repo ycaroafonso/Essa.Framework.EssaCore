@@ -1,61 +1,65 @@
 ﻿using RabbitMQ.Client;
 using System;
+using System.Threading.Tasks;
 
 
-namespace Essa.Framework.Mensageria
+namespace Essa.Framework.Mensageria;
+
+public class ConexaoMensageria : IConexaoMensageria
 {
-    public class ConexaoMensageria : IConexaoMensageria
+    private ConnectionFactory factory;
+
+    public ConexaoMensageria(ConnectionFactory factory)
     {
-        private ConnectionFactory _factory;
-        public IConnection Conexao { get; private set; }
+        this.factory = factory;
+    }
+
+    public IConnection Conexao { get; private set; }
 
 
-        public ConexaoMensageria(string hostname, string userName, string password, string virtualHost = null
-            , int consumerDispatchConcurrency = 1)
+    public ConexaoMensageria(string hostname, string userName, string password, string virtualHost = null
+        , ushort consumerDispatchConcurrency = 1)
+    {
+        factory = new ConnectionFactory()
         {
-            _factory = new ConnectionFactory()
-            {
-                HostName = hostname,
-                UserName = userName,
-                Password = password,
+            HostName = hostname,
+            UserName = userName,
+            Password = password,
 
-                ConsumerDispatchConcurrency = consumerDispatchConcurrency
-            };
+            ConsumerDispatchConcurrency = consumerDispatchConcurrency
+        };
 
-            if (!string.IsNullOrEmpty(virtualHost))
-                _factory.VirtualHost = virtualHost;
-
-
-            Conectar();
-
-        }
-        public ConexaoMensageria(Uri url
-            , int consumerDispatchConcurrency = 1)
-            : this(url.Authority, url.UserInfo.Split(':')[0], url.UserInfo.Split(':')[1], url.LocalPath.Replace("/", ""), consumerDispatchConcurrency)
-        {
-        }
-
-        public ConexaoMensageria(string stringconexao
-            , int consumerDispatchConcurrency = 1) : this(new Uri(stringconexao), consumerDispatchConcurrency)
-        {
-        }
+        if (!string.IsNullOrEmpty(virtualHost))
+            factory.VirtualHost = virtualHost;
+    }
 
 
-        public void Conectar()
-        {
-            Conexao = _factory.CreateConnection();
-        }
+    public ConexaoMensageria(Uri url
+        , ushort consumerDispatchConcurrency = 1)
+        : this(url.Authority, url.UserInfo.Split(':')[0], url.UserInfo.Split(':')[1], url.LocalPath.Replace("/", ""), consumerDispatchConcurrency)
+    {
+    }
+
+    public ConexaoMensageria(string stringconexao
+        , ushort consumerDispatchConcurrency = 1) : this(new Uri(stringconexao), consumerDispatchConcurrency)
+    {
+    }
 
 
-        public ICadastrarMensageria NovaFila()
-        {
-            return new CadastrarMensageria(this);
-        }
+    public async Task Conectar()
+    {
+        Conexao = await factory.CreateConnectionAsync();
+    }
 
 
-        public void Dispose()
-        {
-            Conexao.Dispose();
-        }
+    public ICadastrarMensageria NovaFila()
+    {
+        return new CadastrarMensageria(this);
+    }
+
+
+    public void Dispose()
+    {
+        Conexao.Dispose();
     }
 }
