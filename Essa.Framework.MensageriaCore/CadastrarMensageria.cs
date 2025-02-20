@@ -16,22 +16,23 @@ internal class CadastrarMensageria(IConexaoMensageria conexaoMensageria) : IDisp
     public string Queue { get; set; }
     public string RoutingKey { get; set; }
     public string Exchange { get; set; } = "";
+    public IChannel Canal { get => channel; }
 
-    public void CriarFila(string queue, bool autoDelete = false, IDictionary<string, object> arguments = null)
+    public async Task CriarFila(string queue, bool autoDelete = false, IDictionary<string, object> arguments = null)
     {
         Queue = queue;
 
-        CriarFila(durable: true,
-                 autoDelete: autoDelete,
-                 arguments: arguments);
+        await CriarFila(durable: true,
+                       autoDelete: autoDelete,
+                       arguments: arguments);
     }
-    public void CriarFila(string queue, bool durable, bool autoDelete = false, IDictionary<string, object> arguments = null)
+    public async Task CriarFila(string queue, bool durable, bool autoDelete = false, IDictionary<string, object> arguments = null)
     {
         Queue = queue;
 
-        CriarFila(durable: durable,
-                 autoDelete: autoDelete,
-                 arguments: arguments);
+        await CriarFila(durable: durable,
+                         autoDelete: autoDelete,
+                         arguments: arguments);
     }
 
 
@@ -44,9 +45,8 @@ internal class CadastrarMensageria(IConexaoMensageria conexaoMensageria) : IDisp
 
         }
     }
-    public IChannel Canal { get => channel; }
 
-    private async void CriarFila(bool durable, bool autoDelete = false, IDictionary<string, object> arguments = null)
+    private async Task CriarFila(bool durable, bool autoDelete = false, IDictionary<string, object> arguments = null)
     {
         await CriarCanal();
         await channel.QueueDeclareAsync(queue: Queue,

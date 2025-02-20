@@ -52,8 +52,9 @@ public class ConexaoMensageria : IConexaoMensageria
     }
 
 
-    public ICadastrarMensageria NovaFila()
+    public async Task<ICadastrarMensageria> NovaFila()
     {
+        if (Conexao == null) await Conectar();
         return new CadastrarMensageria(this);
     }
 

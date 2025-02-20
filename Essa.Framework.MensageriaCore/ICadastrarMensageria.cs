@@ -20,8 +20,8 @@ public interface ICadastrarMensageria : IDisposable
     Task CriarBind(string exchange, string routingKey);
     Task CriarCanal();
     Task CriarExchange(string exchange, string type, IDictionary<string, object> args);
-    void CriarFila(string queue, bool autoDelete = false, IDictionary<string, object> arguments = null);
-    void CriarFila(string queue, bool durable, bool autoDelete = false, IDictionary<string, object> arguments = null);
+    Task CriarFila(string queue, bool autoDelete = false, IDictionary<string, object> arguments = null);
+    Task CriarFila(string queue, bool durable, bool autoDelete = false, IDictionary<string, object> arguments = null);
     Task Publicar<T>(T body);
     Task Publicar(byte[] body);
     Task<string> Receber(Func<ulong, byte[], Task> received);

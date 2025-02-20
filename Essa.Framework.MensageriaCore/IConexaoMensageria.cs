@@ -2,13 +2,12 @@
 using System;
 using System.Threading.Tasks;
 
-namespace Essa.Framework.Mensageria
-{
-    public interface IConexaoMensageria : IDisposable
-    {
-        IConnection Conexao { get; }
+namespace Essa.Framework.Mensageria;
 
-        Task Conectar();
-        ICadastrarMensageria NovaFila();
-    }
+public interface IConexaoMensageria : IDisposable
+{
+    IConnection Conexao { get; }
+
+    Task Conectar();
+    Task<ICadastrarMensageria> NovaFila();
 }
