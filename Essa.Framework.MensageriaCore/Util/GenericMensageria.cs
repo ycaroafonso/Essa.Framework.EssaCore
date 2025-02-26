@@ -49,7 +49,7 @@ public abstract class GenericMensageria<T> : IDisposable
 
     }
 
-    public GenericMensageria(ConexaoMensageria conexao, string fila)
+    public GenericMensageria(IConexaoMensageria conexao, string fila)
     {
         _cadastrarMensageria = new CadastrarMensageria(conexao);
         _cadastrarMensageria.CriarFila(fila, arguments: null);
