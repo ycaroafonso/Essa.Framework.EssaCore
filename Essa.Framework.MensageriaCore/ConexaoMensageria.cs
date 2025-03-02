@@ -26,7 +26,7 @@ public class ConexaoMensageria : IConexaoMensageria
             UserName = userName,
             Password = password,
 
-            ConsumerDispatchConcurrency = consumerDispatchConcurrency
+            ConsumerDispatchConcurrency = consumerDispatchConcurrency,
         };
 
         if (!string.IsNullOrEmpty(virtualHost))
@@ -61,6 +61,7 @@ public class ConexaoMensageria : IConexaoMensageria
 
     public void Dispose()
     {
-        Conexao.Dispose();
+        if (Conexao != null)
+            Conexao.Dispose();
     }
 }
