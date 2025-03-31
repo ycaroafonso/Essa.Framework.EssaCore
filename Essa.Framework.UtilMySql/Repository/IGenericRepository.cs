@@ -6,10 +6,16 @@ namespace Essa.Framework.Util.Repository
 {
     public interface IGenericBaseRepository : IDisposable
     {
+        void Anexar<T>(T instancia, EntityState state) where T : class;
+
         //DbRawSqlQuery<T> SqlQuery<T>(string sql, params object[] parametros);
         //int ExecuteSqlCommand(string sql, params object[] parametros);
         IDbContextTransaction BeginTransaction();
         Task<IDbContextTransaction> BeginTransactionAsync();
+        Task<IList<T>> SqlQueryAsync<T>(string sql, params object[] parametros) where T : class;
+        IList<T> SqlQuery<T>(string sql, params object[] parametros) where T : class;
+
+        int ExecuteSqlCommand(string sql, params object[] parametros);
     }
 
 
@@ -123,5 +129,6 @@ namespace Essa.Framework.Util.Repository
 
     public interface IGenericRepository : IGenericBaseRepository, IGenericReadRepository, IGenericIncluirRepository, IGenericAlterarRepository, IGenericExcluirRepository, IGenericSalvarRepository
     {
+        
     }
 }

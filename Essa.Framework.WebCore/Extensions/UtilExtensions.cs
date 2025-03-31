@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Essa.Framework.Util.Models;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Internal;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections;
@@ -92,6 +94,26 @@ namespace Essa.Framework.Web.Extensions
             }
         }
 
+        public static async Task<ArquivoDTO> ToArquivoDTO(this IFormFile formFile)
+        {
+            return new ArquivoDTO
+            {
+                File = await formFile.GetBytesAsync(),
+                FileName = formFile.FileName,
+                ContentType = formFile.ContentType,
+                Length = formFile.Length,
+            };
+        }
+        public static async Task<List<ArquivoDTO>> ToListArquivoDTOs(this List<IFormFile> formFiles)
+        {
+            List<ArquivoDTO> arquivos = [];
+            foreach (var item in formFiles)
+            {
+                var arq = await item.ToArquivoDTO();
+                arquivos.Add(arq);
+            }
+            return arquivos;
+        }
 
         public static async Task<byte[]> GetBytesAsync(this IFormFile formFile)
         {

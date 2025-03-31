@@ -14,6 +14,6 @@
     }
     public interface IAuditoriaUsuarioCadastro
     {
-        public int? usuarioidcadastro { get; set; }
+        public int? UsuarioIdCadastrado { get; set; }
     }
 }

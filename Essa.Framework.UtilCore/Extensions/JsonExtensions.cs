@@ -50,13 +50,13 @@
 
 
 
-        public static object ToOjectFromJson(this string obj, System.Type type)
+        public static object ToOjectFromJson(this string obj, System.Type type, JsonSerializerSettings settings = null)
         {
-            return JsonConvert.DeserializeObject(obj, type);
+            return JsonConvert.DeserializeObject(obj, type, settings);
         }
-        public static T ToObjectFromJson<T>(this string obj)
+        public static T ToObjectFromJson<T>(this string obj, JsonSerializerSettings settings = null)
         {
-            return JsonConvert.DeserializeObject<T>(obj);
+            return JsonConvert.DeserializeObject<T>(obj, settings);
         }
 
 

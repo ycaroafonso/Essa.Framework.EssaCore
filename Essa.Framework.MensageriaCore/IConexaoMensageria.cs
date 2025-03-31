@@ -1,14 +1,13 @@
 ﻿using RabbitMQ.Client;
 using System;
+using System.Threading.Tasks;
 
-namespace Essa.Framework.Mensageria
+namespace Essa.Framework.Mensageria;
+
+public interface IConexaoMensageria : IDisposable
 {
-    public interface IConexaoMensageria : IDisposable
-    {
-        IConnection Conexao { get; }
+    IConnection Conexao { get; }
 
-        void Conectar();
-        void Dispose();
-        ICadastrarMensageria NovaFila();
-    }
+    Task Conectar();
+    Task<ICadastrarMensageria> NovaFila();
 }
