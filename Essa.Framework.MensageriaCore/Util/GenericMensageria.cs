@@ -9,7 +9,7 @@
         protected CadastrarMensageria _cadastrarMensageria;
 
 
-        public GenericMensageria(ConexaoMensageria conexao, string fila)
+        public GenericMensageria(IConexaoMensageria conexao, string fila)
         {
             _cadastrarMensageria = new CadastrarMensageria(conexao);
             _cadastrarMensageria.CriarFila(fila, arguments: null);
@@ -46,12 +46,7 @@
     {
         private CadastrarMensageria _cadastrarMensageria;
 
-        public GenericMensageria()
-        {
-
-        }
-
-        public GenericMensageria(ConexaoMensageria conexao, string fila)
+        public GenericMensageria(IConexaoMensageria conexao, string fila)
         {
             _cadastrarMensageria = new CadastrarMensageria(conexao);
             _cadastrarMensageria.CriarFila(fila, arguments: null);
