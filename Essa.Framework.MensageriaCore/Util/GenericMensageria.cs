@@ -81,6 +81,7 @@ public abstract class GenericMensageria<T>(IConexaoMensageria conexao, string fi
 
     public void Dispose()
     {
-        _cadastrarMensageria.Dispose();
+        if (_cadastrarMensageria != null)
+            _cadastrarMensageria.Dispose();
     }
 }
