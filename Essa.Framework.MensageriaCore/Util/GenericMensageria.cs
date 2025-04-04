@@ -2,28 +2,32 @@
 using System.Threading.Tasks;
 
 namespace Essa.Framework.Mensageria.Util;
-internal abstract class GenericMensageria : IDisposable
+
+internal interface IGenericMensageria : IDisposable
 {
-    protected CadastrarMensageria _cadastrarMensageria;
+    Task ConfirmarRecebimento(ulong tag);
+    Task Publicar<T>(T envio);
+    Task Receber<T>(Func<ulong, T, Task> received);
+}
 
-
-    public GenericMensageria(ConexaoMensageria conexao, string fila)
-    {
-        _cadastrarMensageria = new CadastrarMensageria(conexao);
-        _cadastrarMensageria.CriarFila(fila, arguments: null);
-    }
+internal abstract class GenericMensageria(IConexaoMensageria conexao, string fila) : IGenericMensageria
+{
+    protected ICadastrarMensageria _cadastrarMensageria;
 
     public async Task Publicar<T>(T envio)
     {
+        _cadastrarMensageria = await conexao.NovaFila();
+        await _cadastrarMensageria.CriarFila(fila, arguments: null);
+
         await _cadastrarMensageria.Publicar(envio);
     }
 
 
-
-
-
     public async Task Receber<T>(Func<ulong, T, Task> received)
     {
+        _cadastrarMensageria = await conexao.NovaFila();
+        await _cadastrarMensageria.CriarFila(fila, arguments: null);
+
         await _cadastrarMensageria.Receber(received);
         Console.ReadLine();
     }
@@ -38,26 +42,24 @@ internal abstract class GenericMensageria : IDisposable
     }
 }
 
-
-public abstract class GenericMensageria<T> : IDisposable
-    where T : class
+public interface IGenericMensageria<T> : IDisposable where T : class
 {
-    private CadastrarMensageria _cadastrarMensageria;
+    Task ConfirmarRecebimento(ulong tag);
+    Task Publicar(T envio);
+    Task Receber(Func<ulong, T, Task> received);
+}
 
-    public GenericMensageria()
+public abstract class GenericMensageria<T>(IConexaoMensageria conexao, string fila) : IDisposable, IGenericMensageria<T> where T : class
+{
+
+    private ICadastrarMensageria _cadastrarMensageria;
+
+    public virtual async Task Publicar(T envio)
     {
-
-    }
-
-    public GenericMensageria(IConexaoMensageria conexao, string fila)
-    {
-        _cadastrarMensageria = new CadastrarMensageria(conexao);
-        _cadastrarMensageria.CriarFila(fila, arguments: null);
-    }
+        _cadastrarMensageria = await conexao.NovaFila();
+        await _cadastrarMensageria.CriarFila(fila, arguments: null);
 
 
-    public virtual async void Publicar(T envio)
-    {
         await _cadastrarMensageria.Publicar(envio);
     }
 
@@ -65,6 +67,9 @@ public abstract class GenericMensageria<T> : IDisposable
 
     public async Task Receber(Func<ulong, T, Task> received)
     {
+        _cadastrarMensageria = await conexao.NovaFila();
+        await _cadastrarMensageria.CriarFila(fila, arguments: null);
+
         await _cadastrarMensageria.Receber(received);
     }
 
