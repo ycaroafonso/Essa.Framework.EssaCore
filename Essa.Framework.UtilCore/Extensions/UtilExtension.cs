@@ -6,6 +6,7 @@
     using System.IO;
     using System.Linq;
     using System.Runtime.Serialization.Formatters.Binary;
+    using System.Text.RegularExpressions;
 
     public static class UtilExtension
     {
@@ -137,5 +138,49 @@
         {
             return fileInfo.Name.Replace(fileInfo.Extension, "");
         }
+
+
+
+        public static string ResolveNomeArquivo(string fileName)
+        {
+            if (string.IsNullOrWhiteSpace(fileName))
+                throw new ArgumentException("A entrada não pode ser nula ou vazia.");
+
+            // Obter a lista de caracteres inválidos para nomes de arquivos
+            char[] invalidChars = Path.GetInvalidFileNameChars();
+
+            // Criar um padrão Regex para os caracteres inválidos
+            string invalidPattern = $"[{Regex.Escape(new string(invalidChars))}]";
+
+            // Substituir caracteres inválidos por "_"
+            string validFileName = Regex.Replace(fileName, invalidPattern, "_");
+
+            // Opcional: Remover espaços em excesso
+            validFileName = Regex.Replace(validFileName, @"\s+", " ").Trim();
+
+
+            return validFileName;
+        }
+        public static string MakeValidHttpFileName(string input)
+        {
+            if (string.IsNullOrWhiteSpace(input))
+                throw new ArgumentException("A entrada não pode ser nula ou vazia.");
+
+            // Permitir apenas letras, números, traços, sublinhados e pontos
+            string validFileName = Regex.Replace(input, @"[^a-zA-Z0-9\-_\.]", "_");
+
+            // Garantir que o nome do arquivo não termine ou comece com "."
+            validFileName = validFileName.Trim('.');
+
+            // Garantir que o nome do arquivo não fique vazio após a sanitização
+            if (string.IsNullOrEmpty(validFileName))
+            {
+                validFileName = "arquivo";
+            }
+
+            return validFileName;
+        }
+
+
     }
 }

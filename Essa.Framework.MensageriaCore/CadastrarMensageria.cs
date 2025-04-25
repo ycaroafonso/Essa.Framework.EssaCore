@@ -175,7 +175,7 @@ internal class CadastrarMensageria(IConexaoMensageria conexaoMensageria) : IDisp
 
     public void Dispose()
     {
-        channel.Dispose();
+        //channel.Dispose();
     }
 
     public async Task BasicReject(ulong tag)

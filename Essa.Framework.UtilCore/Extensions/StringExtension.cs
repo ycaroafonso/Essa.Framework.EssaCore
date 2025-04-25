@@ -881,6 +881,11 @@
             return DateTime.ParseExact(valor, "dd/MM/yyyy", //HH:mm:ss,fff
                                        System.Globalization.CultureInfo.InvariantCulture);
         }
+        public static DateTime ToDateTime(this string valor)
+        {
+            return DateTime.ParseExact(valor, "dd/MM/yyyy HH:mm:ss", //HH:mm:ss,fff
+                                       System.Globalization.CultureInfo.InvariantCulture);
+        }
 
 
         public static T ToEnum<T>(this string value)
