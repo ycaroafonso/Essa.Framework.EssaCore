@@ -1,7 +1,4 @@
-﻿using BCrypt.Net;
-using Org.BouncyCastle.Crypto.Generators;
-using System;
-using System.Text;
+﻿using System;
 
 namespace Essa.Framework.Util.Util.Hash
 {

@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Text;
 
-namespace Essa.Framework.UtilMySql.Repository;
+namespace Essa.Framework.Util.Repository;
 
 public static class ExceptionExtensions
 {

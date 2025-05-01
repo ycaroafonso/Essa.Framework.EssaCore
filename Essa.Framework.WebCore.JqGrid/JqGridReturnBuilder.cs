@@ -1,6 +1,6 @@
 ﻿namespace Essa.Framework.WebCore.JqGrid
 {
-    using Essa.Framework.Util;
+    using Essa.Framework.Util.Util;
     using System;
     using System.Collections.Generic;
     using System.Linq;
