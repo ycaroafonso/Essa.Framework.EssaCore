@@ -26,5 +26,6 @@ public interface ICadastrarMensageria : IDisposable
     Task Publicar(byte[] body);
     Task<string> Receber(Func<ulong, byte[], Task> received);
     Task Receber<T>(Func<ulong, T, Task> received, JsonSerializerSettings settings = null);
+    Task<long> TotalMensagensNaFila();
     void TravarFinalizacao();
 }

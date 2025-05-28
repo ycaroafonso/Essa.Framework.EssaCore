@@ -1,5 +1,8 @@
 ﻿using RabbitMQ.Client;
 using System;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
 
 
@@ -51,6 +54,17 @@ public class ConexaoMensageria : IConexaoMensageria
         Conexao = await factory.CreateConnectionAsync();
     }
 
+
+    public string VirtualHost { get => factory.VirtualHost; }
+
+    public HttpClient ConectarHttp()
+    {
+        using var client = new HttpClient { BaseAddress = factory.Uri };
+        var creds = Convert.ToBase64String(Encoding.UTF8.GetBytes($"{factory.UserName}:{factory.Password}"));
+        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", creds);
+
+        return client;
+    }
 
     public async Task<ICadastrarMensageria> NovaFila()
     {

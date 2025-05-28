@@ -4,7 +4,10 @@ using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System;
 using System.Collections.Generic;
+using System.Net.Http.Headers;
+using System.Net.Http;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 
@@ -182,4 +185,26 @@ internal class CadastrarMensageria(IConexaoMensageria conexaoMensageria) : IDisp
     {
         await channel.BasicRejectAsync(tag, true);
     }
+
+
+
+
+
+
+
+
+
+    public async Task<long> TotalMensagensNaFila()
+    {
+        using var client = conexaoMensageria.ConectarHttp();
+
+        var resp = await client.GetAsync($"/api/queues/{Uri.EscapeDataString(conexaoMensageria.VirtualHost)}/{Uri.EscapeDataString(Queue)}");
+        if (!resp.IsSuccessStatusCode) return 0;
+
+        using var doc = JsonDocument.Parse(await resp.Content.ReadAsStringAsync());
+        var ready = doc.RootElement.GetProperty("messages_ready").GetInt64();
+        var unacked = doc.RootElement.GetProperty("messages_unacknowledged").GetInt64();
+        return ready + unacked;
+    }
+
 }
