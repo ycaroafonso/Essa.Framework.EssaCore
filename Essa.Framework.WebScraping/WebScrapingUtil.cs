@@ -1,4 +1,4 @@
-﻿namespace Essa.Framework.Mensageria
+﻿namespace Essa.Framework.WebScraping
 {
     using OpenQA.Selenium;
     using OpenQA.Selenium.Chrome;
@@ -28,7 +28,7 @@
                 _chromeOptions.AddUserProfilePreference("profile.default_content_setting_values.images", 2);
             _chromeOptions.AddArgument(@"--user-data-dir=" + Path.GetFullPath(@"browsercache", diretorioCache));
             _chromeOptions.AddArgument("ignore-certificate-errors");
-            
+
         }
 
 

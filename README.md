@@ -1,3 +1,1 @@
-# Essa.Framework.EssaCore
-TESTE
-TESTE
+Publicado em https://github.com/ycaroafonso/Essa.Framework.EssaCore/tree/feature/net8

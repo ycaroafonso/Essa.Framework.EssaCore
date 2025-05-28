@@ -24,6 +24,11 @@ public class GenericRepository<TContext>(TContext contexto) : IGenericBaseReposi
         return Contexto.Database.ExecuteSqlRaw(sql, parametros);
     }
 
+    public async Task<int> ExecuteSqlCommandAsync(string sql, params object[] parametros)
+    {
+        return await Contexto.Database.ExecuteSqlRawAsync(sql, parametros);
+    }
+
     public IDbContextTransaction BeginTransaction()
     {
         return Contexto.Database.BeginTransaction();

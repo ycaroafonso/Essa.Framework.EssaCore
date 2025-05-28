@@ -16,6 +16,7 @@ namespace Essa.Framework.Util.Repository
         IList<T> SqlQuery<T>(string sql, params object[] parametros) where T : class;
 
         int ExecuteSqlCommand(string sql, params object[] parametros);
+        Task<int> ExecuteSqlCommandAsync(string sql, params object[] parametros);
     }
 
 
