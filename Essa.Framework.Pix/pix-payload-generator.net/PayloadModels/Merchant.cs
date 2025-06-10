@@ -1,11 +1,12 @@
-﻿namespace pix_payload_generator.net.Models.PayloadModels
+﻿using Essa.Framework.Util.Extensions;
+namespace pix_payload_generator.net.Models.PayloadModels
 {
     public class Merchant
     {
         public Merchant(string _name, string _city)
         {
             if (!string.IsNullOrEmpty(_name) && _name.Length > 25) _name = _name.Substring(0, 25);
-            Name = _name;
+            Name = _name.RemoveAcentos();
             City = _city;
         }
 
