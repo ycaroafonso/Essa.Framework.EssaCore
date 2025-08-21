@@ -1,19 +1,17 @@
-﻿namespace Essa.Framework.Util.Models.Interface
+﻿using System;
+
+namespace Essa.Framework.Util.Models.Interface;
+
+public interface IAuditoria
 {
-    using System;
+    int? auditoriausuarioid { get; set; }
 
-
-    public interface IAuditoria
-    {
-        int? auditoriausuarioid { get; set; }
-
-        /// <summary>
-        /// Hora UTC
-        /// </summary>
-        DateTime? auditoriadatahora { get; set; }
-    }
-    public interface IAuditoriaUsuarioCadastro
-    {
-        public int? UsuarioIdCadastrado { get; set; }
-    }
+    /// <summary>
+    /// Hora UTC
+    /// </summary>
+    DateTime? auditoriadatahora { get; set; }
+}
+public interface IAuditoriaUsuarioCadastro
+{
+    public int? UsuarioIdCadastrado { get; set; }
 }
