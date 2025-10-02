@@ -1,6 +1,5 @@
-﻿using EssaGestaoCore.DTO.Calendario;
+﻿using EssaGestaoCore.DTO.GoogleApi.Calendario;
 using Google.Apis.Calendar.v3.Data;
-using System;
 
 namespace Essa.Framework.GoogleApi.Calendario.Calendario
 {

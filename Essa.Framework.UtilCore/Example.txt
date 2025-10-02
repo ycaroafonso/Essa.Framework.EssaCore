@@ -14,7 +14,7 @@
     {
         public static string NomeExecutavel { get; } = System.Reflection.Assembly.GetExecutingAssembly().GetName().Name;
 
-        //public static ModelGIS Contexto { get => new ModelGIS(new DbContextOptionsBuilder<ModelGIS>().UseMySql(EssaGestaoCore.DTO.Util.StringDeConexao).Options); }
+        //public static YouTubePainelContexto Contexto { get => new YouTubePainelContexto(new DbContextOptionsBuilder<YouTubePainelContexto>().UseMySql(EssaGestaoCore.DTO.Util.StringDeConexao).Options); }
 
 
         protected static Options _options = new Options();
