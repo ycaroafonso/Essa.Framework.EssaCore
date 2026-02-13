@@ -167,6 +167,12 @@ public class GenericRepository<T, TContext> : GenericRepository<TContext>, IGene
 
         return this;
     }
+    public async Task<IGenericRepository<T>> IncluirAsync(IEnumerable<T> instancia)
+    {
+        await Contexto.Set<T>().AddRangeAsync(instancia);
+
+        return this;
+    }
     public IGenericRepository<T> Incluir(ICollection<T> instancia)
     {
         Contexto.Set<T>().AddRange(instancia);

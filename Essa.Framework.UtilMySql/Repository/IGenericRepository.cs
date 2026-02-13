@@ -49,6 +49,7 @@ namespace Essa.Framework.Util.Repository
         IGenericRepository<T> Incluir(T instancia);
         Task<IGenericRepository<T>> IncluirAsync(T instancia);
         IGenericRepository<T> Incluir(ICollection<T> instancia);
+        Task<IGenericRepository<T>> IncluirAsync(IEnumerable<T> instancia);
     }
     public interface IGenericIncluirRepository
     {
