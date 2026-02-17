@@ -9,7 +9,7 @@
     {
         Uri _requestUrl;
         string _ipCliente;
-        public bool IsLocal { get { return _requestUrl.Host == "192.168.0.110" || _ipCliente == "179.124.9.149" || _ipCliente == "::1"; } }
+        public bool IsLocal { get { return _requestUrl.Host == "192.1610.0.30" || _ipCliente == "179.124.9.149" || _ipCliente == "::1"; } }
 
 
 
