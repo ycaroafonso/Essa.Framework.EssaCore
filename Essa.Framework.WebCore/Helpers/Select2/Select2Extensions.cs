@@ -3,8 +3,6 @@
     using Framework.Util.Models.Helpers.Select2;
     using Microsoft.AspNetCore.Html;
     using Microsoft.AspNetCore.Mvc.Rendering;
-    using Microsoft.AspNetCore.Mvc.ViewFeatures;
-    using Microsoft.AspNetCore.Mvc.ViewFeatures.Internal;
     using System;
     using System.Collections.Generic;
     using System.Linq.Expressions;
@@ -52,13 +50,25 @@
 
         public static IHtmlContent Select2<TModel, TProperty>(this IHtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression, IEnumerable<SelectListItem> selectList, object htmlAttributes = null)
         {
-            string name = ExpressionHelper.GetExpressionText(expression);
+            string name = GetPropertyName(expression);
 
             var x = new Select2Builder(name, htmlAttributes).SetSelectList(selectList);
 
             //x.Val("");
 
             return x.Montar();
+        }
+
+        public static string GetPropertyName<TModel, TValue>(Expression<Func<TModel, TValue>> expression)
+        {
+            if (expression.Body is MemberExpression member)
+                return member.Member.Name;
+
+            if (expression.Body is UnaryExpression unary &&
+                unary.Operand is MemberExpression memberUnary)
+                return memberUnary.Member.Name;
+
+            throw new InvalidOperationException("Expressão inválida.");
         }
 
     }
