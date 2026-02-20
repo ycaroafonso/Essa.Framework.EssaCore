@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Text;
 
 namespace Essa.Framework.Util.Extensions;
 
@@ -68,4 +69,32 @@ public static class StreamExtensions
 
         return outputStream;
     }
+
+
+
+
+
+
+
+
+
+
+
+    public static byte[] ToByteArray(this Stream input)
+    {
+        byte[] buffer = new byte[16 * 1024];
+        using (MemoryStream ms = new MemoryStream())
+        {
+            int read;
+            while ((read = input.Read(buffer, 0, buffer.Length)) > 0)
+            {
+                ms.Write(buffer, 0, read);
+            }
+            return ms.ToArray();
+        }
+    }
+
+
+
+
 }
