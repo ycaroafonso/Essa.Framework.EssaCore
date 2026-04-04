@@ -4,6 +4,7 @@ using System.Linq.Expressions;
 
 namespace Essa.Framework.Util.Repository;
 
+[Obsolete]
 public class GenericRepository<TContext>(TContext contexto) : IGenericBaseRepository, IGenericRepository
     where TContext : DbContext
 {
@@ -140,14 +141,10 @@ public class GenericRepository<TContext>(TContext contexto) : IGenericBaseReposi
 }
 
 
-public class GenericRepository<T, TContext> : GenericRepository<TContext>, IGenericRepository<T>
+public class GenericRepository<T, TContext>(TContext contexto) : GenericRepository<TContext>(contexto), IGenericRepository<T>
     where T : class
     where TContext : DbContext
 {
-    public GenericRepository(TContext contexto) : base(contexto) { }
-
-
-
     public virtual IQueryable<T> ObterTodos()
     {
         return Contexto.Set<T>();
@@ -155,13 +152,13 @@ public class GenericRepository<T, TContext> : GenericRepository<TContext>, IGene
 
 
 
-    public IGenericRepository<T> Incluir(T instancia)
+    public virtual IGenericRepository<T> Incluir(T instancia)
     {
         Contexto.Set<T>().Add(instancia);
 
         return this;
     }
-    public async Task<IGenericRepository<T>> IncluirAsync(T instancia)
+    public virtual async Task<IGenericRepository<T>> IncluirAsync(T instancia)
     {
         await Contexto.Set<T>().AddAsync(instancia);
 
@@ -238,12 +235,13 @@ public class GenericRepository<T, TContext> : GenericRepository<TContext>, IGene
 
     #region Plus
 
-
+    [Obsolete]
     public void AnexarAdded(T instancia)
     {
         Anexar(instancia, EntityState.Added);
     }
 
+    [Obsolete]
     public virtual IGenericRepository<T> AnexarAdded(ICollection<T> lista)
     {
         Anexar(lista, EntityState.Added);
