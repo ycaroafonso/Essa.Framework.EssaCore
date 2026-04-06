@@ -13,7 +13,7 @@ public class EmailDTO
 
 
 
-    public string de { get; set; } = "naoresponda@senarms.org.br";
+    public string de { get; set; } = "naoresponda@essatecnologia.com.br";
 
 
     public string para { get; set; }
