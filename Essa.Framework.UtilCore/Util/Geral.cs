@@ -123,6 +123,13 @@
             objOriginal.PessoaSessaoViewModel = pessoaSessao;
             return objOriginal;
         }
+        public static T PreparaV2<T>(this T objOriginal, IPessoaSessaoViewModel pessoaSessao) where T : IEmpresaV2, IAuditoria
+        {
+            objOriginal.EmpresaId = pessoaSessao.EmpresaId;
+            objOriginal.auditoriadatahora = DateTime.UtcNow;
+            objOriginal.auditoriausuarioid = pessoaSessao.UsuarioId;
+            return objOriginal;
+        }
         public static T PorEmpresa<T>(this T objOriginal, IPessoaSessaoViewModel empresa) where T : IEmpresa
         {
             objOriginal.empresaid = empresa.EmpresaId;

@@ -10,7 +10,8 @@
         {
             return obj.ToJson(new JsonSerializerSettings
             {
-                DefaultValueHandling = DefaultValueHandling.Ignore,
+                ContractResolver = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver(),
+                DefaultValueHandling = DefaultValueHandling.Ignore
             });
         }
 
