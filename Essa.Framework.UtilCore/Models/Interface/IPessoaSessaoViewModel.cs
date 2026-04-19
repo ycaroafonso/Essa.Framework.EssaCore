@@ -2,9 +2,8 @@
 
 namespace Essa.Framework.Util.Models.Interface;
 
-public interface IPessoaSessaoViewModel
+public interface IPessoaSessaoViewModel : IEmpresaV2, IUsuarioV2
 {
-    int EmpresaId { get; set; }
     string NomeEmpresa { get; set; }
 
     string NomePessoa { get; set; }
@@ -12,7 +11,6 @@ public interface IPessoaSessaoViewModel
 
     string Login { get; set; }
 
-    int UsuarioId { get; set; }
     IPessoaPermissaoSessaoViewModel Permissao { get; set; }
 }
 
