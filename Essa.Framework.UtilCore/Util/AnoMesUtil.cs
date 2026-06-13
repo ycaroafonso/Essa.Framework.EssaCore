@@ -56,6 +56,11 @@
 
         public AnoMesUtil() { }
 
+        public AnoMesUtil(int ano, int mes)
+        {
+            Ano= ano;
+            Mes = mes;
+        }
         public AnoMesUtil(int anomes)
         {
             AnoMes = anomes;
